@@ -1,0 +1,34 @@
+<div id="counters" role="region" [attr.aria-label]="'counters.sectionAria' | t">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-6">
+        <div class="counter">
+          <div class="counter-icon"><i class="fa fa-calendar"></i></div>
+          <div class="number"><span>{{ countYears() }}</span></div>
+          <h4 class="fw-normal">{{ 'counters.years' | t }}</h4>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="counter">
+          <div class="counter-icon"><i class="fa fa-check"></i></div>
+          <div class="number"><span>{{ countProjects() }}</span></div>
+          <h4 class="fw-normal">{{ 'counters.projects' | t }}</h4>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="counter">
+          <div class="counter-icon"><i class="fa fa-users"></i></div>
+          <div class="number"><span>{{ countClients() }}</span></div>
+          <h4 class="fw-normal">{{ 'counters.clients' | t }}</h4>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="counter">
+          <div class="counter-icon"><i class="fa fa-rocket"></i></div>
+          <div class="number"><span>{{ countMilestones() }}</span></div>
+          <h4 class="fw-normal">{{ 'counters.milestones' | t }}</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

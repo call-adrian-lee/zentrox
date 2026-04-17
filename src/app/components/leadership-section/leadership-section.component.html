@@ -1,0 +1,69 @@
+<div id="leadership" class="leadership">
+  <div class="container">
+    <div class="section-header">
+      <h2>{{ 'leadership.title' | t }}</h2>
+      <p>{{ 'leadership.lead' | t }}</p>
+    </div>
+    <div class="row g-4 leadership-row">
+      <div class="col-lg-4 col-md-6 d-flex">
+        <article
+          class="leader-card leader-card--open-seat h-100 w-100"
+          [attr.aria-label]="'leadership.ceoPlaceholder.cardAria' | t"
+        >
+          <span class="leader-open-badge">{{ 'leadership.ceoPlaceholder.badge' | t }}</span>
+          <div class="leader-card-top">
+            <div class="leader-photo leader-photo--placeholder leader-photo--open-seat">
+              <span class="leader-placeholder-ring" aria-hidden="true"></span>
+              <span class="leader-placeholder-icon" aria-hidden="true"><i class="fa fa-user"></i></span>
+            </div>
+          </div>
+          <div class="leader-body">
+            <h3>{{ 'leadership.ceoPlaceholder.name' | t }}</h3>
+            <div class="leader-role">{{ 'leadership.ceoPlaceholder.role' | t }}</div>
+            <div class="leader-blurb">{{ 'leadership.ceoPlaceholder.blurb' | t }}</div>
+          </div>
+        </article>
+      </div>
+      <div class="col-lg-4 col-md-6 d-flex">
+        <article class="leader-card h-100 w-100" [attr.aria-label]="'leadership.cto.cardAria' | t">
+          <div class="leader-card-top">
+            <div class="leader-photo">
+              <img
+                src="/img/zentrox-cto.png"
+                [attr.alt]="'leadership.cto.name' | t"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                class="leader-img"
+              />
+            </div>
+          </div>
+          <div class="leader-body">
+            <h3>{{ 'leadership.cto.name' | t }}</h3>
+            <div class="leader-role">{{ 'leadership.cto.role' | t }}</div>
+            <div class="leader-blurb">{{ 'leadership.cto.blurb' | t }}</div>
+          </div>
+        </article>
+      </div>
+      <div class="col-lg-4 col-md-6 d-flex">
+        <article class="leader-card h-100 w-100" [attr.aria-label]="'leadership.techLead.cardAria' | t">
+          <div class="leader-card-top">
+            <div class="leader-photo">
+              <img
+                src="/img/zentrox-tech-lead.png"
+                [attr.alt]="'leadership.techLead.name' | t"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                class="leader-img"
+              />
+            </div>
+          </div>
+          <div class="leader-body">
+            <h3>{{ 'leadership.techLead.name' | t }}</h3>
+            <div class="leader-role">{{ 'leadership.techLead.role' | t }}</div>
+            <div class="leader-blurb">{{ 'leadership.techLead.blurb' | t }}</div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</div>

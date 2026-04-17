@@ -1,0 +1,122 @@
+/* Fonts loaded from index.html (preconnect + stylesheet) for faster first paint */
+@import 'font-awesome/css/font-awesome.min.css';
+@import './zentrox-theme.css';
+
+/* Mobile: avoid accidental horizontal page scroll from overflowing sections */
+html {
+  overflow-x: clip;
+  /* Fixed header (#header ~92px): in-page anchors (#about, #contact) land below the bar */
+  scroll-padding-top: calc(96px + env(safe-area-inset-top, 0px));
+}
+
+@supports not (overflow: clip) {
+  html {
+    overflow-x: hidden;
+  }
+}
+
+/* ng-bootstrap carousel tweaks for Zentrox layout */
+#header-carousel ngb-carousel.carousel {
+  width: 100%;
+  height: 100vh;
+}
+
+#header-carousel ngb-carousel .carousel-inner,
+#header-carousel ngb-carousel .carousel-item {
+  height: 100vh;
+}
+
+/* Owl put dots under slides; ngb-carousel renders indicators first in DOM — reorder visually */
+#clients ngb-carousel.carousel {
+  display: flex !important;
+  flex-direction: column;
+}
+
+#clients ngb-carousel .carousel-inner {
+  overflow: hidden;
+  order: 1;
+}
+
+#clients ngb-carousel .carousel-item {
+  padding: 0 8px;
+}
+
+/* Match static HTML: portrait stays within 150px column (flex + Bootstrap img rules were blowing it up) */
+#clients .testimonial-item .testimonial-img {
+  flex: 0 0 150px;
+  width: 150px;
+  height: 150px;
+  max-width: 150px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Same square crop and face framing for every testimonial so head position reads consistently */
+#clients .testimonial-item .testimonial-img .client-img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+  object-position: center 28%;
+  display: block;
+}
+
+#clients .testimonial-item {
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* Client dots: match static HTML Owl Carousel (.owl-dots / .owl-dot), not Bootstrap pill indicators */
+#clients ngb-carousel.carousel .carousel-indicators {
+  position: static;
+  right: auto;
+  bottom: auto;
+  left: auto;
+  z-index: 1;
+  order: 2;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 15px 0 0;
+  padding: 0;
+}
+
+#clients ngb-carousel.carousel .carousel-indicators [data-bs-target] {
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  margin: 0 5px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  text-indent: -9999px;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.3);
+  background-clip: border-box;
+  opacity: 1;
+  border-top: none;
+  border-bottom: none;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+#clients ngb-carousel.carousel .carousel-indicators [data-bs-target].active {
+  background-color: #ffffff;
+  opacity: 1;
+}
+
+#clients ngb-carousel.carousel .carousel-indicators [data-bs-target]:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.85);
+  outline-offset: 2px;
+}
+
+/* Shown only when mobile menu is open (template @if); theme had display:none for jQuery toggle */
+#mobile-body-overly {
+  display: block !important;
+}
+
+.back-to-top {
+  appearance: none;
+}

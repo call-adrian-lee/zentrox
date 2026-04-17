@@ -1,0 +1,130 @@
+/* CEO / open-seat card — stands out from filled leadership cards */
+.leader-card--open-seat {
+  position: relative;
+  padding-top: 20px;
+  padding-inline: 18px;
+  padding-bottom: 18px;
+  border: 1px solid transparent;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(
+      125deg,
+      rgba(63, 105, 170, 0.45),
+      rgba(99, 102, 241, 0.22) 42%,
+      rgba(63, 105, 170, 0.12) 100%
+    )
+      border-box;
+  box-shadow:
+    0 10px 40px rgba(63, 105, 170, 0.14),
+    0 1px 0 rgba(16, 24, 40, 0.04);
+}
+
+.leader-card--open-seat:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 16px 48px rgba(63, 105, 170, 0.18),
+    0 4px 12px rgba(16, 24, 40, 0.06);
+}
+
+.leader-card--open-seat::before {
+  height: 5px;
+  opacity: 1;
+  background: linear-gradient(
+    90deg,
+    #3f69aa 0%,
+    #6366f1 45%,
+    #3f69aa 100%
+  );
+}
+
+.leader-open-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  padding: 6px 12px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: linear-gradient(135deg, #2f4f8f 0%, #3f69aa 55%, #4f7ab8 100%);
+  border-radius: 999px;
+  box-shadow:
+    0 4px 14px rgba(47, 79, 143, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.leader-card--open-seat .leader-photo--open-seat {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 112px;
+  height: 112px;
+  border: 2px dashed rgba(63, 105, 170, 0.4);
+  background:
+    radial-gradient(circle at 28% 22%, rgba(63, 105, 170, 0.18) 0%, transparent 42%),
+    radial-gradient(circle at 78% 88%, rgba(99, 102, 241, 0.14) 0%, transparent 38%),
+    linear-gradient(165deg, #f3f6fc 0%, #e8edf6 48%, #dfe7f2 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 12px 28px rgba(63, 105, 170, 0.16);
+}
+
+.leader-placeholder-ring {
+  position: absolute;
+  inset: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(63, 105, 170, 0.2);
+  pointer-events: none;
+}
+
+.leader-card--open-seat .leader-placeholder-icon {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: #3f69aa;
+  text-shadow: 0 2px 12px rgba(63, 105, 170, 0.25);
+  opacity: 0.92;
+}
+
+.leader-card--open-seat .leader-body {
+  width: 100%;
+  align-items: center;
+  text-align: center;
+}
+
+@media (max-width: 575.98px) {
+  .leader-card--open-seat .leader-photo--open-seat {
+    width: 96px;
+    height: 96px;
+  }
+
+  .leader-card--open-seat .leader-placeholder-icon {
+    font-size: 2.1rem;
+  }
+
+  .leader-open-badge {
+    top: 10px;
+    right: 10px;
+    padding: 5px 9px;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leader-card--open-seat:hover {
+    transform: none;
+  }
+}

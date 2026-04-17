@@ -1,0 +1,13 @@
+<a href="#main-content" class="skip-link">{{ 'skip.main' | t }}</a>
+@if (showPublicChrome()) {
+  <app-header></app-header>
+}
+<main id="main-content" tabindex="-1" [attr.aria-label]="'layout.mainAriaLabel' | t">
+  <div class="page-outlet" role="region" [attr.aria-label]="'layout.pageRegionAria' | t">
+    <router-outlet />
+  </div>
+</main>
+@if (showPublicChrome()) {
+  <app-footer-section></app-footer-section>
+  <app-back-to-top></app-back-to-top>
+}

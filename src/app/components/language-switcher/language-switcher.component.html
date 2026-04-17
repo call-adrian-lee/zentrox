@@ -1,0 +1,55 @@
+<div
+  ngbDropdown
+  class="language-switcher"
+  [attr.aria-label]="'lang.switcherLabel' | t"
+  placement="bottom-end"
+  container="body"
+>
+  <button
+    type="button"
+    class="btn btn-lang-dropdown"
+    ngbDropdownToggle
+    id="langMenuButton"
+    [attr.aria-label]="'lang.switcherLabel' | t"
+    [attr.aria-haspopup]="true"
+  >
+    <span class="language-switcher__flag-wrap" aria-hidden="true">
+      <img
+        class="language-switcher__flag-img"
+        [src]="flagSrc(active().flagCode)"
+        width="22"
+        height="16"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        referrerpolicy="no-referrer"
+      />
+    </span>
+    <span class="visually-hidden">{{ active().labelKey | t }}</span>
+  </button>
+  <div ngbDropdownMenu aria-labelledby="langMenuButton" class="dropdown-menu-end lang-dropdown-menu">
+    @for (opt of options; track opt.code) {
+      <button
+        ngbDropdownItem
+        type="button"
+        class="lang-dropdown-item"
+        [class.active]="i18n.lang() === opt.code"
+        (click)="i18n.setLang(opt.code)"
+      >
+        <span class="language-switcher__flag-wrap language-switcher__flag-wrap--sm" aria-hidden="true">
+          <img
+            class="language-switcher__flag-img"
+            [src]="flagSrc(opt.flagCode)"
+            width="22"
+            height="16"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            referrerpolicy="no-referrer"
+          />
+        </span>
+        <span>{{ opt.labelKey | t }}</span>
+      </button>
+    }
+  </div>
+</div>

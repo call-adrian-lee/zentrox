@@ -1,0 +1,25 @@
+<app-hero-carousel></app-hero-carousel>
+<app-about-section></app-about-section>
+<app-leadership-section></app-leadership-section>
+<app-services-section></app-services-section>
+<section id="mvp-cta" [attr.aria-label]="'mvp.cta.sectionAria' | t">
+  <div class="container">
+    <div class="mvp-cta-card section-header">
+      <h2>{{ 'mvp.cta.title' | t }}</h2>
+      <p class="mvp-cta-description">
+        {{ 'mvp.cta.body' | t }}
+      </p>
+      <a
+        class="mvp-cta-button"
+        [href]="mvpHref()"
+        target="_blank"
+        rel="noopener noreferrer"
+        [attr.aria-label]="'mvp.cta.linkAria' | t"
+        >{{ 'mvp.cta.linkLabel' | t }}</a>
+    </div>
+  </div>
+</section>
+<app-counters-section></app-counters-section>
+<app-portfolio-section></app-portfolio-section>
+<app-clients-section></app-clients-section>
+<app-contact-section></app-contact-section>

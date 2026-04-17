@@ -1,0 +1,58 @@
+<footer id="footer">
+  <div class="container">
+    <div class="row align-items-start footer-main">
+      <div class="col-md-6 mb-3 mb-md-0">
+        <p class="footer-brand"><strong>Zentrox LLC</strong></p>
+        <p class="footer-meta mb-0">{{ 'footer.tagline' | t }}</p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <p class="footer-note">{{ 'footer.note' | t }}</p>
+        <p class="footer-meta footer-copy mb-0">{{ 'footer.copy' | t }}</p>
+      </div>
+    </div>
+    <div class="zt-footer-social">
+      <div class="zt-footer-social__inner">
+        <a
+          class="zt-footer-ico"
+          [href]="linkedInHref"
+          (click)="$event.preventDefault()"
+          [attr.aria-label]="'footer.linkedinAria' | t"
+        >
+          <svg
+            class="zt-footer-ico__svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              fill="currentColor"
+              d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"
+            />
+          </svg>
+        </a>
+        <a
+          class="zt-footer-ico"
+          [href]="slackHref"
+          (click)="$event.preventDefault()"
+          [attr.aria-label]="'footer.slackAria' | t"
+        >
+          <svg
+            class="zt-footer-ico__svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path
+              fill="currentColor"
+              d="M5.042 15.165a2.528 2.528 0 0 1-2.52 2.523A2.528 2.528 0 0 1 0 15.165a2.527 2.527 0 0 1 2.522-2.52h2.52v2.52zM6.313 15.165a2.527 2.527 0 0 1 2.521-2.52 2.527 2.527 0 0 1 2.521 2.52v6.313A2.528 2.528 0 0 1 8.834 24a2.528 2.528 0 0 1-2.521-2.522v-6.313zM8.834 6.323a2.528 2.528 0 0 1-2.521-2.52 2.528 2.528 0 0 1 2.521-2.522 2.528 2.528 0 0 1 2.521 2.521v2.522H8.834V6.323zm0 1.274a2.528 2.528 0 0 1 2.521 2.521 2.528 2.528 0 0 1-2.521 2.521H2.522A2.528 2.528 0 0 1 0 10.118a2.528 2.528 0 0 1 2.522-2.521h6.312zm9.843 2.521a2.528 2.528 0 0 1 2.522-2.521A2.528 2.528 0 0 1 24 10.118a2.528 2.528 0 0 1-2.522 2.521h-2.518V10.118zm-1.274 0a2.528 2.528 0 0 1-2.521 2.521 2.528 2.528 0 0 1-2.521-2.521V3.806A2.528 2.528 0 0 1 15.165 1.28 2.527 2.527 0 0 1 17.686 3.8v6.318zm-2.522 9.843a2.527 2.527 0 0 1 2.522 2.522 2.528 2.528 0 0 1-2.522 2.522 2.528 2.528 0 0 1-2.521-2.522v-2.522h2.521zm0-1.274a2.528 2.528 0 0 1-2.521-2.523 2.527 2.527 0 0 1 2.521-2.52h6.313A2.528 2.528 0 0 1 24 15.165a2.528 2.528 0 0 1-2.522 2.52h-6.315z"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>

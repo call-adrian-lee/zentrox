@@ -1,0 +1,129 @@
+<ng-template #imagePreview let-modal>
+  <div class="modal-header border-0 pb-0">
+    <div class="pe-3 flex-grow-1 min-w-0">
+      <h4 class="modal-title portfolio-modal__title" id="portfolio-preview-title">{{ previewTitle() }}</h4>
+      @if (previewSubtitle()) {
+        <p class="portfolio-modal__tag">{{ previewSubtitle() }}</p>
+      }
+    </div>
+    <button
+      type="button"
+      class="btn-close"
+      [attr.aria-label]="'portfolio.close' | t"
+      (click)="modal.dismiss()"
+    ></button>
+  </div>
+  <div class="modal-body pt-2">
+    <img
+      [src]="previewSrc()"
+      class="img-fluid w-100 rounded portfolio-modal__img"
+      [attr.alt]="previewTitle() + ' — ' + ('portfolio.preview' | t)"
+    />
+    <p class="portfolio-modal__desc">{{ previewDescription() }}</p>
+    <a
+      class="btn btn-sm portfolio-modal__cta"
+      [href]="previewLink()"
+      target="_blank"
+      rel="noopener noreferrer"
+      [attr.aria-label]="'portfolio.openProjectAria' | t"
+    >
+      {{ 'portfolio.openProject' | t }}
+      <i class="fa fa-external-link ms-1" aria-hidden="true"></i>
+    </a>
+  </div>
+</ng-template>
+
+<div id="portfolio">
+  <div class="container">
+    <header class="section-header">
+      <h2 class="section-title">{{ 'portfolio.title' | t }}</h2>
+      <p>{{ 'portfolio.intro' | t }}</p>
+    </header>
+    <div class="row">
+      <div class="col-lg-12">
+        <ul
+          class="portfolio-flters"
+          role="toolbar"
+          [attr.aria-label]="'portfolio.filterToolbarAria' | t"
+        >
+          <li>
+            <button
+              type="button"
+              class="portfolio-filter-btn"
+              [class.filter-active]="portfolioFilter() === 'all'"
+              [attr.aria-pressed]="portfolioFilter() === 'all'"
+              (click)="setPortfolioFilter('all')"
+            >
+              {{ 'portfolio.filterAll' | t }}
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="portfolio-filter-btn"
+              [class.filter-active]="portfolioFilter() === 'web'"
+              [attr.aria-pressed]="portfolioFilter() === 'web'"
+              (click)="setPortfolioFilter('web')"
+            >
+              {{ 'portfolio.filterWeb' | t }}
+            </button>
+          </li>
+          <li>
+            <button
+              type="button"
+              class="portfolio-filter-btn"
+              [class.filter-active]="portfolioFilter() === 'game'"
+              [attr.aria-pressed]="portfolioFilter() === 'game'"
+              (click)="setPortfolioFilter('game')"
+            >
+              {{ 'portfolio.filterGame' | t }}
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="row portfolio-container">
+      @for (item of filteredPortfolio(); track item.image) {
+        <div
+          class="col-lg-4 col-md-6 portfolio-item"
+          [class.dev-web]="item.category === 'web'"
+          [class.dev-game]="item.category === 'game'"
+        >
+          <div class="portfolio-wrap">
+            <figure>
+              <img
+                [src]="item.image"
+                class="img-fluid"
+                [attr.alt]="item.title + ' — ' + ('portfolio.preview' | t)"
+              />
+              <button
+                type="button"
+                class="link-preview"
+                [attr.title]="'portfolio.preview' | t"
+                [attr.aria-label]="('portfolio.preview' | t) + ': ' + item.title"
+                (click)="openPreview(imagePreview, item, $event)"
+              >
+                <i class="fa fa-eye" aria-hidden="true"></i>
+              </button>
+              <a
+                [href]="item.link"
+                class="link-details"
+                [attr.title]="'portfolio.details' | t"
+                target="_blank"
+                rel="noopener"
+              >
+                <i class="fa fa-link"></i>
+              </a>
+              <h3 class="portfolio-title">
+                {{ item.title }}
+                @if (item.subtitle) {
+                  <span>{{ item.subtitle }}</span>
+                }
+              </h3>
+            </figure>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,121 @@
+<div
+  id="header"
+  [class.header-scrolled]="nav.headerScrolled() && !isMvpRoute()"
+  [class.header-mvp-minimal]="isMvpRoute()"
+>
+  <div class="container">
+    <div class="header-inner d-flex align-items-center justify-content-between w-100">
+      <div id="logo" class="flex-shrink-0">
+        <a routerLink="/" (click)="nav.closeMobileNav()" [attr.aria-label]="'nav.logoAlt' | t">
+          <!-- Inline SVG so wordmark can be white on hero while icon keeps brand colors (external img cannot be styled per-part). -->
+          <svg
+            class="zt-header-logo"
+            xmlns="http://www.w3.org/2000/svg"
+            width="360"
+            height="72"
+            viewBox="0 0 360 72"
+            role="img"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <style>
+                .zt-logo-word {
+                  font: 700 34px/1 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+                  letter-spacing: 0.5px;
+                }
+              </style>
+            </defs>
+            <g class="zt-logo-mark" transform="translate(6 6)">
+              <rect x="0" y="0" width="60" height="60" rx="16" fill="#3F69AA" />
+              <path d="M18 18h24l-20 24h20v6H18l20-24H18z" fill="#ffffff" />
+              <g fill="#ffffff" opacity="0.95">
+                <circle cx="44" cy="16" r="2.2" />
+                <circle cx="49" cy="22" r="2.2" />
+                <circle cx="40" cy="24" r="2.2" />
+              </g>
+              <g stroke="#ffffff" stroke-width="1.6" opacity="0.75" stroke-linecap="round">
+                <path d="M44 16 L49 22" />
+                <path d="M40 24 L49 22" />
+              </g>
+            </g>
+            <text x="84" y="46" class="zt-logo-word">Zentrox</text>
+          </svg>
+        </a>
+      </div>
+      <div class="header-toolbar d-flex align-items-center justify-content-end flex-grow-1 min-w-0">
+        <nav id="nav-menu-container" class="d-none d-md-flex align-items-center" [attr.aria-label]="'nav.primaryAria' | t">
+          <ul class="nav-menu">
+            <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'home'">
+              <a href="/" (click)="nav.scrollToHomeSection($event, 'header-carousel', 'home')">{{ 'nav.home' | t }}</a>
+            </li>
+            <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'about'">
+              <a href="/" (click)="nav.scrollToHomeSection($event, 'about', 'about')">{{ 'nav.about' | t }}</a>
+            </li>
+            <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'services'">
+              <a href="/" (click)="nav.scrollToHomeSection($event, 'services', 'services')">{{ 'nav.services' | t }}</a>
+            </li>
+            <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'portfolio'">
+              <a href="/" (click)="nav.scrollToHomeSection($event, 'portfolio', 'portfolio')">{{ 'nav.portfolio' | t }}</a>
+            </li>
+            <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'clients'">
+              <a href="/" (click)="nav.scrollToHomeSection($event, 'clients', 'clients')">{{ 'nav.clients' | t }}</a>
+            </li>
+            <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'contact'">
+              <a href="/" (click)="nav.scrollToHomeSection($event, 'contact', 'contact')">{{ 'nav.contact' | t }}</a>
+            </li>
+          </ul>
+        </nav>
+        <app-language-switcher class="header-lang flex-shrink-0" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<button
+  type="button"
+  id="mobile-nav-toggle"
+  class="d-md-none"
+  (click)="nav.toggleMobileNav()"
+  [attr.aria-expanded]="nav.mobileNavOpen()"
+  aria-controls="mobile-nav"
+  [attr.aria-label]="'nav.toggleMenu' | t"
+>
+  <i
+    class="fa"
+    [class.fa-bars]="!nav.mobileNavOpen()"
+    [class.fa-times]="nav.mobileNavOpen()"
+  ></i>
+</button>
+
+<nav id="mobile-nav" [attr.aria-hidden]="!nav.mobileNavOpen()" [attr.aria-label]="'nav.mobileNav' | t">
+  <ul>
+    <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'home'">
+      <a href="/" (click)="nav.scrollToHomeSection($event, 'header-carousel', 'home')">{{ 'nav.home' | t }}</a>
+    </li>
+    <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'about'">
+      <a href="/" (click)="nav.scrollToHomeSection($event, 'about', 'about')">{{ 'nav.about' | t }}</a>
+    </li>
+    <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'services'">
+      <a href="/" (click)="nav.scrollToHomeSection($event, 'services', 'services')">{{ 'nav.services' | t }}</a>
+    </li>
+    <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'portfolio'">
+      <a href="/" (click)="nav.scrollToHomeSection($event, 'portfolio', 'portfolio')">{{ 'nav.portfolio' | t }}</a>
+    </li>
+    <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'clients'">
+      <a href="/" (click)="nav.scrollToHomeSection($event, 'clients', 'clients')">{{ 'nav.clients' | t }}</a>
+    </li>
+    <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'contact'">
+      <a href="/" (click)="nav.scrollToHomeSection($event, 'contact', 'contact')">{{ 'nav.contact' | t }}</a>
+    </li>
+  </ul>
+</nav>
+
+@if (nav.mobileNavOpen()) {
+  <div
+    id="mobile-body-overly"
+    role="presentation"
+    aria-hidden="true"
+    (click)="nav.closeMobileNav()"
+  ></div>
+}

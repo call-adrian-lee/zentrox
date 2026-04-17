@@ -1,0 +1,44 @@
+/* Skip link: visible on keyboard focus */
+:host {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 10000;
+  padding: 0.75rem 1.25rem;
+  background: var(--brand, #3f69aa);
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 0 0 8px 0;
+  text-decoration: none !important;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  left: 0;
+  top: 0;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+}
+
+main#main-content {
+  display: block;
+  flex: 1 0 auto;
+  min-height: 0;
+}
+
+.page-outlet {
+  display: block;
+  min-height: 0;
+}

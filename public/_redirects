@@ -1,0 +1,3 @@
+# Netlify / Cloudflare Pages: SPA fallback (Angular)
+# Serves index.html for client routes (e.g. /mvp) while real files still win.
+/*    /index.html   200

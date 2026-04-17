@@ -1,0 +1,14 @@
+<section class="mvp-page" aria-labelledby="mvp-page-heading">
+  <div class="container">
+    <h1 id="mvp-page-heading" class="mvp-page-title">{{ 'mvp.page.heading' | t }}</h1>
+    <div class="mvp-grid" role="list" [attr.aria-label]="'mvp.page.gridAria' | t">
+      @for (row of mvpRows; track row.slug) {
+        <article class="mvp-card" role="listitem">
+          <p class="mvp-stage">{{ ('mvp.stage.' + row.stageKey) | t }}</p>
+          <h2 [id]="'mvp-card-' + row.slug">{{ ('mvp.items.' + row.slug + '.name') | t }}</h2>
+          <p class="mvp-card-desc">{{ ('mvp.items.' + row.slug + '.focus') | t }}</p>
+        </article>
+      }
+    </div>
+  </div>
+</section>
