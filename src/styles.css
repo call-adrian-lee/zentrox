@@ -6,7 +6,8 @@
 html {
   overflow-x: clip;
   /* Fixed header (#header ~92px): in-page anchors (#about, #contact) land below the bar */
-  scroll-padding-top: calc(96px + env(safe-area-inset-top, 0px));
+  scroll-padding-top: 96px;
+  scroll-padding-top: calc(96px + env(safe-area-inset-top));
 }
 
 @supports not (overflow: clip) {
