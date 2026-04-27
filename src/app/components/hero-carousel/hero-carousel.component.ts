@@ -1,19 +1,19 @@
 import { isPlatformBrowser } from '@angular/common';
 import { afterNextRender, Component, computed, inject, PLATFORM_ID, signal } from '@angular/core';
 import { NgbCarousel, NgbSlide } from '@ng-bootstrap/ng-bootstrap';
-import { I18nService } from '../../i18n/i18n.service';
-import { TranslatePipe } from '../../i18n/translate.pipe';
+import { TextService } from '../../text/text.service';
+import { TextPipe } from '../../text/text.pipe';
 import { NavigationService } from '../../core/navigation.service';
 
 @Component({
   selector: 'app-hero-carousel',
   standalone: true,
-  imports: [NgbCarousel, NgbSlide, TranslatePipe],
+  imports: [NgbCarousel, NgbSlide, TextPipe],
   templateUrl: './hero-carousel.component.html'
 })
 export class HeroCarouselComponent {
   private readonly platformId = inject(PLATFORM_ID);
-  private readonly i18n = inject(I18nService);
+  private readonly text = inject(TextService);
   readonly nav = inject(NavigationService);
 
   /** Disables auto-rotation and slide animation when the user prefers reduced motion. */
@@ -35,7 +35,7 @@ export class HeroCarouselComponent {
   }
 
   readonly heroSlides = computed(() => {
-    this.i18n.lang();
+    this.text.lang();
     return [
       {
         image: '/img/slider-0.jpg',

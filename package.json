@@ -4,13 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 127.0.0.1 --port 4200 --open",
-    "prebuild": "npm run i18n:check",
     "build": "ng build",
     "postbuild": "node scripts/copy-spa-fallback.cjs",
     "watch": "ng build --watch --configuration development",
-    "pretest": "npm run i18n:check",
-    "test": "ng test",
-    "i18n:check": "ng test --no-watch --include=**/messages-sync.spec.ts"
+    "test": "ng test"
   },
   "private": true,
   "packageManager": "npm@11.9.0",

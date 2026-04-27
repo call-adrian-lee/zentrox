@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { NavigationService } from '../../core/navigation.service';
-import { TranslatePipe } from '../../i18n/translate.pipe';
+import { TextPipe } from '../../text/text.pipe';
 
 @Component({
   selector: 'app-back-to-top',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [TextPipe],
   templateUrl: './back-to-top.component.html'
 })
 export class BackToTopComponent {

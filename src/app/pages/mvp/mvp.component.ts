@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { TranslatePipe } from '../../i18n/translate.pipe';
+import { TextPipe } from '../../text/text.pipe';
 
 @Component({
   selector: 'app-mvp',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [TextPipe],
   templateUrl: './mvp.component.html'
 })
 export class MvpComponent {

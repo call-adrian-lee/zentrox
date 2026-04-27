@@ -35,6 +35,7 @@
     #6366f1 45%,
     #3f69aa 100%
   );
+  pointer-events: none;
 }
 
 .leader-open-badge {

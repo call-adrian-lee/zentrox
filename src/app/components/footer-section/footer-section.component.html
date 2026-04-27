@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row align-items-start footer-main">
       <div class="col-md-6 mb-3 mb-md-0">
-        <p class="footer-brand"><strong>Zentrox LLC</strong></p>
+        <p class="footer-brand"><strong>Zentrox C-Corp</strong></p>
         <p class="footer-meta mb-0">{{ 'footer.tagline' | t }}</p>
       </div>
       <div class="col-md-6 text-md-end">
@@ -15,7 +15,8 @@
         <a
           class="zt-footer-ico"
           [href]="linkedInHref"
-          (click)="$event.preventDefault()"
+          target="_blank"
+          rel="noopener noreferrer"
           [attr.aria-label]="'footer.linkedinAria' | t"
         >
           <svg
@@ -35,7 +36,8 @@
         <a
           class="zt-footer-ico"
           [href]="slackHref"
-          (click)="$event.preventDefault()"
+          target="_blank"
+          rel="noopener noreferrer"
           [attr.aria-label]="'footer.slackAria' | t"
         >
           <svg

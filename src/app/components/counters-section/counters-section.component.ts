@@ -1,11 +1,11 @@
 import { DOCUMENT } from '@angular/common';
-import { TranslatePipe } from '../../i18n/translate.pipe';
+import { TextPipe } from '../../text/text.pipe';
 import { AfterViewInit, Component, inject, signal } from '@angular/core';
 
 @Component({
   selector: 'app-counters-section',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [TextPipe],
   templateUrl: './counters-section.component.html'
 })
 export class CountersSectionComponent implements AfterViewInit {

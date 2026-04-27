@@ -109,6 +109,7 @@
                 [href]="item.link"
                 class="link-details"
                 [attr.title]="'portfolio.details' | t"
+                [attr.aria-label]="('portfolio.openProject' | t) + ': ' + item.title + ' (opens in new tab)'"
                 target="_blank"
                 rel="noopener"
               >

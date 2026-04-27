@@ -1,0 +1,82 @@
+.founder-page {
+  padding: 72px 0 56px;
+  background: #fff;
+}
+
+.founder-page-container {
+  max-width: 1100px;
+}
+
+.founder-hero p {
+  margin: 0 0 12px;
+  color: #4f5866;
+}
+
+.founder-page-title {
+  margin: 0 0 16px;
+  font-size: 2rem;
+  line-height: 1.25;
+}
+
+.founder-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 20px;
+}
+
+.founder-card {
+  border: 1px solid #e5eaf2;
+  border-radius: 12px;
+  padding: 18px 18px 16px;
+  background: #fafcff;
+}
+
+.founder-card h2 {
+  margin: 0 0 10px;
+  font-size: 1.1rem;
+}
+
+.founder-card p {
+  margin: 0 0 8px;
+  color: #5f6672;
+}
+
+.founder-card ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.founder-card li + li {
+  margin-top: 8px;
+}
+
+.founder-cta {
+  margin-top: 20px;
+}
+
+.founder-cta h2 {
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+}
+
+.founder-cta p {
+  margin: 0;
+  color: #4f5866;
+}
+
+.founder-cta a {
+  color: #0a58ca;
+  text-decoration: none;
+}
+
+.founder-cta a:hover,
+.founder-cta a:focus-visible {
+  text-decoration: underline;
+}
+
+@media (max-width: 992px) {
+  .founder-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -2,7 +2,7 @@ export type PortfolioCategory = 'web' | 'game';
 
 export interface PortfolioItem {
   category: PortfolioCategory;
-  /** Stable key for i18n (`portfolio.items.<slug>.desc`) */
+  /** Stable text key (`portfolio.items.<slug>.desc`) */
   slug: string;
   image: string;
   title: string;

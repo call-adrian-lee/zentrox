@@ -3,25 +3,24 @@ import { inject, Injectable } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { environment } from '../../environments/environment';
 import { HOME_ROUTE_SEO } from '../app.routes';
-import { I18nService } from '../i18n/i18n.service';
-import type { AppLang } from '../i18n/i18n.types';
+import { TextService } from '../text/text.service';
 import { COMPANY } from './company-info';
 import type { SeoData } from './seo.models';
 
 const SITE = 'Zentrox';
 const DEFAULT_DESCRIPTION =
-  'SaaS and web platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. Zentrox LLC, Austin, TX.';
+  'SaaS and web platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. Zentrox C-Corp, Austin, TX.';
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
   private readonly title = inject(Title);
   private readonly meta = inject(Meta);
   private readonly document = inject(DOCUMENT);
-  private readonly i18n = inject(I18nService);
+  private readonly text = inject(TextService);
 
   /** Path without query/hash, leading slash. */
   apply(path: string, data?: SeoData): void {
-    this.i18n.lang();
+    this.text.lang();
     const pathOnly = path.split(/[?#]/)[0] || '/';
     const resolved =
       data ??
@@ -31,16 +30,20 @@ export class SeoService {
 
     const isHome = pathOnly === '/' || pathOnly === '';
     const isMvp = pathOnly === '/mvp';
+    const isFounder = pathOnly === '/us-founder-ceo';
     const homeWithJsonLd = isHome && resolved?.jsonLd === 'organization';
 
     let description: string;
     let rawTitle: string;
     if (homeWithJsonLd) {
-      description = this.i18n.t('seo.homeDescription');
-      rawTitle = this.i18n.t('seo.homeTitle');
+      description = this.text.t('seo.homeDescription');
+      rawTitle = this.text.t('seo.homeTitle');
     } else if (isMvp) {
-      description = this.i18n.t('seo.mvpDescription').trim() || DEFAULT_DESCRIPTION;
-      rawTitle = this.i18n.t('seo.mvpTitle').trim() || SITE;
+      description = this.text.t('seo.mvpDescription').trim() || DEFAULT_DESCRIPTION;
+      rawTitle = this.text.t('seo.mvpTitle').trim() || SITE;
+    } else if (isFounder) {
+      description = this.text.t('seo.founderDescription').trim() || DEFAULT_DESCRIPTION;
+      rawTitle = this.text.t('seo.founderTitle').trim() || SITE;
     } else {
       description = resolved?.description?.trim() || DEFAULT_DESCRIPTION;
       rawTitle = resolved?.title?.trim() || SITE;
@@ -60,10 +63,12 @@ export class SeoService {
     this.meta.updateTag({ name: 'author', content: COMPANY.legalName });
 
     const keywords = isHome
-      ? this.i18n.t('seo.homeKeywords').trim()
+      ? this.text.t('seo.homeKeywords').trim()
       : isMvp
-        ? this.i18n.t('seo.mvpKeywords').trim()
-        : resolved?.keywords?.trim();
+        ? this.text.t('seo.mvpKeywords').trim()
+        : isFounder
+          ? this.text.t('seo.founderKeywords').trim()
+          : resolved?.keywords?.trim();
     if (keywords) {
       this.meta.updateTag({ name: 'keywords', content: keywords });
     } else {
@@ -77,12 +82,13 @@ export class SeoService {
       url: canonical
     });
     this.setOgLocaleTags();
-    this.setHreflangAlternates(base, pathOnly);
 
     if (homeWithJsonLd) {
       this.setJsonLd(this.organizationSchema(base));
     } else if (isMvp) {
       this.setJsonLd(this.mvpPageSchema(base, canonical, documentTitle));
+    } else if (isFounder) {
+      this.setJsonLd(this.founderPageSchema(base, canonical, documentTitle));
     } else {
       this.clearJsonLd();
     }
@@ -112,7 +118,7 @@ export class SeoService {
   private setOgTwitter(opts: { title: string; description: string; url: string }): void {
     const base = this.baseUrl();
     const imageUrl = `${base}/img/slider-0.jpg`;
-    const imageAlt = this.i18n.t('seo.ogImageAlt');
+    const imageAlt = this.text.t('seo.ogImageAlt');
     this.meta.updateTag({ property: 'og:type', content: 'website' });
     this.meta.updateTag({ property: 'og:site_name', content: SITE });
     this.meta.updateTag({ property: 'og:title', content: opts.title });
@@ -133,83 +139,38 @@ export class SeoService {
     this.meta.updateTag({ name: 'twitter:image:alt', content: imageAlt });
   }
 
-  /** Open Graph locale + alternates for ES / EN / Chinese (helps social previews). */
+  /** Open Graph locale for the single-language site. */
   private setOgLocaleTags(): void {
-    const lang = this.i18n.lang();
-    const primary = ((): string => {
-      switch (lang) {
-        case 'es':
-          return 'es_ES';
-        case 'zh':
-          return 'zh_CN';
-        default:
-          return 'en_US';
-      }
-    })();
-    this.meta.updateTag({ property: 'og:locale', content: primary });
+    this.meta.updateTag({ property: 'og:locale', content: 'en_US' });
     this.document.head.querySelectorAll('meta[property="og:locale:alternate"]').forEach((el) => el.remove());
-    for (const code of ['en_US', 'es_ES', 'zh_CN'] as const) {
-      if (code === primary) {
-        continue;
-      }
-      const m = this.document.createElement('meta');
-      m.setAttribute('property', 'og:locale:alternate');
-      m.setAttribute('content', code);
-      this.document.head.appendChild(m);
-    }
   }
 
-  /** hreflang alternates use `?hl=` so each locale has a stable URL for crawlers. */
-  private setHreflangAlternates(base: string, pathOnly: string): void {
-    if (!base) {
-      return;
-    }
-    this.document.head.querySelectorAll('link[data-zt-hreflang]').forEach((el) => el.remove());
-    const path = pathOnly === '/' || pathOnly === '' ? '/' : pathOnly;
-    const origin = base.endsWith('/') ? base.slice(0, -1) : base;
-    const withHl = (hl: AppLang): string => {
-      const u = new URL(path, `${origin}/`);
-      u.searchParams.set('hl', hl);
-      return u.toString();
-    };
-    const pairs: [string, string][] = [
-      ['en', withHl('en')],
-      ['es', withHl('es')],
-      ['zh-Hans', withHl('zh')],
-      ['x-default', withHl('en')]
-    ];
-    for (const [hreflang, href] of pairs) {
-      const link = this.document.createElement('link');
-      link.setAttribute('rel', 'alternate');
-      link.setAttribute('hreflang', hreflang);
-      link.setAttribute('href', href);
-      link.setAttribute('data-zt-hreflang', '');
-      this.document.head.appendChild(link);
-    }
-  }
-
-  private mvpPageSchema(base: string, pageUrl: string, documentTitle: string): object {
-    const itemSlugs = ['hireflowLite', 'clientPulse', 'sprintBoardAi', 'opsDeskMini'] as const;
-    const pageLang = ((): string => {
-      switch (this.i18n.lang()) {
-        case 'es':
-          return 'es';
-        case 'zh':
-          return 'zh-Hans';
-        default:
-          return 'en-US';
-      }
-    })();
+  private founderPageSchema(base: string, pageUrl: string, documentTitle: string): object {
     return {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
       '@id': `${pageUrl}#webpage`,
       url: pageUrl,
       name: documentTitle,
-      description: this.i18n.t('seo.jsonLdMvpWebPageDescription'),
+      description: this.text.t('seo.jsonLdFounderWebPageDescription'),
       isPartOf: { '@id': `${base}/#website` },
       about: { '@id': `${base}/#organization` },
-      inLanguage: pageLang,
+      inLanguage: 'en-US'
+    };
+  }
+
+  private mvpPageSchema(base: string, pageUrl: string, documentTitle: string): object {
+    const itemSlugs = ['hireflowLite', 'clientPulse', 'sprintBoardAi', 'opsDeskMini'] as const;
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `${pageUrl}#webpage`,
+      url: pageUrl,
+      name: documentTitle,
+      description: this.text.t('seo.jsonLdMvpWebPageDescription'),
+      isPartOf: { '@id': `${base}/#website` },
+      about: { '@id': `${base}/#organization` },
+      inLanguage: 'en-US',
       mainEntity: {
         '@type': 'ItemList',
         numberOfItems: itemSlugs.length,
@@ -218,8 +179,8 @@ export class SeoService {
           position: i + 1,
           item: {
             '@type': 'CreativeWork',
-            name: this.i18n.t(`mvp.items.${slug}.name`),
-            description: this.i18n.t(`mvp.items.${slug}.focus`)
+            name: this.text.t(`mvp.items.${slug}.name`),
+            description: this.text.t(`mvp.items.${slug}.focus`)
           }
         }))
       }
@@ -227,19 +188,9 @@ export class SeoService {
   }
 
   private organizationSchema(base: string): object {
-    const orgDesc = this.i18n.t('seo.jsonLdOrgDescription');
-    const pageDesc = this.i18n.t('seo.jsonLdWebPageDescription');
-    const pageTitle = this.i18n.t('seo.homeTitle');
-    const pageLang = ((): string => {
-      switch (this.i18n.lang()) {
-        case 'es':
-          return 'es';
-        case 'zh':
-          return 'zh-Hans';
-        default:
-          return 'en-US';
-      }
-    })();
+    const orgDesc = this.text.t('seo.jsonLdOrgDescription');
+    const pageDesc = this.text.t('seo.jsonLdWebPageDescription');
+    const pageTitle = this.text.t('seo.homeTitle');
 
     return {
       '@context': 'https://schema.org',
@@ -282,7 +233,7 @@ export class SeoService {
           url: base,
           name: SITE,
           publisher: { '@id': `${base}/#organization` },
-          inLanguage: ['en-US', 'es', 'zh-Hans']
+          inLanguage: 'en-US'
         },
         {
           '@type': 'WebPage',
@@ -292,7 +243,7 @@ export class SeoService {
           description: pageDesc,
           isPartOf: { '@id': `${base}/#website` },
           about: { '@id': `${base}/#organization` },
-          inLanguage: pageLang
+          inLanguage: 'en-US'
         }
       ]
     };

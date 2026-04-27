@@ -1,6 +1,6 @@
 /** Public-facing company details */
 export const COMPANY = {
-  legalName: 'Zentrox LLC',
+  legalName: 'Zentrox C-Corp',
   tagline: 'Software & IT services for U.S. businesses',
   addressLine1: '1005 N Congress Ave',
   addressLocality: 'Austin',

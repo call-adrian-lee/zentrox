@@ -18,7 +18,6 @@ Default local URL: `http://127.0.0.1:4200/`
 
 - `npm run build` - Production build
 - `npm run test` - Unit tests
-- `npm run i18n:check` - Translation key sync check
 
 ## Content and SEO Notes
 

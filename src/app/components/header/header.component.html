@@ -1,7 +1,7 @@
 <div
   id="header"
-  [class.header-scrolled]="nav.headerScrolled() && !isMvpRoute()"
-  [class.header-mvp-minimal]="isMvpRoute()"
+  [class.header-scrolled]="nav.headerScrolled() && !isMinimalHeaderRoute()"
+  [class.header-mvp-minimal]="isMinimalHeaderRoute()"
 >
   <div class="container">
     <div class="header-inner d-flex align-items-center justify-content-between w-100">
@@ -43,79 +43,82 @@
           </svg>
         </a>
       </div>
-      <div class="header-toolbar d-flex align-items-center justify-content-end flex-grow-1 min-w-0">
-        <nav id="nav-menu-container" class="d-none d-md-flex align-items-center" [attr.aria-label]="'nav.primaryAria' | t">
-          <ul class="nav-menu">
-            <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'home'">
-              <a href="/" (click)="nav.scrollToHomeSection($event, 'header-carousel', 'home')">{{ 'nav.home' | t }}</a>
-            </li>
-            <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'about'">
-              <a href="/" (click)="nav.scrollToHomeSection($event, 'about', 'about')">{{ 'nav.about' | t }}</a>
-            </li>
-            <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'services'">
-              <a href="/" (click)="nav.scrollToHomeSection($event, 'services', 'services')">{{ 'nav.services' | t }}</a>
-            </li>
-            <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'portfolio'">
-              <a href="/" (click)="nav.scrollToHomeSection($event, 'portfolio', 'portfolio')">{{ 'nav.portfolio' | t }}</a>
-            </li>
-            <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'clients'">
-              <a href="/" (click)="nav.scrollToHomeSection($event, 'clients', 'clients')">{{ 'nav.clients' | t }}</a>
-            </li>
-            <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'contact'">
-              <a href="/" (click)="nav.scrollToHomeSection($event, 'contact', 'contact')">{{ 'nav.contact' | t }}</a>
-            </li>
-          </ul>
-        </nav>
-        <app-language-switcher class="header-lang flex-shrink-0" />
-      </div>
+      @if (!isMinimalHeaderRoute()) {
+        <div class="header-toolbar d-flex align-items-center justify-content-end flex-grow-1 min-w-0">
+          <nav id="nav-menu-container" class="d-none d-md-flex align-items-center" [attr.aria-label]="'nav.primaryAria' | t">
+            <ul class="nav-menu">
+              <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'home'">
+                <a href="/" (click)="nav.scrollToHomeSection($event, 'header-carousel', 'home')">{{ 'nav.home' | t }}</a>
+              </li>
+              <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'about'">
+                <a href="/" (click)="nav.scrollToHomeSection($event, 'about', 'about')">{{ 'nav.about' | t }}</a>
+              </li>
+              <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'services'">
+                <a href="/" (click)="nav.scrollToHomeSection($event, 'services', 'services')">{{ 'nav.services' | t }}</a>
+              </li>
+              <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'portfolio'">
+                <a href="/" (click)="nav.scrollToHomeSection($event, 'portfolio', 'portfolio')">{{ 'nav.portfolio' | t }}</a>
+              </li>
+              <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'clients'">
+                <a href="/" (click)="nav.scrollToHomeSection($event, 'clients', 'clients')">{{ 'nav.clients' | t }}</a>
+              </li>
+              <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'contact'">
+                <a href="/" (click)="nav.scrollToHomeSection($event, 'contact', 'contact')">{{ 'nav.contact' | t }}</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      }
     </div>
   </div>
 </div>
 
-<button
-  type="button"
-  id="mobile-nav-toggle"
-  class="d-md-none"
-  (click)="nav.toggleMobileNav()"
-  [attr.aria-expanded]="nav.mobileNavOpen()"
-  aria-controls="mobile-nav"
-  [attr.aria-label]="'nav.toggleMenu' | t"
->
-  <i
-    class="fa"
-    [class.fa-bars]="!nav.mobileNavOpen()"
-    [class.fa-times]="nav.mobileNavOpen()"
-  ></i>
-</button>
+@if (!isMinimalHeaderRoute()) {
+  <button
+    type="button"
+    id="mobile-nav-toggle"
+    class="d-md-none"
+    (click)="nav.toggleMobileNav()"
+    [attr.aria-expanded]="nav.mobileNavOpen()"
+    aria-controls="mobile-nav"
+    [attr.aria-label]="'nav.toggleMenu' | t"
+  >
+    <i
+      class="fa"
+      [class.fa-bars]="!nav.mobileNavOpen()"
+      [class.fa-times]="nav.mobileNavOpen()"
+    ></i>
+  </button>
 
-<nav id="mobile-nav" [attr.aria-hidden]="!nav.mobileNavOpen()" [attr.aria-label]="'nav.mobileNav' | t">
-  <ul>
-    <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'home'">
-      <a href="/" (click)="nav.scrollToHomeSection($event, 'header-carousel', 'home')">{{ 'nav.home' | t }}</a>
-    </li>
-    <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'about'">
-      <a href="/" (click)="nav.scrollToHomeSection($event, 'about', 'about')">{{ 'nav.about' | t }}</a>
-    </li>
-    <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'services'">
-      <a href="/" (click)="nav.scrollToHomeSection($event, 'services', 'services')">{{ 'nav.services' | t }}</a>
-    </li>
-    <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'portfolio'">
-      <a href="/" (click)="nav.scrollToHomeSection($event, 'portfolio', 'portfolio')">{{ 'nav.portfolio' | t }}</a>
-    </li>
-    <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'clients'">
-      <a href="/" (click)="nav.scrollToHomeSection($event, 'clients', 'clients')">{{ 'nav.clients' | t }}</a>
-    </li>
-    <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'contact'">
-      <a href="/" (click)="nav.scrollToHomeSection($event, 'contact', 'contact')">{{ 'nav.contact' | t }}</a>
-    </li>
-  </ul>
-</nav>
+  <nav id="mobile-nav" [attr.aria-hidden]="!nav.mobileNavOpen()" [attr.aria-label]="'nav.mobileNav' | t">
+    <ul>
+      <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'home'">
+        <a href="/" (click)="nav.scrollToHomeSection($event, 'header-carousel', 'home')">{{ 'nav.home' | t }}</a>
+      </li>
+      <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'about'">
+        <a href="/" (click)="nav.scrollToHomeSection($event, 'about', 'about')">{{ 'nav.about' | t }}</a>
+      </li>
+      <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'services'">
+        <a href="/" (click)="nav.scrollToHomeSection($event, 'services', 'services')">{{ 'nav.services' | t }}</a>
+      </li>
+      <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'portfolio'">
+        <a href="/" (click)="nav.scrollToHomeSection($event, 'portfolio', 'portfolio')">{{ 'nav.portfolio' | t }}</a>
+      </li>
+      <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'clients'">
+        <a href="/" (click)="nav.scrollToHomeSection($event, 'clients', 'clients')">{{ 'nav.clients' | t }}</a>
+      </li>
+      <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'contact'">
+        <a href="/" (click)="nav.scrollToHomeSection($event, 'contact', 'contact')">{{ 'nav.contact' | t }}</a>
+      </li>
+    </ul>
+  </nav>
 
-@if (nav.mobileNavOpen()) {
-  <div
-    id="mobile-body-overly"
-    role="presentation"
-    aria-hidden="true"
-    (click)="nav.closeMobileNav()"
-  ></div>
+  @if (nav.mobileNavOpen()) {
+    <div
+      id="mobile-body-overly"
+      role="presentation"
+      aria-hidden="true"
+      (click)="nav.closeMobileNav()"
+    ></div>
+  }
 }

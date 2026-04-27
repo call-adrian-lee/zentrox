@@ -1,18 +1,18 @@
 import { Component, TemplateRef, computed, inject, signal } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { I18nService } from '../../i18n/i18n.service';
-import { TranslatePipe } from '../../i18n/translate.pipe';
+import { TextService } from '../../text/text.service';
+import { TextPipe } from '../../text/text.pipe';
 import type { PortfolioItem } from '../../models/portfolio.model';
 
 @Component({
   selector: 'app-portfolio-section',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [TextPipe],
   templateUrl: './portfolio-section.component.html'
 })
 export class PortfolioSectionComponent {
   private readonly modal = inject(NgbModal);
-  private readonly i18n = inject(I18nService);
+  private readonly text = inject(TextService);
 
   readonly previewSrc = signal('');
   readonly previewTitle = signal('');
@@ -139,7 +139,7 @@ export class PortfolioSectionComponent {
   ];
 
   private readonly localizedItems = computed(() => {
-    this.i18n.lang();
+    this.text.lang();
     return this.portfolioItems.map((item) => this.localizeItem(item));
   });
 
@@ -152,9 +152,9 @@ export class PortfolioSectionComponent {
   });
 
   private localizeItem(item: PortfolioItem): PortfolioItem {
-    const desc = this.i18n.t(`portfolio.items.${item.slug}.desc`);
+    const desc = this.text.t(`portfolio.items.${item.slug}.desc`);
     const subtitle = item.subtitle
-      ? this.i18n.t('portfolio.subtitle.web')
+      ? this.text.t('portfolio.subtitle.web')
       : undefined;
     return { ...item, description: desc, subtitle };
   }

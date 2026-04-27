@@ -1,18 +1,18 @@
 import { Component, inject, signal } from '@angular/core';
 import { COMPANY } from '../../core/company-info';
-import { I18nService } from '../../i18n/i18n.service';
-import { TranslatePipe } from '../../i18n/translate.pipe';
+import { TextService } from '../../text/text.service';
+import { TextPipe } from '../../text/text.pipe';
 
 @Component({
   selector: 'app-contact-section',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [TextPipe],
   templateUrl: './contact-section.component.html',
   styleUrl: './contact-section.component.css'
 })
 export class ContactSectionComponent {
   readonly c = COMPANY;
-  readonly i18n = inject(I18nService);
+  readonly text = inject(TextService);
   readonly formStatus = signal('');
   readonly formStatusClass = signal('');
   readonly formSubmitting = signal(false);
@@ -37,11 +37,11 @@ export class ContactSectionComponent {
           throw new Error('failed');
         }
         form.reset();
-        this.formStatus.set(this.i18n.t('contact.success'));
+        this.formStatus.set(this.text.t('contact.success'));
         this.formStatusClass.set('is-success');
       })
       .catch(() => {
-        this.formStatus.set(this.i18n.t('contact.error'));
+        this.formStatus.set(this.text.t('contact.error'));
         this.formStatusClass.set('is-error');
       })
       .finally(() => this.formSubmitting.set(false));

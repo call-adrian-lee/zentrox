@@ -1,16 +1,15 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { TranslatePipe } from '../../i18n/translate.pipe';
+import { TextPipe } from '../../text/text.pipe';
+import { COMPANY } from '../../core/company-info';
 
 @Component({
   selector: 'app-footer-section',
   standalone: true,
-  imports: [TranslatePipe],
+  imports: [TextPipe],
   templateUrl: './footer-section.component.html',
   encapsulation: ViewEncapsulation.None
 })
 export class FooterSectionComponent {
-  /** Replace with `COMPANY.linkedinUrl` (and `target="_blank"`) when ready */
-  readonly linkedInHref = '#';
-  /** Replace with Slack invite from `COMPANY` when ready */
-  readonly slackHref = '#';
+  readonly linkedInHref = COMPANY.linkedinUrl;
+  readonly slackHref = COMPANY.slackJoinUrl || COMPANY.slackFooterFallbackHref;
 }

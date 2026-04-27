@@ -6,9 +6,11 @@
     </div>
     <div class="row g-4 leadership-row">
       <div class="col-lg-4 col-md-6 d-flex">
-        <article
+        <a
           class="leader-card leader-card--open-seat h-100 w-100"
+          [routerLink]="['/us-founder-ceo']"
           [attr.aria-label]="'leadership.ceoPlaceholder.cardAria' | t"
+          [attr.title]="'leadership.ceoPlaceholder.ctaLabel' | t"
         >
           <span class="leader-open-badge">{{ 'leadership.ceoPlaceholder.badge' | t }}</span>
           <div class="leader-card-top">
@@ -21,8 +23,11 @@
             <h3>{{ 'leadership.ceoPlaceholder.name' | t }}</h3>
             <div class="leader-role">{{ 'leadership.ceoPlaceholder.role' | t }}</div>
             <div class="leader-blurb">{{ 'leadership.ceoPlaceholder.blurb' | t }}</div>
+            <span class="leader-open-cta" [attr.aria-label]="'leadership.ceoPlaceholder.ctaAria' | t">{{
+              'leadership.ceoPlaceholder.ctaLabel' | t
+            }}</span>
           </div>
-        </article>
+        </a>
       </div>
       <div class="col-lg-4 col-md-6 d-flex">
         <article class="leader-card h-100 w-100" [attr.aria-label]="'leadership.cto.cardAria' | t">

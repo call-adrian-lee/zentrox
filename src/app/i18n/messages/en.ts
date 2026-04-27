@@ -1,18 +1,9 @@
-/**
- * English (source) strings — nested maps for `i18n.t('a.b.c')`.
- * Add a key here first, then mirror it in `es.ts` and `zh.ts`; run `npm run i18n:check`.
- */
+/** English source strings. */
 export const enMessages = {
   skip: { main: 'Skip to main content' },
   layout: {
     mainAriaLabel: 'Main content',
     pageRegionAria: 'Page content'
-  },
-  lang: {
-    switcherLabel: 'Language',
-    en: 'English',
-    es: 'Español',
-    zh: '中文'
   },
   nav: {
     primaryAria: 'Primary navigation',
@@ -29,7 +20,7 @@ export const enMessages = {
   footer: {
     tagline: 'SaaS & product engineering for ambitious U.S. markets',
     note: 'Partners and clients across the United States.',
-    copy: '© 2026 Zentrox LLC. All rights reserved.',
+    copy: '© 2026 Zentrox C-Corp. All rights reserved.',
     linkedin: 'LinkedIn',
     linkedinAria: 'Zentrox on LinkedIn',
     slack: 'Slack',
@@ -78,9 +69,11 @@ export const enMessages = {
     lead: 'Leaders who ship SaaS with discipline—partnering with founders, investors, and delivery teams for the long run.',
     ceoPlaceholder: {
       badge: 'Open role',
-      name: 'Waiting for you',
-      cardAria: 'CEO — waiting for you, U.S. citizen',
+      name: 'Founder / CEO',
+      cardAria: 'Open U.S. Founder and CEO role',
       role: 'CEO · U.S. citizen',
+      ctaLabel: 'View role details',
+      ctaAria: 'Open U.S. Founder and CEO role page',
       blurb:
         'A U.S. citizen and seasoned executive will fill this seat—trusted by serious clients, experienced scaling SaaS, and committed to durable quality over shortcuts. Until a hire, delivery and engineering leadership stay with the CTO and Tech Lead profiled here.'
     },
@@ -226,7 +219,7 @@ export const enMessages = {
   },
   contact: {
     title: 'Get in touch',
-    lead1: 'Reach Zentrox LLC by email or phone.',
+    lead1: 'Reach Zentrox C-Corp by email or phone.',
     lead2: 'We read every inquiry and respond during Central Time business hours.',
     chipsAria: 'Response and hours',
     formTitle: 'Send a message',
@@ -282,12 +275,58 @@ export const enMessages = {
       }
     }
   },
+  founder: {
+    page: {
+      kicker: '🟢 Looking for US Founder / CEO',
+      heading: 'SaaS - AI Workflow + Revenue Automation',
+      lead:
+        'Singapore-based technical founder with an established dev team, building SaaS for AI workflow and revenue automation.',
+      lead2:
+        'I lead product and engineering as CTO. Looking for a U.S.-based Founder / CEO to own business and go-to-market.',
+      signature: '— Adrian Lee, CTO',
+      trustStrip: 'U.S. market focus • CTO + team in place • Fast execution',
+      sectionsAria: 'Founder role, current setup, and ideal profile',
+      roleTitle: 'Role (US Founder / CEO)',
+      roleIntro: 'You will own:',
+      roleItems: {
+        strategy: 'Company direction and strategy',
+        gtm: 'Go-to-market (US market focus)',
+        revenue: 'Customer acquisition and revenue generation',
+        partnerships: 'Partnerships and distribution',
+        fundraising: 'Fundraising (if needed)',
+        execution: 'Overall business execution leadership'
+      },
+      existingTitle: "What's already in place",
+      existingIntro: 'The core build team is already operating:',
+      existingItems: {
+        techFounder: 'Technical founder (me)',
+        team: 'Established Singapore-based development team',
+        ctoCovered: 'CTO role covered (product + engineering leadership)',
+        shipFast: 'Fast build and shipping capability'
+      },
+      profileTitle: 'Ideal profile',
+      profileIntro: 'This role is a strong fit if you have:',
+      profileItems: {
+        saas: 'Experience in SaaS, startups, or B2B sales',
+        revenue: 'Proven ability to generate customers or revenue',
+        usMarket: 'Strong understanding of the US market',
+        owner: 'Execution-first mindset with ownership mentality'
+      },
+      nextStepTitle: 'Next step',
+      nextStepBody: 'U.S.-based and interested? DM me.',
+      notFit: 'Open to all U.S.-based candidates.',
+      ctaLabel: 'DM Adrian Lee',
+      mailSubject: 'U.S. Founder / CEO — application',
+      ctaEmailAria: 'Contact about the U.S. Founder and CEO role',
+      mainAria: 'U.S. Founder and CEO opportunity'
+    }
+  },
   seo: {
-    homeTitle: 'Zentrox LLC — U.S. SaaS & Product Engineering',
+    homeTitle: 'Zentrox C-Corp — U.S. SaaS & Product Engineering',
     homeDescription:
-      'SaaS and web platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. Zentrox LLC, Austin, TX. Clear scopes, documentation, and U.S. business hours.',
+      'SaaS and web platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. Zentrox C-Corp, Austin, TX. Clear scopes, documentation, and U.S. business hours.',
     homeKeywords:
-      'Zentrox LLC, SaaS development USA, US product engineering, Austin software company, enterprise SaaS USA, US technology partner, web platform development United States, API development USA, DevOps USA, AI consulting USA, Unity development USA',
+      'Zentrox C-Corp, SaaS development USA, US product engineering, Austin software company, enterprise SaaS USA, US technology partner, web platform development United States, API development USA, DevOps USA, AI consulting USA, Unity development USA',
     ogImageAlt: 'Zentrox — hero image for SaaS and product engineering',
     jsonLdOrgDescription:
       'U.S. SaaS and product engineering partner—collaboration with idea owners and investors, enterprise web, APIs, AI, cloud, DevOps, and Unity.',
@@ -298,6 +337,13 @@ export const enMessages = {
     mvpKeywords:
       'Zentrox, SaaS MVP, minimum viable product, software development, product engineering, Austin Texas',
     jsonLdMvpWebPageDescription:
-      'Current SaaS MVP initiatives in discovery, prototyping, integration, and pilot stages at Zentrox.'
+      'Current SaaS MVP initiatives in discovery, prototyping, integration, and pilot stages at Zentrox.',
+    founderTitle: 'Seeking U.S. Founder / CEO — Zentrox',
+    founderDescription:
+      'Open leadership role: U.S.-based Founder/CEO for strategy, go-to-market, and revenue. Singapore technical founder and engineering team in place; AI workflow and revenue automation SaaS.',
+    founderKeywords:
+      'Zentrox, U.S. CEO, U.S. founder, co-founder SaaS, go-to-market United States, B2B SaaS leadership, Austin Texas, Singapore engineering team, AI workflow automation, revenue automation',
+    jsonLdFounderWebPageDescription:
+      'Zentrox is seeking a U.S.-based Founder/CEO to own company strategy, U.S. go-to-market, customer acquisition, partnerships, and fundraising when needed, alongside an established Singapore engineering team and CTO-led product delivery.'
   }
 } as const;

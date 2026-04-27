@@ -1,13 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { NavigationService } from '../../core/navigation.service';
-import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
-import { TranslatePipe } from '../../i18n/translate.pipe';
+import { TextPipe } from '../../text/text.pipe';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, LanguageSwitcherComponent, TranslatePipe],
+  imports: [RouterLink, TextPipe],
   templateUrl: './header.component.html'
 })
 export class HeaderComponent {
@@ -23,5 +22,14 @@ export class HeaderComponent {
   isMvpRoute(): boolean {
     const p = this.router.url.split('?')[0].split('#')[0];
     return p === '/mvp';
+  }
+
+  isFounderRoute(): boolean {
+    const p = this.router.url.split('?')[0].split('#')[0];
+    return p === '/us-founder-ceo';
+  }
+
+  isMinimalHeaderRoute(): boolean {
+    return this.isMvpRoute() || this.isFounderRoute();
   }
 }
