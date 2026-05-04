@@ -5,9 +5,9 @@ import { UsFounderCeoComponent } from './pages/us-founder-ceo/us-founder-ceo.com
 
 /** Exported for SEO fallback before lazy route `data` is attached (e.g. first effect tick). */
 export const HOME_ROUTE_SEO: SeoData = {
-  title: 'Zentrox C-Corp — U.S. SaaS & Product Engineering',
+  title: 'Zentrox — U.S. SaaS & Product Engineering',
   description:
-    'SaaS and web platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. Zentrox C-Corp, Austin, TX. Clear scopes, documentation, and U.S. business hours.',
+    'SaaS and web platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. Zentrox, Austin, TX. Clear scopes, documentation, and U.S. business hours.',
   jsonLd: 'organization'
 };
 

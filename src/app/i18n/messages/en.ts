@@ -20,7 +20,7 @@ export const enMessages = {
   footer: {
     tagline: 'SaaS & product engineering for ambitious U.S. markets',
     note: 'Partners and clients across the United States.',
-    copy: '© 2026 Zentrox C-Corp. All rights reserved.',
+    copy: '© 2026 Zentrox. All rights reserved.',
     linkedin: 'LinkedIn',
     linkedinAria: 'Zentrox on LinkedIn',
     slack: 'Slack',
@@ -219,7 +219,7 @@ export const enMessages = {
   },
   contact: {
     title: 'Get in touch',
-    lead1: 'Reach Zentrox C-Corp by email or phone.',
+    lead1: 'Reach Zentrox by email or phone.',
     lead2: 'We read every inquiry and respond during Central Time business hours.',
     chipsAria: 'Response and hours',
     formTitle: 'Send a message',
@@ -322,11 +322,11 @@ export const enMessages = {
     }
   },
   seo: {
-    homeTitle: 'Zentrox C-Corp — U.S. SaaS & Product Engineering',
+    homeTitle: 'Zentrox — U.S. SaaS & Product Engineering',
     homeDescription:
-      'SaaS and web platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. Zentrox C-Corp, Austin, TX. Clear scopes, documentation, and U.S. business hours.',
+      'SaaS and web platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. Zentrox, Austin, TX. Clear scopes, documentation, and U.S. business hours.',
     homeKeywords:
-      'Zentrox C-Corp, SaaS development USA, US product engineering, Austin software company, enterprise SaaS USA, US technology partner, web platform development United States, API development USA, DevOps USA, AI consulting USA, Unity development USA',
+      'Zentrox, SaaS development USA, US product engineering, Austin software company, enterprise SaaS USA, US technology partner, web platform development United States, API development USA, DevOps USA, AI consulting USA, Unity development USA',
     ogImageAlt: 'Zentrox — hero image for SaaS and product engineering',
     jsonLdOrgDescription:
       'U.S. SaaS and product engineering partner—collaboration with idea owners and investors, enterprise web, APIs, AI, cloud, DevOps, and Unity.',

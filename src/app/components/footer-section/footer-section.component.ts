@@ -10,6 +10,7 @@ import { COMPANY } from '../../core/company-info';
   encapsulation: ViewEncapsulation.None
 })
 export class FooterSectionComponent {
+  readonly companyName = COMPANY.name;
   readonly linkedInHref = COMPANY.linkedinUrl;
   readonly slackHref = COMPANY.slackJoinUrl || COMPANY.slackFooterFallbackHref;
 }

@@ -4,12 +4,11 @@ import { Meta, Title } from '@angular/platform-browser';
 import { environment } from '../../environments/environment';
 import { HOME_ROUTE_SEO } from '../app.routes';
 import { TextService } from '../text/text.service';
-import { COMPANY } from './company-info';
+import { COMPANY, COMPANY_ATTRIBUTION } from './company-info';
 import type { SeoData } from './seo.models';
 
 const SITE = 'Zentrox';
-const DEFAULT_DESCRIPTION =
-  'SaaS and web platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. Zentrox C-Corp, Austin, TX.';
+const DEFAULT_DESCRIPTION = `SaaS and web platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. ${COMPANY_ATTRIBUTION}, Austin, TX.`;
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
@@ -60,7 +59,7 @@ export class SeoService {
     this.title.setTitle(documentTitle);
     this.meta.updateTag({ name: 'description', content: description });
     this.meta.updateTag({ name: 'robots', content: robots });
-    this.meta.updateTag({ name: 'author', content: COMPANY.legalName });
+    this.meta.updateTag({ name: 'author', content: COMPANY_ATTRIBUTION });
 
     const keywords = isHome
       ? this.text.t('seo.homeKeywords').trim()
@@ -199,7 +198,7 @@ export class SeoService {
           '@type': 'Organization',
           '@id': `${base}/#organization`,
           name: SITE,
-          legalName: COMPANY.legalName,
+          legalName: COMPANY.name,
           description: orgDesc,
           url: base,
           email: COMPANY.email,

@@ -1,6 +1,7 @@
 /** Public-facing company details */
 export const COMPANY = {
-  legalName: 'Zentrox C-Corp',
+  /** Brand and organization name */
+  name: 'Zentrox',
   tagline: 'Software & IT services for U.S. businesses',
   addressLine1: '1005 N Congress Ave',
   addressLocality: 'Austin',
@@ -23,3 +24,6 @@ export const COMPANY = {
   /** Shown in footer when `slackJoinUrl` is empty */
   slackFooterFallbackHref: 'https://slack.com'
 } as const;
+
+/** Name for meta tags, copyright, and running prose */
+export const COMPANY_ATTRIBUTION = COMPANY.name;

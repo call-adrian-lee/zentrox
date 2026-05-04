@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { COMPANY } from '../../core/company-info';
 import { TextPipe } from '../../text/text.pipe';
 
 @Component({
@@ -7,4 +8,6 @@ import { TextPipe } from '../../text/text.pipe';
   imports: [TextPipe],
   templateUrl: './about-section.component.html'
 })
-export class AboutSectionComponent {}
+export class AboutSectionComponent {
+  readonly c = COMPANY;
+}
