@@ -1,0 +1,48 @@
+<section id="header-carousel" [attr.aria-label]="'hero.carousel' | t">
+  <div class="header-carousel-container">
+    <ngb-carousel
+      [interval]="carouselInterval()"
+      [animation]="carouselAnimation()"
+      [wrap]="true"
+      [keyboard]="true"
+      [pauseOnHover]="true"
+      [showNavigationArrows]="true"
+      [showNavigationIndicators]="true"
+      class="carousel slide carousel-fade"
+      id="headerCarousel"
+    >
+      @for (slide of heroSlides(); track slide.fragment; let i = $index) {
+        <ng-template ngbSlide>
+          <div class="carousel-background">
+            <img
+              [src]="slide.image"
+              [alt]="slide.altKey | t"
+              width="1900"
+              height="1200"
+              sizes="100vw"
+              [attr.fetchpriority]="i === 0 ? 'high' : null"
+              [attr.loading]="i === 0 ? 'eager' : 'lazy'"
+              decoding="async"
+            />
+          </div>
+          <div class="carousel-container">
+            <div class="carousel-content">
+              @if (i === 0) {
+                <h1 class="hero-title">{{ slide.titleKey | t }}</h1>
+              } @else {
+                <h2 class="hero-title">{{ slide.titleKey | t }}</h2>
+              }
+              <p class="hero-description">{{ slide.textKey | t }}</p>
+              <a
+                [href]="'#' + slide.fragment"
+                class="btn-get-started"
+                (click)="nav.scrollToHomeSection($event, slide.fragment, slide.navKey)"
+                >{{ slide.ctaKey | t }}</a
+              >
+            </div>
+          </div>
+        </ng-template>
+      }
+    </ngb-carousel>
+  </div>
+</section>

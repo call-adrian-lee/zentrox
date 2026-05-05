@@ -1,0 +1,10 @@
+@if (nav.showBackToTop()) {
+  <button
+    type="button"
+    class="back-to-top border-0"
+    (click)="nav.scrollTop()"
+    [attr.aria-label]="'backTop.aria' | t"
+  >
+    <i class="fa fa-chevron-up"></i>
+  </button>
+}

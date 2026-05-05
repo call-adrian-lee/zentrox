@@ -1,0 +1,190 @@
+<section class="zt-admin py-3 px-2 px-md-3">
+  <div class="container-fluid">
+    <div class="zt-admin-pagehead mb-3">
+      <div class="d-flex flex-wrap align-items-start justify-content-between gap-2">
+        <div>
+          <h1 class="h4 mb-1">{{ 'admin.mvpTitle' | t }}</h1>
+          <p class="text-secondary small mb-0">{{ 'admin.mvpIntro' | t }}</p>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm zt-admin-primary-cta" (click)="openCreate()">
+          {{ 'admin.mvpCreate' | t }}
+        </button>
+      </div>
+    </div>
+
+    @if (loadError()) {
+      <p class="text-danger">{{ 'admin.mvpLoadError' | t }}</p>
+    } @else {
+      <div class="table-responsive zt-admin-table-wrap" cdkScrollable>
+        <div class="zt-admin-dnd zt-admin-dnd--mvp" role="table" [attr.aria-label]="'admin.tableCaptionMvp' | t">
+          <div class="zt-admin-dnd__head" role="row">
+            <div class="zt-admin-dnd__cell zt-admin-dnd__cell--handle" [attr.aria-label]="'admin.dragReorder' | t"></div>
+            <div class="zt-admin-dnd__cell">{{ 'admin.colTitle' | t }}</div>
+            <div class="zt-admin-dnd__cell">{{ 'admin.colStatus' | t }}</div>
+            <div class="zt-admin-dnd__cell">{{ 'admin.mvpStage' | t }}</div>
+            <div class="zt-admin-dnd__cell">{{ 'admin.colActions' | t }}</div>
+          </div>
+          <div
+            class="zt-admin-dnd__list"
+            role="rowgroup"
+            cdkDropList
+            [cdkDropListData]="items()"
+            [cdkDropListDisabled]="reorderBusy()"
+            (cdkDropListDropped)="dropMvp($event)"
+          >
+            @for (item of items(); track item.id) {
+              <div class="zt-admin-dnd__row" cdkDrag cdkDragLockAxis="y" role="row">
+                <div class="zt-admin-dnd__cell zt-admin-dnd__cell--handle">
+                  <span
+                    cdkDragHandle
+                    class="zt-admin-drag-handle fa fa-ellipsis-v"
+                    role="button"
+                    tabindex="0"
+                    [attr.aria-label]="'admin.dragReorder' | t"
+                  ></span>
+                </div>
+                <div class="zt-admin-dnd__cell">
+                  <strong>{{ item.name }}</strong>
+                </div>
+                <div class="zt-admin-dnd__cell">
+                  @if (item.status === 'published') {
+                    <span class="badge text-bg-success">{{ 'admin.statusPublished' | t }}</span>
+                  } @else {
+                    <span class="badge text-bg-secondary">{{ 'admin.statusDraft' | t }}</span>
+                  }
+                </div>
+                <div class="zt-admin-dnd__cell">{{ item.stage }}</div>
+                <div class="zt-admin-dnd__cell zt-admin-actions-cell">
+                  @if (item.status !== 'published') {
+                    <button
+                      type="button"
+                      class="btn btn-link btn-sm zt-admin-row-action"
+                      (click)="quickSetStatus(item, 'published')"
+                    >
+                      {{ 'admin.statusPublished' | t }}
+                    </button>
+                  }
+                  @if (item.status !== 'draft') {
+                    <button type="button" class="btn btn-link btn-sm zt-admin-row-action" (click)="quickSetStatus(item, 'draft')">
+                      {{ 'admin.statusDraft' | t }}
+                    </button>
+                  }
+                  <button type="button" class="btn btn-link btn-sm zt-admin-row-action" (click)="startEdit(item)">
+                    {{ 'admin.edit' | t }}
+                  </button>
+                  <button type="button" class="btn btn-link btn-sm zt-admin-row-action text-danger" (click)="remove(item)">
+                    {{ 'admin.delete' | t }}
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+@if (modalOpen()) {
+  <div class="zt-admin-modal-backdrop" aria-hidden="true" (click)="closeModal()"></div>
+  <div
+    class="zt-admin-modal-wrap"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="admin-mvp-modal-title"
+    (click)="$event.target === $event.currentTarget && closeModal()"
+  >
+    <div class="card shadow-sm border-0 zt-admin-card">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
+          <h2 id="admin-mvp-modal-title" class="h6 mb-0">
+            {{ editingId() == null ? ('admin.mvpFormNew' | t) : ('admin.mvpFormEdit' | t) }}
+          </h2>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-secondary zt-admin-modal-close"
+            (click)="closeModal()"
+            [attr.aria-label]="'admin.modalClose' | t"
+          >
+            ×
+          </button>
+        </div>
+        @if (saveErrorKey()) {
+          <p class="text-danger small mb-2" role="alert">{{ saveErrorKey()! | t }}</p>
+        }
+        <form (ngSubmit)="save()" [formGroup]="form" novalidate>
+          <div class="mb-2">
+            <label class="form-label" for="m-name">{{ 'admin.fieldTitle' | t }}</label>
+            <input id="m-name" class="form-control" formControlName="name" />
+          </div>
+          <div class="mb-2">
+            <label class="form-label" for="m-focus">{{ 'admin.fieldDescription' | t }}</label>
+            <textarea id="m-focus" class="form-control" rows="4" formControlName="focus"></textarea>
+          </div>
+          <div class="row g-2 mb-3">
+            <div class="col-md-6">
+              <label class="form-label" for="m-stage">{{ 'admin.mvpStage' | t }}</label>
+              <select id="m-stage" class="form-select" formControlName="stage">
+                @for (s of stageSelectOptions(); track s) {
+                  <option [value]="s">{{ s }}</option>
+                }
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="m-status">{{ 'admin.fieldStatus' | t }}</label>
+              <select id="m-status" class="form-select" formControlName="status">
+                <option value="draft">{{ 'admin.statusDraft' | t }}</option>
+                <option value="published">{{ 'admin.statusPublished' | t }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="saving()">
+              {{ editingId() == null ? ('admin.mvpCreate' | t) : ('admin.saveUpdate' | t) }}
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeModal()">
+              {{ 'admin.cancelEdit' | t }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}
+
+@if (deleteModalOpen()) {
+  <div class="zt-admin-modal-backdrop" aria-hidden="true" (click)="closeDeleteModal()"></div>
+  <div
+    class="zt-admin-modal-wrap zt-admin-modal-wrap--delete"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="admin-mvp-delete-modal-title"
+    (click)="$event.target === $event.currentTarget && closeDeleteModal()"
+  >
+    <div class="card shadow-sm border-0 zt-admin-card">
+      <div class="card-body">
+        <h2 id="admin-mvp-delete-modal-title" class="h6 mb-2">{{ 'admin.delete' | t }}</h2>
+        <p class="small mb-2">Type <code>delete</code> to confirm deleting this item.</p>
+        <input
+          #deleteConfirmInput
+          class="form-control mb-2"
+          [value]="deleteConfirmText()"
+          (input)="onDeleteConfirmInput($any($event.target).value)"
+          placeholder="delete"
+          autocomplete="off"
+        />
+        <p class="small text-secondary mb-3">
+          This extra confirmation protects against accidental deletes.
+        </p>
+        <div class="d-flex gap-2">
+          <button type="button" class="btn btn-danger btn-sm" [disabled]="!canConfirmDelete()" (click)="confirmDelete()">
+            {{ 'admin.delete' | t }}
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeDeleteModal()">
+            {{ 'admin.cancelEdit' | t }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

@@ -1,0 +1,68 @@
+.zt-admin-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.zt-admin-cover-cell {
+  max-width: 240px;
+}
+
+.zt-admin-application-view-card.zt-admin-card {
+  width: min(560px, 100%);
+}
+
+.zt-admin-application-detail {
+  margin: 0;
+}
+
+.zt-admin-application-detail__row {
+  display: grid;
+  grid-template-columns: minmax(6rem, 8.5rem) 1fr;
+  gap: 0.35rem 0.85rem;
+  align-items: baseline;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid rgba(16, 38, 84, 0.08);
+  font-size: 0.875rem;
+}
+
+.zt-admin-application-detail__row:last-of-type {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.zt-admin-application-detail__row--block dt {
+  align-self: start;
+}
+
+.zt-admin-application-detail__row dt {
+  margin: 0;
+  font-weight: 600;
+  color: #5c6778;
+}
+
+.zt-admin-application-detail__row dd {
+  margin: 0;
+  min-width: 0;
+  word-break: break-word;
+}
+
+.zt-admin-application-cover {
+  white-space: pre-wrap;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.45rem;
+  background: rgba(63, 105, 170, 0.06);
+  border: 1px solid rgba(63, 105, 170, 0.12);
+  max-height: min(320px, 50vh);
+  overflow: auto;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 575.98px) {
+  .zt-admin-application-detail__row {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+}

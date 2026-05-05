@@ -1,0 +1,88 @@
+<div class="zt-admin-shell d-flex min-vh-100">
+  <app-admin-notice-stack />
+  <div class="zt-admin-shell__body d-flex flex-grow-1">
+    @if (showSidebar()) {
+      <aside class="zt-admin-shell__aside">
+        <a routerLink="/" class="zt-admin-shell__brand text-decoration-none" [attr.aria-label]="'nav.logoAlt' | t">
+          <svg
+            class="zt-admin-shell__logo"
+            xmlns="http://www.w3.org/2000/svg"
+            width="280"
+            height="56"
+            viewBox="0 0 360 72"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <defs>
+              <style>
+                .zt-admin-logo-word {
+                  font: 700 34px/1 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+                  letter-spacing: 0.5px;
+                  fill: #f5f8ff;
+                }
+              </style>
+            </defs>
+            <g transform="translate(6 6)">
+              <rect x="0" y="0" width="60" height="60" rx="16" fill="#3F69AA" />
+              <path d="M18 18h24l-20 24h20v6H18l20-24H18z" fill="#ffffff" />
+              <g fill="#ffffff" opacity="0.95">
+                <circle cx="44" cy="16" r="2.2" />
+                <circle cx="49" cy="22" r="2.2" />
+                <circle cx="40" cy="24" r="2.2" />
+              </g>
+              <g stroke="#ffffff" stroke-width="1.6" opacity="0.75" stroke-linecap="round">
+                <path d="M44 16 L49 22" />
+                <path d="M40 24 L49 22" />
+              </g>
+            </g>
+            <text x="84" y="46" class="zt-admin-logo-word">Zentrox</text>
+          </svg>
+        </a>
+        <nav class="d-flex flex-column gap-1 p-3" [attr.aria-label]="'admin.sideNavAria' | t">
+          <a
+            class="zt-admin-shell__nav-link"
+            [routerLink]="adminNav.leadership"
+            routerLinkActive="zt-admin-shell__nav-link--active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >{{ 'admin.navLeadership' | t }}</a
+          >
+          <a
+            class="zt-admin-shell__nav-link"
+            [routerLink]="adminNav.mvp"
+            routerLinkActive="zt-admin-shell__nav-link--active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >{{ 'admin.navMvp' | t }}</a
+          >
+          <a
+            class="zt-admin-shell__nav-link"
+            [routerLink]="adminNav.portfolio"
+            routerLinkActive="zt-admin-shell__nav-link--active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >{{ 'admin.navPortfolio' | t }}</a
+          >
+          <a
+            class="zt-admin-shell__nav-link"
+            [routerLink]="adminNav.jobs"
+            routerLinkActive="zt-admin-shell__nav-link--active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >{{ 'admin.navJobs' | t }}</a
+          >
+          <a
+            class="zt-admin-shell__nav-link"
+            [routerLink]="adminNav.applications"
+            routerLinkActive="zt-admin-shell__nav-link--active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >{{ 'admin.navApplications' | t }}</a
+          >
+          <hr class="my-2" />
+          <button type="button" class="btn btn-link btn-sm text-start px-0" (click)="auth.logout()">
+            {{ 'admin.logout' | t }}
+          </button>
+        </nav>
+      </aside>
+    }
+    <main class="zt-admin-shell__main flex-grow-1">
+      <router-outlet />
+    </main>
+  </div>
+</div>

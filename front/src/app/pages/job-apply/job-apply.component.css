@@ -1,0 +1,96 @@
+.zt-job-apply {
+  /* Push section below fixed header and keep consistent breathing room */
+  margin-top: 92px;
+  padding-top: 2.5rem;
+  min-height: 70vh;
+  background: linear-gradient(180deg, #f8faff 0%, #ffffff 35%);
+}
+
+.zt-job-apply__container {
+  max-width: 920px;
+}
+
+.zt-job-apply__hero {
+  background: #ffffff;
+  border: 1px solid #e7edf7;
+  border-radius: 0.9rem;
+  padding: 1rem 1.1rem;
+  box-shadow: 0 8px 24px rgba(16, 41, 84, 0.06);
+}
+
+.zt-job-apply__description {
+  line-height: 1.6;
+}
+
+.zt-job-apply__description :where(p, ul, ol) {
+  margin-bottom: 0.55rem;
+}
+
+.zt-job-apply__description :where(p:last-child, ul:last-child, ol:last-child) {
+  margin-bottom: 0;
+}
+
+.zt-job-apply__description :where(ul, ol) {
+  padding-left: 1.25rem;
+}
+
+.zt-job-apply__description :where(li) {
+  margin-bottom: 0.25rem;
+}
+
+.zt-job-apply__description :where(h1, h2, h3, h4) {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #24324a;
+  margin-bottom: 0.4rem;
+  margin-top: 0.75rem;
+}
+
+.zt-job-apply__description :where(h1, h2, h3, h4):first-child {
+  margin-top: 0;
+}
+
+.zt-job-apply__description :where(a) {
+  color: #0d6efd;
+  text-decoration-thickness: 1px;
+}
+
+.zt-job-apply__description :where(strong, b) {
+  color: #2f3f5b;
+  font-weight: 600;
+}
+
+.zt-job-apply__form {
+  background: #ffffff;
+  border: 1px solid #e7edf7;
+  border-radius: 0.9rem;
+  padding: 1rem 1.1rem;
+  box-shadow: 0 8px 24px rgba(16, 41, 84, 0.06);
+}
+
+.zt-job-apply__form .form-label {
+  font-weight: 600;
+  color: #24324a;
+}
+
+.zt-job-apply__form .form-control {
+  border-color: #d8e4f8;
+}
+
+.zt-job-apply__form .form-control:focus {
+  border-color: #8fb2ef;
+  box-shadow: 0 0 0 0.2rem rgba(63, 105, 170, 0.16);
+}
+
+@media (max-width: 575.98px) {
+  .zt-job-apply {
+    margin-top: 76px;
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+  }
+
+  .zt-job-apply__hero,
+  .zt-job-apply__form {
+    padding: 0.9rem 1rem;
+  }
+}

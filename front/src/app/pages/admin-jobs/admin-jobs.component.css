@@ -1,0 +1,105 @@
+.zt-editor {
+  border: 1px solid #ced4da;
+  border-radius: 0.5rem;
+  background: #fff;
+}
+
+.zt-editor__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid #e9ecef;
+  background: #f8f9fb;
+}
+
+.zt-editor__toolgroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.zt-editor__toolsep {
+  width: 1px;
+  align-self: stretch;
+  min-height: 1.75rem;
+  background: #dee2e6;
+  margin: 0 0.1rem;
+}
+
+.zt-editor__content.form-control {
+  min-height: 220px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: auto;
+  line-height: 1.55;
+  color: #212529;
+}
+
+.zt-editor__content.form-control:focus {
+  box-shadow: none;
+}
+
+/* WYSIWYG structure — matches roughly what applicants see on the apply page */
+.zt-editor__content :where(h3) {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #24324a;
+  margin: 0.65rem 0 0.35rem;
+}
+
+.zt-editor__content :where(h3):first-child {
+  margin-top: 0;
+}
+
+.zt-editor__content :where(h4) {
+  font-size: 0.97rem;
+  font-weight: 700;
+  color: #2f3f5b;
+  margin: 0.55rem 0 0.3rem;
+}
+
+.zt-editor__content :where(h4):first-child {
+  margin-top: 0;
+}
+
+.zt-editor__content :where(p) {
+  margin: 0 0 0.45rem;
+}
+
+.zt-editor__content :where(p:last-child) {
+  margin-bottom: 0;
+}
+
+.zt-editor__content :where(ul, ol) {
+  margin: 0 0 0.5rem;
+  padding-left: 1.35rem;
+}
+
+.zt-editor__content :where(li) {
+  margin-bottom: 0.2rem;
+}
+
+.zt-editor__content :where(a) {
+  color: #0d6efd;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  word-break: break-word;
+}
+
+.zt-editor__content :where(strong, b) {
+  font-weight: 600;
+  color: #2f3f5b;
+}
+
+/* Fallback when a single block is still wrapped in a div after paste */
+.zt-editor__content > div:not(:has(> div)) {
+  margin: 0 0 0.45rem;
+  line-height: 1.55;
+}
+
+.zt-editor__content > div:not(:has(> div)):last-child {
+  margin-bottom: 0;
+}

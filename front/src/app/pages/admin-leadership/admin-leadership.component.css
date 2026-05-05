@@ -1,0 +1,82 @@
+.zt-admin-col-photo {
+  width: 4.5rem;
+}
+
+.zt-admin-photo-cell {
+  vertical-align: middle;
+}
+
+.zt-admin-leadership-thumb {
+  display: block;
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.zt-admin-photo-file {
+  max-width: min(100%, 280px);
+}
+
+.zt-admin-leadership-modal-card {
+  width: min(760px, calc(100vw - 1.5rem));
+}
+
+.zt-admin-leadership-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.zt-admin-leadership-form .form-label {
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.zt-admin-leadership-media-panel {
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 0.75rem;
+  background: rgba(248, 250, 252, 0.85);
+  padding: 0.75rem;
+}
+
+.zt-admin-subtle-label {
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.zt-admin-leadership-actions {
+  margin-top: 0.25rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.zt-admin-leadership-photo-meta {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.zt-admin-leadership-photo-text {
+  min-width: 0;
+}
+
+.zt-admin-leadership-preview-wrap {
+  max-width: 100%;
+}
+
+.zt-admin-leadership-preview {
+  display: block;
+  width: 132px;
+  aspect-ratio: 762 / 1016;
+  height: auto;
+  object-fit: cover;
+  flex: 0 0 auto;
+  margin-left: auto;
+  margin-right: auto;
+  background: #fff;
+}

@@ -1,0 +1,224 @@
+<section class="zt-admin py-3 px-2 px-md-3">
+  <div class="container-fluid">
+    <div class="zt-admin-pagehead mb-3">
+      <div class="d-flex flex-wrap align-items-start justify-content-between gap-2">
+        <div>
+          <h1 class="h4 mb-1">{{ 'admin.jobsTitle' | t }}</h1>
+          <p class="text-secondary small mb-0">{{ 'admin.jobsIntro' | t }}</p>
+        </div>
+        <button type="button" class="btn btn-primary btn-sm zt-admin-primary-cta" (click)="openCreate()">
+          {{ 'admin.saveCreate' | t }}
+        </button>
+      </div>
+    </div>
+
+    @if (loadError()) {
+      <p class="text-danger">{{ 'admin.jobsLoadError' | t }}</p>
+    } @else {
+      <div class="table-responsive zt-admin-table-wrap">
+        <table class="table table-sm table-striped align-middle">
+          <caption class="visually-hidden">
+            {{ 'admin.tableCaptionJobs' | t }}
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">{{ 'admin.colTitle' | t }}</th>
+              <th scope="col">{{ 'admin.colLocation' | t }}</th>
+              <th scope="col">{{ 'admin.colType' | t }}</th>
+              <th scope="col">{{ 'admin.colStatus' | t }}</th>
+              <th scope="col">{{ 'admin.colActions' | t }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (job of jobs(); track job.id) {
+              <tr>
+                <td>{{ job.title }}</td>
+                <td>{{ job.location || ('admin.none' | t) }}</td>
+                <td>{{ job.employment_type }}</td>
+                <td>
+                  @if (job.status === 'published') {
+                    <span class="badge text-bg-success">{{ 'admin.statusPublished' | t }}</span>
+                  } @else {
+                    <span class="badge text-bg-secondary">{{ 'admin.statusDraft' | t }}</span>
+                  }
+                </td>
+                <td class="zt-admin-actions-cell">
+                  @if (job.status !== 'published') {
+                    <button
+                      type="button"
+                      class="btn btn-link btn-sm zt-admin-row-action"
+                      (click)="quickSetStatus(job, 'published')"
+                    >
+                      {{ 'admin.statusPublished' | t }}
+                    </button>
+                  }
+                  @if (job.status !== 'draft') {
+                    <button type="button" class="btn btn-link btn-sm zt-admin-row-action" (click)="quickSetStatus(job, 'draft')">
+                      {{ 'admin.statusDraft' | t }}
+                    </button>
+                  }
+                  <button type="button" class="btn btn-link btn-sm zt-admin-row-action" (click)="startEdit(job)">
+                    {{ 'admin.edit' | t }}
+                  </button>
+                  <button type="button" class="btn btn-link btn-sm zt-admin-row-action text-danger" (click)="remove(job)">
+                    {{ 'admin.delete' | t }}
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</section>
+
+@if (modalOpen()) {
+  <div class="zt-admin-modal-backdrop" aria-hidden="true" (click)="closeModal()"></div>
+  <div
+    class="zt-admin-modal-wrap"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="admin-job-modal-title"
+    (click)="$event.target === $event.currentTarget && closeModal()"
+  >
+    <div class="card shadow-sm border-0 zt-admin-card">
+      <div class="card-body">
+        <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
+          <h2 id="admin-job-modal-title" class="h6 mb-0">
+            {{ editingId() == null ? ('admin.formNewTitle' | t) : ('admin.formEditTitle' | t) }}
+          </h2>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-secondary zt-admin-modal-close"
+            (click)="closeModal()"
+            [attr.aria-label]="'admin.modalClose' | t"
+          >
+            ×
+          </button>
+        </div>
+        <form (ngSubmit)="save()" [formGroup]="form" novalidate>
+          @if (saveErrorKey()) {
+            <p class="text-danger small mb-2" role="alert">{{ saveErrorKey()! | t }}</p>
+          }
+          <div class="mb-2">
+            <label class="form-label" for="j-title">{{ 'admin.fieldTitle' | t }}</label>
+            <input id="j-title" class="form-control" formControlName="title" />
+          </div>
+          <div class="mb-2">
+            <label class="form-label" for="j-desc">{{ 'admin.fieldDescription' | t }}</label>
+            <div class="zt-editor">
+              <div class="zt-editor__toolbar" role="toolbar" [attr.aria-label]="'admin.jobDescriptionToolbarAria' | t">
+                <span class="zt-editor__toolgroup" role="group" [attr.aria-label]="'admin.editorStructureGroupAria' | t">
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="applyDescriptionBlock('p')">
+                    {{ 'admin.editorParagraph' | t }}
+                  </button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="applyDescriptionBlock('h3')">
+                    {{ 'admin.editorHeading' | t }}
+                  </button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="applyDescriptionBlock('h4')">
+                    {{ 'admin.editorSubheading' | t }}
+                  </button>
+                </span>
+                <span class="zt-editor__toolsep" aria-hidden="true"></span>
+                <span class="zt-editor__toolgroup" role="group" [attr.aria-label]="'admin.editorInlineGroupAria' | t">
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="applyDescriptionFormat('bold')">
+                    {{ 'admin.editorBold' | t }}
+                  </button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="applyDescriptionFormat('italic')">
+                    {{ 'admin.editorItalic' | t }}
+                  </button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="applyDescriptionFormat('insertUnorderedList')">
+                    {{ 'admin.editorBullets' | t }}
+                  </button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="applyDescriptionFormat('insertOrderedList')">
+                    {{ 'admin.editorNumbered' | t }}
+                  </button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary" (click)="applyDescriptionLink()">
+                    {{ 'admin.editorLink' | t }}
+                  </button>
+                </span>
+              </div>
+              <div
+                #descriptionEditor
+                id="j-desc"
+                class="zt-editor__content form-control"
+                contenteditable="true"
+                role="textbox"
+                aria-multiline="true"
+                [attr.aria-label]="'admin.fieldDescription' | t"
+                (input)="onDescriptionInput()"
+              ></div>
+            </div>
+          </div>
+          <div class="row g-2 mb-2">
+            <div class="col-md-6">
+              <label class="form-label" for="j-loc">{{ 'admin.fieldLocation' | t }}</label>
+              <input id="j-loc" class="form-control" formControlName="location" />
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" for="j-et">{{ 'admin.fieldEmploymentType' | t }}</label>
+              <select id="j-et" class="form-select" formControlName="employmentType">
+                @for (kind of employmentTypeOptions; track kind) {
+                  <option [value]="kind">{{ kind }}</option>
+                }
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label" for="j-st">{{ 'admin.fieldStatus' | t }}</label>
+              <select id="j-st" class="form-select" formControlName="status">
+                <option value="draft">{{ 'admin.statusDraft' | t }}</option>
+                <option value="published">{{ 'admin.statusPublished' | t }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <button type="submit" class="btn btn-primary btn-sm" [disabled]="saving()">
+              {{ editingId() == null ? ('admin.saveCreate' | t) : ('admin.saveUpdate' | t) }}
+            </button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeModal()">
+              {{ 'admin.cancelEdit' | t }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+}
+
+@if (deleteModalOpen()) {
+  <div class="zt-admin-modal-backdrop" aria-hidden="true" (click)="closeDeleteModal()"></div>
+  <div
+    class="zt-admin-modal-wrap zt-admin-modal-wrap--delete"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="admin-job-delete-modal-title"
+    (click)="$event.target === $event.currentTarget && closeDeleteModal()"
+  >
+    <div class="card shadow-sm border-0 zt-admin-card">
+      <div class="card-body">
+        <h2 id="admin-job-delete-modal-title" class="h6 mb-2">{{ 'admin.delete' | t }}</h2>
+        <p class="small mb-2">Type <code>delete</code> to confirm deleting this item.</p>
+        <input
+          #deleteConfirmInput
+          class="form-control mb-2"
+          [value]="deleteConfirmText()"
+          (input)="onDeleteConfirmInput($any($event.target).value)"
+          placeholder="delete"
+          autocomplete="off"
+        />
+        <p class="small text-secondary mb-3">
+          This helps prevent accidental deletion. The item will be removed only after exact confirmation.
+        </p>
+        <div class="d-flex gap-2">
+          <button type="button" class="btn btn-danger btn-sm" [disabled]="!canConfirmDelete()" (click)="confirmDelete()">
+            {{ 'admin.delete' | t }}
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeDeleteModal()">
+            {{ 'admin.cancelEdit' | t }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

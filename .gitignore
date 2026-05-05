@@ -1,11 +1,20 @@
-# Dependencies
-node_modules/
+# --- Repository root ---
+/node_modules/
+/.angular/
+/dist/
 
-# Build outputs
-dist/
+# --- Front (Angular): run npm / ng from front/ ---
+front/node_modules/
+front/dist/
+front/.angular/
 
-# Angular and tooling caches
-.angular/
+# --- Back (Node API): run npm from back/ ---
+back/node_modules/
+
+# API secrets
+back/.env
+
+# Tooling caches (if created at repo root by mistake)
 .cache/
 
 # Editor/IDE

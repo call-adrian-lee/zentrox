@@ -1,0 +1,13 @@
+<div class="zt-admin-notice-stack" aria-live="polite" aria-atomic="false">
+  @for (n of notify.notices(); track n.id) {
+    <div class="zt-admin-notice" [class.zt-admin-notice--error]="n.kind === 'error'">
+      <span>{{ n.messageKey | t }}</span>
+      <button
+        type="button"
+        class="btn-close btn-close-white zt-admin-notice__close"
+        (click)="notify.dismiss(n.id)"
+        aria-label="Close"
+      ></button>
+    </div>
+  }
+</div>

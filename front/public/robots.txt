@@ -1,0 +1,7 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+Disallow: /admin-0911
+Disallow: /admin-0911/
+
+Sitemap: https://zentrox.us/sitemap.xml

@@ -1,32 +1,52 @@
 # Zentrox
 
-Angular frontend app for the Zentrox website and public product pages.
+Monorepo with two apps:
+
+- `front/` - Angular website + careers + admin UI
+- `back/` - Express + MySQL API
+
+## Quick start
+
+From repo root:
 
 ```bash
 npm install
-npm start
+npm run setup
+npm run db:bootstrap
+npm run dev
 ```
 
-Default local URL: `http://127.0.0.1:4200/`
+`npm run dev` starts:
 
-## Main Routes
+- Frontend: `http://127.0.0.1:4200`
+- API: `http://127.0.0.1:3000`
 
-- `/` - Home page
-- `/mvp` - SaaS MVP projects currently in progress
+## Package layout
 
-## Build and Test
+This repo intentionally uses 3 npm trees (no workspaces):
 
-- `npm run build` - Production build
-- `npm run test` - Unit tests
+- root `package.json` + `package-lock.json` (only orchestrator dependency: `concurrently`)
+- `front/package.json` + `front/package-lock.json`
+- `back/package.json` + `back/package-lock.json`
 
-## Content and SEO Notes
+## Node modules policy
 
-- Company/contact details are defined in `src/app/core/company-info.ts`.
-- Route-level SEO metadata is configured in `src/app/app.routes.ts`.
-- Meta tag and JSON-LD handling lives in `src/app/core/seo.service.ts`.
-- Set `siteUrl` in `src/environments/environment.ts` for correct canonical and OG URLs.
+- `front/node_modules` and `back/node_modules` are required to run each app.
+- root `node_modules` is optional and only needed for root scripts (`npm run dev`).
+- deleting root `node_modules` is safe; run `npm install` at root when needed again.
 
-## Public Assets
+## Useful commands (root)
 
-- Static assets are in `public/` and `img/`.
-- Sitemap is in `public/sitemap.xml`; keep it updated when public routes change.
+- `npm run setup` - install dependencies in `front/` and `back/`
+- `npm run dev` - run web + API together
+- `npm start` - run web only
+- `npm run api` - run API only
+- `npm run db:bootstrap` - create DB/schema and seed admin/jobs
+
+## Prerequisites
+
+- Node.js 20+
+- npm 11+
+- MySQL on `127.0.0.1:3306` with credentials in `back/.env`
+
+See `front/README.md` and `back/README.md` for app-specific notes.

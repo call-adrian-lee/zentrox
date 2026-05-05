@@ -1,0 +1,197 @@
+<section class="zt-admin py-3 px-2 px-md-3">
+  <div class="container-fluid">
+    <div class="zt-admin-pagehead mb-3">
+      <h1 class="h4 mb-1">{{ 'admin.applicationsTitle' | t }}</h1>
+      <p class="text-secondary small mb-0">{{ 'admin.applicationsIntro' | t }}</p>
+    </div>
+
+    @if (loadError()) {
+      <p class="text-danger">{{ 'admin.applicationsLoadError' | t }}</p>
+    } @else if (!rows().length) {
+      <p class="text-secondary">{{ 'careers.empty' | t }}</p>
+    } @else {
+      <div class="table-responsive zt-admin-table-wrap">
+        <table class="table table-sm table-striped align-middle">
+          <caption class="visually-hidden">
+            {{ 'admin.tableCaptionApplications' | t }}
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">{{ 'admin.colReceived' | t }}</th>
+              <th scope="col">{{ 'admin.colJob' | t }}</th>
+              <th scope="col">{{ 'admin.colApplicant' | t }}</th>
+              <th scope="col">{{ 'apply.email' | t }}</th>
+              <th scope="col">{{ 'apply.phone' | t }}</th>
+              <th scope="col">{{ 'apply.resumeUrl' | t }}</th>
+              <th scope="col">{{ 'admin.viewCover' | t }}</th>
+              <th scope="col">{{ 'admin.colActions' | t }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (a of rows(); track a.id) {
+              <tr>
+                <td class="text-nowrap small">{{ a.created_at | date: 'medium' }}</td>
+                <td>{{ a.job_title }}</td>
+                <td>{{ a.full_name }}</td>
+                <td><a [href]="'mailto:' + a.email">{{ a.email }}</a></td>
+                <td>{{ a.phone || ('admin.none' | t) }}</td>
+                <td class="small">
+                  @if (a.resume_url) {
+                    <a
+                      [href]="a.resume_url"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      [attr.aria-label]="a.resume_url + ' (' + ('admin.linkOpensNewTab' | t) + ')'"
+                      >{{ a.resume_url }}</a
+                    >
+                  } @else {
+                    {{ 'admin.none' | t }}
+                  }
+                </td>
+                <td class="small zt-admin-cover-cell">
+                  @if (a.cover_letter) {
+                    <span class="zt-admin-clamp">{{ a.cover_letter }}</span>
+                  } @else {
+                    {{ 'admin.none' | t }}
+                  }
+                </td>
+                <td class="zt-admin-actions-cell">
+                  <button type="button" class="btn btn-link btn-sm zt-admin-row-action" (click)="openView(a)">
+                    {{ 'admin.viewApplicant' | t }}
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-link btn-sm zt-admin-row-action text-danger"
+                    [disabled]="deletingId() === a.id"
+                    (click)="remove(a)"
+                  >
+                    {{ 'admin.delete' | t }}
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</section>
+
+@if (viewModalOpen() && viewing(); as v) {
+  <div class="zt-admin-modal-backdrop" aria-hidden="true" (click)="closeViewModal()"></div>
+  <div
+    class="zt-admin-modal-wrap"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="admin-app-view-modal-title"
+    (click)="$event.target === $event.currentTarget && closeViewModal()"
+  >
+    <div class="card shadow-sm border-0 zt-admin-card zt-admin-application-view-card">
+      <div class="card-body">
+        <div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+          <h2 id="admin-app-view-modal-title" class="h6 mb-0">{{ 'admin.applicationDetailTitle' | t }}</h2>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-secondary zt-admin-modal-close"
+            (click)="closeViewModal()"
+            [attr.aria-label]="'admin.modalClose' | t"
+          >
+            ×
+          </button>
+        </div>
+        <dl class="zt-admin-application-detail">
+          <div class="zt-admin-application-detail__row">
+            <dt>{{ 'admin.colReceived' | t }}</dt>
+            <dd>{{ v.created_at | date: 'medium' }}</dd>
+          </div>
+          <div class="zt-admin-application-detail__row">
+            <dt>{{ 'admin.colJob' | t }}</dt>
+            <dd>{{ v.job_title }}</dd>
+          </div>
+          <div class="zt-admin-application-detail__row">
+            <dt>{{ 'admin.colApplicant' | t }}</dt>
+            <dd>{{ v.full_name }}</dd>
+          </div>
+          <div class="zt-admin-application-detail__row">
+            <dt>{{ 'apply.email' | t }}</dt>
+            <dd><a [href]="'mailto:' + v.email">{{ v.email }}</a></dd>
+          </div>
+          <div class="zt-admin-application-detail__row">
+            <dt>{{ 'apply.phone' | t }}</dt>
+            <dd>{{ v.phone || ('admin.none' | t) }}</dd>
+          </div>
+          <div class="zt-admin-application-detail__row">
+            <dt>{{ 'apply.resumeUrl' | t }}</dt>
+            <dd>
+              @if (v.resume_url) {
+                <a [href]="v.resume_url" target="_blank" rel="noopener noreferrer">{{ v.resume_url }}</a>
+              } @else {
+                {{ 'admin.none' | t }}
+              }
+            </dd>
+          </div>
+          <div class="zt-admin-application-detail__row zt-admin-application-detail__row--block">
+            <dt>{{ 'admin.viewCover' | t }}</dt>
+            <dd>
+              @if (v.cover_letter) {
+                <div class="zt-admin-application-cover">{{ v.cover_letter }}</div>
+              } @else {
+                {{ 'admin.none' | t }}
+              }
+            </dd>
+          </div>
+        </dl>
+        <div class="d-flex justify-content-end mt-3">
+          <button type="button" class="btn btn-primary btn-sm" (click)="closeViewModal()">
+            {{ 'admin.applicationDetailClose' | t }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+@if (deleteModalOpen()) {
+  <div class="zt-admin-modal-backdrop" aria-hidden="true" (click)="closeDeleteModal()"></div>
+  <div
+    class="zt-admin-modal-wrap zt-admin-modal-wrap--delete"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="admin-app-delete-modal-title"
+    (click)="$event.target === $event.currentTarget && closeDeleteModal()"
+  >
+    <div class="card shadow-sm border-0 zt-admin-card">
+      <div class="card-body">
+        <h2 id="admin-app-delete-modal-title" class="h6 mb-2">{{ 'admin.delete' | t }}</h2>
+        @if (deleteErrorKey()) {
+          <p class="text-danger small mb-2" role="alert">{{ deleteErrorKey()! | t }}</p>
+        }
+        <p class="small mb-2">Type <code>delete</code> to confirm deleting this item.</p>
+        <input
+          #deleteConfirmInput
+          class="form-control mb-2"
+          [value]="deleteConfirmText()"
+          (input)="onDeleteConfirmInput($any($event.target).value)"
+          placeholder="delete"
+          autocomplete="off"
+        />
+        <p class="small text-secondary mb-3">
+          This confirmation step avoids accidental deletion of applicant data.
+        </p>
+        <div class="d-flex gap-2">
+          <button
+            type="button"
+            class="btn btn-danger btn-sm"
+            [disabled]="!canConfirmDelete() || deletingId() !== null"
+            (click)="confirmDelete()"
+          >
+            {{ 'admin.delete' | t }}
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" [disabled]="deletingId() !== null" (click)="closeDeleteModal()">
+            {{ 'admin.cancelEdit' | t }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
