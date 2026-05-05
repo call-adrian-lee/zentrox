@@ -88,9 +88,9 @@ h6 {
     max-width: var(--container-max);
 }
 
-/* Make anchor jumps feel better with fixed header */
+/* Align section anchors with `html` scroll-padding (fixed `#header`). */
 [id] {
-    scroll-margin-top: 88px;
+    scroll-margin-top: calc(var(--header-height) + 6px);
 }
 
 .back-to-top {

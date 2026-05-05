@@ -1,4 +1,7 @@
-/** Route segment for admin shell (login + jobs + applications). */
+/**
+ * Public URL segment for the staff console (`/admin-0911/…`). Not a secret: real protection is JWT + bcrypt +
+ * rate limits on `POST /api/admin/login`. Prefer strong `JWT_SECRET` and admin passwords in production.
+ */
 export const ADMIN_ROUTE_SEGMENT = 'admin-0911';
 
 /** Client URL prefix: `/admin-0911`, `/admin-0911/jobs`, … */

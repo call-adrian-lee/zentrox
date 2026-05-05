@@ -5,9 +5,8 @@
 /* Mobile: avoid accidental horizontal page scroll from overflowing sections */
 html {
   overflow-x: clip;
-  /* Fixed header (#header ~92px): in-page anchors (#about, #contact) land below the bar */
-  scroll-padding-top: 96px;
-  scroll-padding-top: calc(96px + env(safe-area-inset-top));
+  /* Fixed header: anchors land below `#header` (see `--header-height` in zentrox-theme.css). */
+  scroll-padding-top: calc(var(--header-height) + max(6px, env(safe-area-inset-top)));
 }
 
 @supports not (overflow: clip) {

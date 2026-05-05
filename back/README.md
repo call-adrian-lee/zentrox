@@ -31,6 +31,11 @@ Copy `.env.example` to `.env` and set:
 - `MYSQL_DATABASE`
 - `JWT_SECRET`
 
+## Security model
+
+- Admin UI is served by the Angular app at `/admin-0911`; API routes use `Authorization: Bearer <jwt>` after `POST /api/admin/login`.
+- There is **no hidden or secondary admin bypass** in this codebase. Strength comes from `JWT_SECRET`, password hashes, and rate limits — not from obscurity.
+
 ## Bootstrap admin credentials
 
 `npm run db:bootstrap` always sets one admin user:

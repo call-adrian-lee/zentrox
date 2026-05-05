@@ -7,6 +7,9 @@ export class NavigationService {
   private readonly doc = inject(DOCUMENT);
   private readonly router = inject(Router);
 
+  /** Match `scroll-padding-top` / `[id]` scroll-margin in global styles (~header height + gutter). */
+  private static readonly ACTIVE_SECTION_SCROLL_OFFSET = 98;
+
   readonly headerScrolled = signal(false);
   readonly showBackToTop = signal(false);
   readonly mobileNavOpen = signal(false);
@@ -31,8 +34,7 @@ export class NavigationService {
       return;
     }
 
-    const offset = 90;
-    const pos = y + offset;
+    const pos = y + NavigationService.ACTIVE_SECTION_SCROLL_OFFSET;
     let current = 'home';
     for (const link of this.navLinks) {
       const el = this.doc.getElementById(link.fragment);
@@ -75,7 +77,8 @@ export class NavigationService {
 
   private scrollToFragmentEl(fragment: string): void {
     const el = this.doc.getElementById(fragment);
-    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const behavior: ScrollBehavior = this.prefersReducedMotion() ? 'auto' : 'smooth';
+    el?.scrollIntoView({ behavior, block: 'start' });
     if (fragment === 'contact') {
       setTimeout(() => {
         (this.doc.querySelector('#contact-name') as HTMLInputElement | null)?.focus();
@@ -84,6 +87,13 @@ export class NavigationService {
   }
 
   scrollTop(): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: this.prefersReducedMotion() ? 'auto' : 'smooth' });
+  }
+
+  private prefersReducedMotion(): boolean {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+      return false;
+    }
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 }

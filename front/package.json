@@ -1,6 +1,7 @@
 {
   "name": "zentrox-front",
   "version": "0.0.0",
+  "description": "Angular SPA for zentrox.us — marketing site, careers, job apply, and authenticated admin UI.",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 127.0.0.1 --port 4200 --open",

@@ -90,12 +90,18 @@
   >
     <i
       class="fa"
+      aria-hidden="true"
       [class.fa-bars]="!nav.mobileNavOpen()"
       [class.fa-times]="nav.mobileNavOpen()"
     ></i>
   </button>
 
-  <nav id="mobile-nav" [attr.aria-hidden]="!nav.mobileNavOpen()" [attr.aria-label]="'nav.mobileNav' | t">
+  <nav
+    id="mobile-nav"
+    [attr.aria-hidden]="!nav.mobileNavOpen()"
+    [attr.inert]="nav.mobileNavOpen() ? null : ''"
+    [attr.aria-label]="'nav.mobileNav' | t"
+  >
     <ul>
       <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'home'">
         <a href="/" (click)="nav.scrollToHomeSection($event, 'header-carousel', 'home')">{{ 'nav.home' | t }}</a>

@@ -50,3 +50,9 @@ This repo intentionally uses 3 npm trees (no workspaces):
 - MySQL on `127.0.0.1:3306` with credentials in `back/.env`
 
 See `front/README.md` and `back/README.md` for app-specific notes.
+
+## Security notes
+
+- **Staff console** lives at `/admin-0911` (see `ADMIN_ROUTE_SEGMENT` in `front/src/app/core/admin-paths.ts`). Crawlers are discouraged via `robots.txt` (`Disallow: /admin-0911`); that is not authentication.
+- **Protection** is bcrypt-hashed passwords, signed JWTs (`JWT_SECRET` must be 32+ characters), rate-limited login and application endpoints, CORS allowlist, and `helmet`. The API has **no alternate or hidden login bypass** — use `POST /api/admin/login` with legitimate credentials only.
+- Rotate bootstrap admin credentials and JWT secret in production; treat any “undocumented backdoor” URL or token as compromise, not a feature.
