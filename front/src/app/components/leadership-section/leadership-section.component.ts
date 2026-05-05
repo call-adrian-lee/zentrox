@@ -12,7 +12,7 @@ import type { LeadershipMemberPublic } from '../../core/leadership.models';
 })
 export class LeadershipSectionComponent {
   private readonly api = inject(LeadershipPublicService);
-  readonly placeholderAvatarPath = '/img/upload/leadership/placeholder-avatar.svg';
+  readonly placeholderAvatarPath = '/img/leadership/placeholder-avatar.svg';
 
   readonly members = signal<LeadershipMemberPublic[]>([]);
   readonly loadError = signal(false);

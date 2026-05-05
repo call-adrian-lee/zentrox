@@ -183,7 +183,7 @@
         @if (saveErrorTab()) {
           <p class="text-danger small mb-2" role="alert">{{ saveErrorTab()! | t }}</p>
         }
-        <form (ngSubmit)="saveTab()" [formGroup]="tabForm" novalidate>
+        <form [formGroup]="tabForm" novalidate (keydown)="tabModalFormKeydown($event)">
           <div class="mb-2">
             <label class="form-label" for="pt-title">{{ 'admin.fieldTitle' | t }}</label>
             <input id="pt-title" class="form-control" formControlName="title" />
@@ -198,11 +198,11 @@
             </div>
           </div>
           <div class="d-flex gap-2 flex-wrap">
-            <button type="submit" class="btn btn-primary btn-sm" [disabled]="savingTab()">
+            <button type="button" class="btn btn-primary btn-sm" [disabled]="savingTab()" (click)="saveTab()">
               {{ editingTabId() == null ? ('admin.portfolioCreateTab' | t) : ('admin.saveUpdate' | t) }}
             </button>
             <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeTabModal()">
-              {{ 'admin.cancelEdit' | t }}
+              {{ 'admin.cancel' | t }}
             </button>
           </div>
         </form>
@@ -240,7 +240,7 @@
             {{ 'admin.delete' | t }}
           </button>
           <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeDeleteModal()">
-            {{ 'admin.cancelEdit' | t }}
+            {{ 'admin.cancel' | t }}
           </button>
         </div>
       </div>
@@ -275,7 +275,7 @@
         @if (saveErrorItem()) {
           <p class="text-danger small mb-2" role="alert">{{ saveErrorItem()! | t }}</p>
         }
-        <form (ngSubmit)="saveItem()" [formGroup]="itemForm" novalidate>
+        <form [formGroup]="itemForm" novalidate (keydown)="itemModalFormKeydown($event)">
           <div class="mb-2">
             <label class="form-label" for="pi-tab">{{ 'admin.fieldTab' | t }}</label>
             <select id="pi-tab" class="form-select" formControlName="tabId">
@@ -354,11 +354,11 @@
             </div>
           </div>
           <div class="d-flex gap-2 flex-wrap">
-            <button type="submit" class="btn btn-primary btn-sm" [disabled]="savingItem()">
+            <button type="button" class="btn btn-primary btn-sm" [disabled]="savingItem()" (click)="saveItem()">
               {{ editingItemId() == null ? ('admin.portfolioCreateItem' | t) : ('admin.saveUpdate' | t) }}
             </button>
             <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeItemModal()">
-              {{ 'admin.cancelEdit' | t }}
+              {{ 'admin.cancel' | t }}
             </button>
           </div>
         </form>

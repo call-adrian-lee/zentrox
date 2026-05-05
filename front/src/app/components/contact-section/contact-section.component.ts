@@ -17,9 +17,21 @@ export class ContactSectionComponent {
   readonly formStatusClass = signal('');
   readonly formSubmitting = signal(false);
 
-  onContactSubmit(event: Event): void {
-    event.preventDefault();
-    const form = event.target as HTMLFormElement;
+  contactFormKeydown(ev: KeyboardEvent, form: HTMLFormElement): void {
+    if (ev.key !== 'Enter') return;
+    const t = ev.target;
+    if (!(t instanceof HTMLElement)) return;
+    const tag = t.tagName;
+    if (tag === 'TEXTAREA' || tag === 'SELECT' || tag === 'BUTTON') return;
+    ev.preventDefault();
+    this.submitContact(form);
+  }
+
+  submitContact(form: HTMLFormElement): void {
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
     const action = form.getAttribute('action');
     if (!action) {
       return;

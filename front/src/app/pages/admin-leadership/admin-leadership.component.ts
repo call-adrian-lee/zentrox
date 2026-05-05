@@ -17,7 +17,7 @@ export class AdminLeadershipComponent implements OnInit {
   private readonly api = inject(AdminApiService);
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly notify = inject(AdminNotifyService);
-  readonly placeholderAvatarPath = '/img/upload/leadership/placeholder-avatar.svg';
+  readonly placeholderAvatarPath = '/img/leadership/placeholder-avatar.svg';
 
   readonly deleteConfirmInput = viewChild<ElementRef<HTMLInputElement>>('deleteConfirmInput');
 
@@ -67,7 +67,7 @@ export class AdminLeadershipComponent implements OnInit {
 
   openCreate(): void {
     this.saveErrorKey.set(null);
-    this.cancelEdit();
+    this.resetModalForm();
     this.modalOpen.set(true);
   }
 
@@ -84,7 +84,8 @@ export class AdminLeadershipComponent implements OnInit {
     this.modalOpen.set(true);
   }
 
-  cancelEdit(): void {
+  /** Clears draft state when opening create or after closing the modal (not the same as dismiss-only). */
+  resetModalForm(): void {
     this.editingId.set(null);
     this.modalPhotoPathOverride.set(null);
     this.form.reset({
@@ -98,7 +99,18 @@ export class AdminLeadershipComponent implements OnInit {
   closeModal(): void {
     this.saveErrorKey.set(null);
     this.modalOpen.set(false);
-    this.cancelEdit();
+    this.resetModalForm();
+  }
+
+  /** Enter in modal fields submits; excludes textarea/select; primary button uses click (does not rely on `ngSubmit`). */
+  modalFormKeydown(ev: KeyboardEvent): void {
+    if (ev.key !== 'Enter') return;
+    const t = ev.target;
+    if (!(t instanceof HTMLElement)) return;
+    const tag = t.tagName;
+    if (tag === 'TEXTAREA' || tag === 'SELECT' || tag === 'BUTTON') return;
+    ev.preventDefault();
+    this.save();
   }
 
   expectedLeadershipPhotoPath(id: number | null): string | null {

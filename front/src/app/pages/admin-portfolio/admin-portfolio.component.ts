@@ -20,7 +20,7 @@ export class AdminPortfolioComponent implements OnInit {
   private readonly api = inject(AdminApiService);
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly notify = inject(AdminNotifyService);
-  readonly placeholderImagePath = '/img/upload/leadership/placeholder-avatar.svg';
+  readonly placeholderImagePath = '/img/leadership/placeholder-avatar.svg';
 
   readonly deleteConfirmInput = viewChild<ElementRef<HTMLInputElement>>('deleteConfirmInput');
 
@@ -113,6 +113,7 @@ export class AdminPortfolioComponent implements OnInit {
         this.loadError.set(true);
         this.reorderTabBusy.set(false);
         this.reorderItemBusy.set(false);
+        this.notify.error('admin.portfolioLoadError');
       }
     });
   }
@@ -141,6 +142,16 @@ export class AdminPortfolioComponent implements OnInit {
     this.tabForm.reset({ title: '', status: 'draft' });
   }
 
+  tabModalFormKeydown(ev: KeyboardEvent): void {
+    if (ev.key !== 'Enter') return;
+    const t = ev.target;
+    if (!(t instanceof HTMLElement)) return;
+    const tag = t.tagName;
+    if (tag === 'TEXTAREA' || tag === 'SELECT' || tag === 'BUTTON') return;
+    ev.preventDefault();
+    this.saveTab();
+  }
+
   saveTab(): void {
     this.saveErrorTab.set(null);
     if (this.tabForm.invalid) {
@@ -156,12 +167,13 @@ export class AdminPortfolioComponent implements OnInit {
       status: v.status
     };
     if (id == null) {
+      const hadNoTabs = this.tabs().length === 0;
       this.api.createPortfolioTab(body).subscribe({
         next: () => {
           this.closeTabModal();
           this.reload();
           this.savingTab.set(false);
-          this.notify.success('admin.noticeSaved');
+          this.notify.success(hadNoTabs ? 'admin.portfolioFirstTabCreated' : 'admin.noticeSaved');
         },
         error: (err: unknown) => {
           this.savingTab.set(false);
@@ -228,12 +240,16 @@ export class AdminPortfolioComponent implements OnInit {
 
   openItemCreate(): void {
     const first = this.tabs()[0];
+    if (!first) {
+      this.notify.error('admin.portfolioItemsNeedTab');
+      return;
+    }
     this.saveErrorItem.set(null);
     this.portfolioImageUploadError.set(null);
     this.editingItemId.set(null);
     this.modalItemImagePreview.set(null);
     this.itemForm.reset({
-      tabId: first?.id ?? 0,
+      tabId: first.id,
       title: '',
       subtitle: '',
       description: '',
@@ -274,6 +290,17 @@ export class AdminPortfolioComponent implements OnInit {
       linkUrl: '',
       status: 'draft'
     });
+  }
+
+  itemModalFormKeydown(ev: KeyboardEvent): void {
+    if (ev.key !== 'Enter') return;
+    const t = ev.target;
+    if (!(t instanceof HTMLElement)) return;
+    const tag = t.tagName;
+    if (tag === 'TEXTAREA' || tag === 'SELECT' || tag === 'BUTTON') return;
+    if (t instanceof HTMLInputElement && t.type === 'file') return;
+    ev.preventDefault();
+    this.saveItem();
   }
 
   expectedPortfolioImagePath(id: number | null): string | null {

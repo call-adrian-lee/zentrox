@@ -69,7 +69,7 @@ export class AdminMvpComponent implements OnInit {
 
   openCreate(): void {
     this.saveErrorKey.set(null);
-    this.cancelEdit();
+    this.resetModalForm();
     this.modalOpen.set(true);
   }
 
@@ -85,7 +85,7 @@ export class AdminMvpComponent implements OnInit {
     this.modalOpen.set(true);
   }
 
-  cancelEdit(): void {
+  resetModalForm(): void {
     this.editingId.set(null);
     this.form.reset({
       name: '',
@@ -98,7 +98,17 @@ export class AdminMvpComponent implements OnInit {
   closeModal(): void {
     this.saveErrorKey.set(null);
     this.modalOpen.set(false);
-    this.cancelEdit();
+    this.resetModalForm();
+  }
+
+  modalFormKeydown(ev: KeyboardEvent): void {
+    if (ev.key !== 'Enter') return;
+    const t = ev.target;
+    if (!(t instanceof HTMLElement)) return;
+    const tag = t.tagName;
+    if (tag === 'TEXTAREA' || tag === 'SELECT' || tag === 'BUTTON') return;
+    ev.preventDefault();
+    this.save();
   }
 
   save(): void {

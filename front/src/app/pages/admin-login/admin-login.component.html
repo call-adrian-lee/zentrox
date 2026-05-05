@@ -3,7 +3,7 @@
     <div class="card border-0 shadow-sm zt-admin-login-card">
       <div class="card-body p-4">
         <h1 class="h4 mb-4">{{ 'admin.loginTitle' | t }}</h1>
-        <form (ngSubmit)="submit()" [formGroup]="form" novalidate>
+        <form [formGroup]="form" novalidate (keydown)="loginFormKeydown($event)">
           <div class="mb-3">
             <label class="form-label" for="adm-user">{{ 'admin.loginUsername' | t }}</label>
             <input
@@ -22,7 +22,7 @@
           @if (errorKey()) {
             <p class="text-danger small">{{ errorKey()! | t }}</p>
           }
-          <button type="submit" class="btn btn-primary w-100" [disabled]="submitting()">
+          <button type="button" class="btn btn-primary w-100" [disabled]="submitting()" (click)="submit()">
             {{ submitting() ? '…' : ('admin.loginSubmit' | t) }}
           </button>
         </form>

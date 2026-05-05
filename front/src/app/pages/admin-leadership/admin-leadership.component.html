@@ -123,7 +123,7 @@
         @if (saveErrorKey()) {
           <p class="text-danger small mb-2" role="alert">{{ saveErrorKey()! | t }}</p>
         }
-        <form (ngSubmit)="save()" [formGroup]="form" novalidate class="zt-admin-leadership-form">
+        <form [formGroup]="form" novalidate class="zt-admin-leadership-form" (keydown)="modalFormKeydown($event)">
           <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label" for="l-name">{{ 'admin.fieldName' | t }}</label>
@@ -161,11 +161,11 @@
             </select>
           </div>
           <div class="zt-admin-leadership-actions d-flex gap-2 flex-wrap justify-content-end">
-            <button type="submit" class="btn btn-primary btn-sm" [disabled]="saving()">
+            <button type="button" class="btn btn-primary btn-sm" [disabled]="saving()" (click)="save()">
               {{ editingId() == null ? ('admin.leadershipCreate' | t) : ('admin.saveUpdate' | t) }}
             </button>
             <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeModal()">
-              {{ 'admin.cancelEdit' | t }}
+              {{ 'admin.cancel' | t }}
             </button>
           </div>
         </form>

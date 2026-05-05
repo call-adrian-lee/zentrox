@@ -80,7 +80,7 @@ export class AdminJobsComponent implements OnInit {
 
   openCreate(): void {
     this.saveErrorKey.set(null);
-    this.cancelEdit();
+    this.resetModalForm();
     this.modalOpen.set(true);
     runInInjectionContext(this.injector, () => {
       afterNextRender(() => this.bootstrapDescriptionEditor(''));
@@ -103,7 +103,7 @@ export class AdminJobsComponent implements OnInit {
     });
   }
 
-  cancelEdit(): void {
+  resetModalForm(): void {
     this.editingId.set(null);
     this.form.reset({
       title: '',
@@ -119,7 +119,18 @@ export class AdminJobsComponent implements OnInit {
   closeModal(): void {
     this.saveErrorKey.set(null);
     this.modalOpen.set(false);
-    this.cancelEdit();
+    this.resetModalForm();
+  }
+
+  modalFormKeydown(ev: KeyboardEvent): void {
+    if (ev.key !== 'Enter') return;
+    const t = ev.target;
+    if (!(t instanceof HTMLElement)) return;
+    if (t.isContentEditable) return;
+    const tag = t.tagName;
+    if (tag === 'TEXTAREA' || tag === 'SELECT' || tag === 'BUTTON') return;
+    ev.preventDefault();
+    this.save();
   }
 
   openDeleteModal(job: Job): void {

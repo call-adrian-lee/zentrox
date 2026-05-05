@@ -34,7 +34,7 @@
               {
                 "glob": "**/*",
                 "input": "img",
-                "output": "/img"
+                "output": "img"
               }
             ],
             "styles": [

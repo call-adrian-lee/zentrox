@@ -112,7 +112,7 @@
         @if (saveErrorKey()) {
           <p class="text-danger small mb-2" role="alert">{{ saveErrorKey()! | t }}</p>
         }
-        <form (ngSubmit)="save()" [formGroup]="form" novalidate>
+        <form [formGroup]="form" novalidate (keydown)="modalFormKeydown($event)">
           <div class="mb-2">
             <label class="form-label" for="m-name">{{ 'admin.fieldTitle' | t }}</label>
             <input id="m-name" class="form-control" formControlName="name" />
@@ -139,11 +139,11 @@
             </div>
           </div>
           <div class="d-flex gap-2 flex-wrap">
-            <button type="submit" class="btn btn-primary btn-sm" [disabled]="saving()">
+            <button type="button" class="btn btn-primary btn-sm" [disabled]="saving()" (click)="save()">
               {{ editingId() == null ? ('admin.mvpCreate' | t) : ('admin.saveUpdate' | t) }}
             </button>
             <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeModal()">
-              {{ 'admin.cancelEdit' | t }}
+              {{ 'admin.cancel' | t }}
             </button>
           </div>
         </form>
@@ -181,7 +181,7 @@
             {{ 'admin.delete' | t }}
           </button>
           <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeDeleteModal()">
-            {{ 'admin.cancelEdit' | t }}
+            {{ 'admin.cancel' | t }}
           </button>
         </div>
       </div>

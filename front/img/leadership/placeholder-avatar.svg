@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" role="img" aria-label="Portrait placeholder">
+  <defs>
+    <linearGradient id="zt-ph-sky" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#f6f9ff"/>
+      <stop offset="52%" stop-color="#e9f0fb"/>
+      <stop offset="100%" stop-color="#dce7f7"/>
+    </linearGradient>
+    <linearGradient id="zt-ph-ring" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5b88c4"/>
+      <stop offset="48%" stop-color="#3f69aa"/>
+      <stop offset="100%" stop-color="#2f5591"/>
+    </linearGradient>
+    <radialGradient id="zt-ph-face" cx="42%" cy="38%" r="62%">
+      <stop offset="0%" stop-color="#cfddef"/>
+      <stop offset="70%" stop-color="#95b3da"/>
+      <stop offset="100%" stop-color="#6f96c9"/>
+    </radialGradient>
+    <linearGradient id="zt-ph-body" x1="50%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#89acd4"/>
+      <stop offset="100%" stop-color="#5f89bd"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="160" height="160" rx="14" ry="14" fill="url(#zt-ph-sky)" stroke="#c8d8ee" stroke-width="1"/>
+
+  <circle cx="80" cy="74" r="46" fill="none" stroke="url(#zt-ph-ring)" stroke-width="2.25" opacity="0.5"/>
+
+  <ellipse cx="80" cy="148" rx="64" ry="54" fill="url(#zt-ph-body)" opacity="0.94"/>
+
+  <circle cx="80" cy="69" r="34" fill="url(#zt-ph-face)"/>
+
+  <!-- Soft forehead highlight -->
+  <ellipse cx="71" cy="54" rx="22" ry="14" fill="#ffffff" opacity="0.22"/>
+
+  <!-- Light curve suggesting shoulders -->
+  <path d="M30 146 Q80 118 130 146" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.28"/>
+
+  <!-- Small brand-aligned accents -->
+  <g opacity="0.42" stroke="#3f69aa" stroke-width="2" stroke-linecap="round" fill="none">
+    <path d="M116 118a46 46 0 015-18"/>
+    <circle cx="80" cy="152" r="3" fill="#3f69aa" stroke="none"/>
+    <circle cx="92" cy="148" r="2" fill="#3f69aa" stroke="none"/>
+    <circle cx="68" cy="148" r="2" fill="#3f69aa" stroke="none"/>
+  </g>
+</svg>

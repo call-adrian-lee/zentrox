@@ -31,6 +31,16 @@ export class AdminLoginComponent {
     }
   }
 
+  loginFormKeydown(ev: KeyboardEvent): void {
+    if (ev.key !== 'Enter') return;
+    const t = ev.target;
+    if (!(t instanceof HTMLElement)) return;
+    const tag = t.tagName;
+    if (tag === 'TEXTAREA' || tag === 'SELECT' || tag === 'BUTTON') return;
+    ev.preventDefault();
+    this.submit();
+  }
+
   submit(): void {
     this.errorKey.set(null);
     if (this.form.invalid) {

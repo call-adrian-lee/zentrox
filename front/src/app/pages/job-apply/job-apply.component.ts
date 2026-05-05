@@ -64,6 +64,16 @@ export class JobApplyComponent implements OnInit {
     });
   }
 
+  applyFormKeydown(ev: KeyboardEvent): void {
+    if (ev.key !== 'Enter') return;
+    const t = ev.target;
+    if (!(t instanceof HTMLElement)) return;
+    const tag = t.tagName;
+    if (tag === 'TEXTAREA' || tag === 'SELECT' || tag === 'BUTTON') return;
+    ev.preventDefault();
+    this.submit();
+  }
+
   submit(): void {
     this.submitError.set(null);
     if (this.form.invalid) {

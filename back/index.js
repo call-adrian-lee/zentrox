@@ -234,7 +234,7 @@ function resolveLeadershipPhotoForResponse(member) {
       return { ...member, photo_path: url };
     }
   }
-  return { ...member, photo_path: '/img/upload/leadership/placeholder-avatar.svg' };
+  return { ...member, photo_path: '/img/leadership/placeholder-avatar.svg' };
 }
 
 async function syncLeadershipPhotoPaths(pool) {
@@ -250,7 +250,7 @@ function resolvePortfolioImageForResponse(item) {
       return { ...item, image_path: url };
     }
   }
-  return { ...item, image_path: '/img/upload/leadership/placeholder-avatar.svg' };
+  return { ...item, image_path: '/img/leadership/placeholder-avatar.svg' };
 }
 
 async function syncPortfolioImagePaths(pool) {
