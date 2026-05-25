@@ -1,0 +1,142 @@
+<ng-template #imagePreview let-modal>
+  <div class="zt-portfolio-preview">
+    <header class="zt-portfolio-preview__head">
+      <div class="zt-portfolio-preview__head-inner">
+        <p class="zt-portfolio-preview__eyebrow">{{ 'portfolio.modalPreviewSubtitle' | t }}</p>
+        <h4 class="zt-portfolio-preview__title" id="portfolio-preview-title">{{ previewTitle() }}</h4>
+        @if (previewSubtitle()) {
+          <p class="zt-portfolio-preview__tag">{{ previewSubtitle() }}</p>
+        }
+      </div>
+      <button
+        type="button"
+        class="btn-close zt-portfolio-preview__close"
+        [attr.aria-label]="'portfolio.close' | t"
+        (click)="modal.dismiss()"
+      ></button>
+    </header>
+    <div class="zt-portfolio-preview__media">
+      <img
+        [src]="previewSrc()"
+        class="zt-portfolio-preview__img"
+        [attr.alt]="previewTitle() + ' — ' + ('portfolio.preview' | t)"
+        loading="lazy"
+        decoding="async"
+      />
+    </div>
+    <div class="zt-portfolio-preview__body">
+      <p class="zt-portfolio-preview__desc">{{ previewDescription() }}</p>
+    </div>
+    <footer class="zt-portfolio-preview__foot">
+      @if (previewLink().trim()) {
+        <a
+          class="btn zt-portfolio-preview__cta"
+          [href]="previewLink()"
+          target="_blank"
+          rel="noopener noreferrer"
+          [attr.aria-label]="'portfolio.openProjectAria' | t"
+        >
+          {{ 'portfolio.openProject' | t }}
+          <i class="fa fa-external-link ms-2" aria-hidden="true"></i>
+        </a>
+      } @else {
+        <span class="zt-portfolio-preview__nolink">{{ 'portfolio.modalNoLink' | t }}</span>
+      }
+    </footer>
+  </div>
+</ng-template>
+
+<div id="portfolio">
+  <div class="container">
+    <header class="section-header">
+      <h2 class="section-title">{{ 'nav.portfolio' | t }}</h2>
+      <p>{{ 'portfolio.intro' | t }}</p>
+    </header>
+    @if (loadError()) {
+      <p class="text-center text-secondary">{{ 'portfolio.loadError' | t }}</p>
+    } @else if (loading()) {
+      <p class="text-center text-secondary">{{ 'portfolio.loading' | t }}</p>
+    } @else if (!gridItems().length) {
+      <p class="text-center text-secondary">{{ 'portfolio.empty' | t }}</p>
+    } @else {
+      <div class="row">
+        <div class="col-lg-12">
+          <ul
+            class="portfolio-flters"
+            role="toolbar"
+            [attr.aria-label]="'portfolio.filterToolbarAria' | t"
+          >
+            <li>
+              <button
+                type="button"
+                class="portfolio-filter-btn"
+                [class.filter-active]="portfolioFilter() === 'all'"
+                [attr.aria-pressed]="portfolioFilter() === 'all'"
+                (click)="setPortfolioFilter('all')"
+              >
+                {{ 'portfolio.filterAll' | t }}
+              </button>
+            </li>
+            @for (tab of portfolioTabs(); track tab.id) {
+              <li>
+                <button
+                  type="button"
+                  class="portfolio-filter-btn"
+                  [class.filter-active]="portfolioFilter() === tab.id"
+                  [attr.aria-pressed]="portfolioFilter() === tab.id"
+                  (click)="setPortfolioFilter(tab.id)"
+                >
+                  {{ tab.title }}
+                </button>
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
+      <div class="row portfolio-container">
+        @for (item of filteredPortfolio(); track item.id) {
+          <div
+            class="col-lg-4 col-md-6 portfolio-item"
+            [class.dev-web]="item.portfolioKind === 'web'"
+            [class.dev-game]="item.portfolioKind === 'game'"
+          >
+            <div class="portfolio-wrap">
+              <figure>
+                <img
+                  [src]="item.image"
+                  class="img-fluid"
+                  [attr.alt]="item.title + ' — ' + ('portfolio.preview' | t)"
+                />
+                <button
+                  type="button"
+                  class="link-preview"
+                  [attr.title]="'portfolio.preview' | t"
+                  [attr.aria-label]="('portfolio.preview' | t) + ': ' + item.title"
+                  (click)="openPreview(imagePreview, item, $event)"
+                >
+                  <i class="fa fa-eye" aria-hidden="true"></i>
+                </button>
+                <a
+                  [href]="item.link"
+                  class="link-details"
+                  [attr.title]="'portfolio.details' | t"
+                  [attr.aria-label]="('portfolio.openProject' | t) + ': ' + item.title + ' (opens in new tab)'"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <i aria-hidden="true" class="fa fa-link"></i>
+                </a>
+                <h3 class="portfolio-title">
+                  {{ item.title }}
+                  @if (item.subtitle) {
+                    <span>{{ item.subtitle }}</span>
+                  }
+                </h3>
+              </figure>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

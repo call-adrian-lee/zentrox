@@ -1,0 +1,100 @@
+<section class="zt-page zt-page--tall py-5" aria-labelledby="open-role-apply-page-heading">
+  <div class="container zt-page__container--920">
+    @if (loadError()) {
+      <p class="text-danger" role="alert">{{ 'openRoleApply.loadError' | t }}</p>
+      <a [routerLink]="openRolesPath" class="btn btn-outline-primary btn-sm zt-touch-btn">{{ 'openRoleApply.backOpenRoles' | t }}</a>
+    } @else if (!role()) {
+      <p class="text-secondary" role="status" aria-live="polite">{{ 'openRoleApply.loading' | t }}</p>
+    } @else if (submitted()) {
+      <h1 id="open-role-apply-page-heading" class="h4 mb-3">{{ 'openRoleApply.thanksTitle' | t }}</h1>
+      <p class="text-secondary">{{ 'openRoleApply.thanksBody' | t }}</p>
+      <a [routerLink]="openRolesPath" class="btn btn-primary btn-sm mt-2 zt-touch-btn">{{ 'openRoleApply.backOpenRoles' | t }}</a>
+    } @else {
+      <header class="mb-4 zt-panel" aria-labelledby="open-role-apply-heading">
+        <p class="small text-secondary mb-1">
+          <a [routerLink]="openRolesPath">{{ 'openRoles.title' | t }}</a>
+        </p>
+        <h1 id="open-role-apply-heading" class="h3 mb-2">{{ role()!.title }}</h1>
+        <p class="small text-secondary mb-2">{{ 'openRoleApply.subtitle' | t }}</p>
+        <p class="small text-secondary mb-0">{{ role()!.location }} · {{ role()!.employment_type }}</p>
+      </header>
+
+      <div
+        id="open-role-apply-description"
+        class="zt-prose mb-3 small text-body-secondary"
+        [innerHTML]="roleDescriptionHtml(role()!.description)"
+      ></div>
+
+      <form
+        class="zt-panel zt-form-block"
+        [formGroup]="form"
+        novalidate
+        [attr.aria-label]="'openRoleApply.formRegionAria' | t"
+        (keydown)="applyFormKeydown($event)"
+      >
+        <div class="mb-3">
+          <label class="form-label" for="open-role-apply-fullName">{{ 'openRoleApply.fullName' | t }}</label>
+          <input
+            id="open-role-apply-fullName"
+            class="form-control"
+            type="text"
+            formControlName="fullName"
+            autocomplete="name"
+            [attr.aria-required]="true"
+            [attr.aria-invalid]="form.controls.fullName.touched && form.controls.fullName.invalid"
+          />
+          @if (form.controls.fullName.touched && form.controls.fullName.hasError('required')) {
+            <div class="invalid-feedback d-block" role="alert">{{ 'openRoleApply.required' | t }}</div>
+          }
+          @if (form.controls.fullName.touched && form.controls.fullName.hasError('minlength')) {
+            <div class="invalid-feedback d-block" role="alert">{{ 'openRoleApply.fullNameMinLength' | t }}</div>
+          }
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="open-role-apply-email">{{ 'openRoleApply.email' | t }}</label>
+          <input
+            id="open-role-apply-email"
+            class="form-control"
+            type="email"
+            formControlName="email"
+            autocomplete="email"
+            [attr.aria-required]="true"
+            [attr.aria-invalid]="form.controls.email.touched && form.controls.email.invalid"
+          />
+          @if (form.controls.email.touched && form.controls.email.invalid) {
+            <div class="invalid-feedback d-block" role="alert">{{ 'openRoleApply.emailInvalid' | t }}</div>
+          }
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="open-role-apply-phone">{{ 'openRoleApply.phone' | t }}</label>
+          <input id="open-role-apply-phone" class="form-control" type="tel" formControlName="phone" autocomplete="tel" />
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="open-role-apply-cover">{{ 'openRoleApply.cover' | t }}</label>
+          <textarea id="open-role-apply-cover" class="form-control" rows="5" formControlName="coverLetter"></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="open-role-apply-resumeUrl">{{ 'openRoleApply.resumeUrl' | t }}</label>
+          <input id="open-role-apply-resumeUrl" class="form-control" type="url" formControlName="resumeUrl" placeholder="https://…" />
+          @if (form.controls.resumeUrl.touched && form.controls.resumeUrl.errors?.['resumeUrlInvalid']) {
+            <div class="invalid-feedback d-block" role="alert">{{ 'openRoleApply.resumeUrlInvalid' | t }}</div>
+          }
+          @if (form.controls.resumeUrl.touched && form.controls.resumeUrl.errors?.['resumeUrlScheme']) {
+            <div class="invalid-feedback d-block" role="alert">{{ 'openRoleApply.resumeUrlScheme' | t }}</div>
+          }
+        </div>
+
+        @if (submitError()) {
+          <p class="text-danger small" role="alert">{{ submitError()! | t }}</p>
+        }
+
+        <div class="d-flex flex-wrap align-items-center gap-2">
+          <button type="button" class="btn btn-primary zt-touch-btn" [disabled]="submitting()" (click)="submit()">
+            {{ submitting() ? ('openRoleApply.sending' | t) : ('openRoleApply.submit' | t) }}
+          </button>
+          <a [routerLink]="openRolesPath" class="btn btn-link zt-touch-btn">{{ 'openRoleApply.cancel' | t }}</a>
+        </div>
+      </form>
+    }
+  </div>
+</section>

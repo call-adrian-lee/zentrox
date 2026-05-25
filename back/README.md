@@ -1,6 +1,6 @@
 # Zentrox API
 
-Express + MySQL backend for jobs, applications, and admin auth.
+Express + MySQL backend for open roles, quote requests, portfolio, leadership, and admin auth.
 
 ## Run from repo root (recommended)
 

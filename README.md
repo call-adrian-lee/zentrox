@@ -2,7 +2,7 @@
 
 Monorepo with two apps:
 
-- `front/` - Angular website + careers + admin UI
+- `front/` - Angular website (open roles, get a quote, admin UI)
 - `back/` - Express + MySQL API
 
 ## Quick start
@@ -41,7 +41,8 @@ This repo intentionally uses 3 npm trees (no workspaces):
 - `npm run dev` - run web + API together
 - `npm start` - run web only
 - `npm run api` - run API only
-- `npm run db:bootstrap` - create DB/schema and seed admin/jobs
+- `npm run db:bootstrap` - create DB/schema and seed admin/open roles
+- `npm run verify:api` - smoke-test public + admin API (API must be running on port 3000)
 
 ## Prerequisites
 
@@ -49,7 +50,9 @@ This repo intentionally uses 3 npm trees (no workspaces):
 - npm 11+
 - MySQL on `127.0.0.1:3306` with credentials in `back/.env`
 
-See `front/README.md` and `back/README.md` for app-specific notes.
+See [`NAMING.md`](NAMING.md) for full-stack naming conventions.
+
+See `front/README.md`, `back/README.md`, and [`deploy/README.md`](deploy/README.md) for app-specific notes.
 
 ## Security notes
 

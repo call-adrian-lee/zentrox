@@ -1,7 +1,7 @@
 /**
  * Creates MYSQL_DATABASE if missing, applies API schema, seeds admin + sample data.
  * Idempotent: adds missing canonical leadership + portfolio tabs/items (original homepage set),
- * sample jobs/MVP only when those tables are completely empty; always ensures Recruitment Partner job exists.
+ * sample jobs only when those tables are completely empty; always ensures Recruitment Partner job exists.
  * Run from repo: npm run db:bootstrap --prefix back
  */
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
@@ -84,26 +84,11 @@ async function main() {
        VALUES ?`,
       [seedJobs.map((j) => [j[0], j[1], j[2], j[3], 'published'])]
     );
-    console.log('[bootstrap] Seeded 3 published partnership jobs for /careers.');
+    console.log('[bootstrap] Seeded 3 published partnership jobs for /open-roles.');
   }
 
   if (await ensureRecruitmentPartnerJob(pool)) {
     console.log('[bootstrap] Added Recruitment Partner (High Commission) job.');
-  }
-
-  const seedMvp = [
-    ['HireFlow Lite', 'AI-assisted hiring pipeline and candidate workflow automation.', 'Prototyping', 1],
-    ['ClientPulse', 'Client health monitoring with alerts for delivery and communication risk.', 'Integration', 2],
-    ['SprintBoard AI', 'AI sprint assistant for backlog shaping, estimations, and release planning.', 'Discovery', 3]
-  ];
-  const [mvp] = await pool.query('SELECT id FROM mvp_items LIMIT 1');
-  if (!mvp.length) {
-    await pool.query(
-      `INSERT INTO mvp_items (name, focus, stage, status, sort_order)
-       VALUES ?`,
-      [seedMvp.map((x) => [x[0], x[1], x[2], 'published', x[3]])]
-    );
-    console.log('[bootstrap] Seeded 3 published MVP placeholder cards for /mvp.');
   }
 
   await seedCanonicalHomepageContent(pool, '[bootstrap]');

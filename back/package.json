@@ -1,12 +1,14 @@
 {
   "name": "zentrox-back",
   "private": true,
-  "description": "Zentrox job board API (Express + MySQL)",
+  "description": "Zentrox API — open roles, quotes, leadership, portfolio (Express + MySQL)",
   "packageManager": "npm@11.9.0",
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js",
     "db:bootstrap": "node scripts/bootstrap-db.cjs",
+    "smoke:quotes": "node scripts/smoke-quotes.cjs",
+    "verify:api": "node scripts/verify-api.cjs",
     "db:seed-recruitment-partner": "node scripts/seed-recruitment-partner-job.cjs",
     "migrate:portfolio-images": "node scripts/migrate-portfolio-assets.cjs"
   },

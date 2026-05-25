@@ -1,0 +1,222 @@
+<section class="zt-admin py-3 px-2 px-md-3">
+  <div class="container-fluid">
+    <div class="zt-admin-pagehead mb-3 d-flex flex-wrap align-items-start justify-content-between gap-2">
+      <div>
+        <h1 class="h4 mb-1">{{ 'admin.quotesTitle' | t }}</h1>
+        <p class="text-secondary small mb-0">{{ 'admin.quotesIntro' | t }}</p>
+      </div>
+      <button
+        type="button"
+        class="btn btn-outline-secondary btn-sm"
+        [disabled]="loading()"
+        (click)="loadRows()"
+      >
+        {{ 'admin.quotesRefresh' | t }}
+      </button>
+    </div>
+
+    @if (loading()) {
+      <p class="text-secondary" role="status" aria-live="polite">{{ 'admin.quotesLoading' | t }}</p>
+    } @else if (loadError()) {
+      <p class="text-danger">{{ 'admin.quotesLoadError' | t }}</p>
+      <button type="button" class="btn btn-outline-primary btn-sm" (click)="loadRows()">
+        {{ 'admin.quotesRefresh' | t }}
+      </button>
+    } @else if (!rows().length) {
+      <p class="text-secondary">{{ 'admin.quotesEmpty' | t }}</p>
+    } @else {
+      <div class="table-responsive zt-admin-table-wrap">
+        <table class="table table-sm table-striped align-middle">
+          <caption class="visually-hidden">
+            {{ 'admin.tableCaptionQuotes' | t }}
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">{{ 'admin.colReceived' | t }}</th>
+              <th scope="col">{{ 'admin.colClient' | t }}</th>
+              <th scope="col">{{ 'admin.colEmail' | t }}</th>
+              <th scope="col">{{ 'getQuote.serviceType' | t }}</th>
+              <th scope="col">{{ 'getQuote.budgetRange' | t }}</th>
+              <th scope="col">{{ 'admin.colStatus' | t }}</th>
+              <th scope="col">{{ 'admin.colActions' | t }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of rows(); track row.id) {
+              <tr>
+                <td class="text-nowrap small">{{ row.created_at | date: 'medium' }}</td>
+                <td>{{ row.full_name }}</td>
+                <td><a [href]="'mailto:' + row.email">{{ row.email }}</a></td>
+                <td>{{ ('getQuote.service.' + row.service_type) | t }}</td>
+                <td>{{ ('getQuote.budget.' + row.budget_range) | t }}</td>
+                <td>
+                  <span class="badge zt-quote-status zt-quote-status--{{ row.status }}">
+                    {{ ('getQuote.status.' + row.status) | t }}
+                  </span>
+                </td>
+                <td class="zt-admin-actions-cell">
+                  <button type="button" class="btn btn-link btn-sm zt-admin-row-action" (click)="openView(row)">
+                    {{ 'admin.viewQuote' | t }}
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-link btn-sm zt-admin-row-action text-danger"
+                    [disabled]="deletingId() === row.id"
+                    (click)="remove(row)"
+                  >
+                    {{ 'admin.delete' | t }}
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</section>
+
+@if (viewModalOpen() && viewing(); as v) {
+  <div class="zt-admin-modal-backdrop" aria-hidden="true" (click)="closeViewModal()"></div>
+  <div
+    class="zt-admin-modal-wrap"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="admin-quote-view-modal-title"
+    (click)="$event.target === $event.currentTarget && closeViewModal()"
+  >
+    <div class="card shadow-sm border-0 zt-admin-card zt-admin-quotes-view-card">
+      <div class="card-body">
+        <div class="d-flex align-items-start justify-content-between gap-2 mb-3">
+          <h2 id="admin-quote-view-modal-title" class="h6 mb-0">{{ 'admin.quotesDetailTitle' | t }}</h2>
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-secondary zt-admin-modal-close"
+            (click)="closeViewModal()"
+            [attr.aria-label]="'admin.modalClose' | t"
+          >
+            ×
+          </button>
+        </div>
+        <dl class="zt-admin-application-detail">
+          <div class="zt-admin-application-detail__row">
+            <dt>{{ 'admin.colReceived' | t }}</dt>
+            <dd>{{ v.created_at | date: 'medium' }}</dd>
+          </div>
+          <div class="zt-admin-application-detail__row">
+            <dt>{{ 'admin.colClient' | t }}</dt>
+            <dd>{{ v.full_name }}</dd>
+          </div>
+          <div class="zt-admin-application-detail__row">
+            <dt>{{ 'admin.colEmail' | t }}</dt>
+            <dd><a [href]="'mailto:' + v.email">{{ v.email }}</a></dd>
+          </div>
+          <div class="zt-admin-application-detail__row">
+            <dt>{{ 'getQuote.company' | t }}</dt>
+            <dd>{{ v.company || ('admin.none' | t) }}</dd>
+          </div>
+          <div class="zt-admin-application-detail__row">
+            <dt>{{ 'admin.colPhone' | t }}</dt>
+            <dd>{{ v.phone || ('admin.none' | t) }}</dd>
+          </div>
+          <div class="zt-admin-application-detail__row">
+            <dt>{{ 'getQuote.serviceType' | t }}</dt>
+            <dd>{{ ('getQuote.service.' + v.service_type) | t }}</dd>
+          </div>
+          <div class="zt-admin-application-detail__row">
+            <dt>{{ 'getQuote.budgetRange' | t }}</dt>
+            <dd>{{ ('getQuote.budget.' + v.budget_range) | t }}</dd>
+          </div>
+          <div class="zt-admin-application-detail__row">
+            <dt>{{ 'getQuote.timeline' | t }}</dt>
+            <dd>
+              @if (v.timeline) {
+                {{ ('getQuote.timelineOption.' + v.timeline) | t }}
+              } @else {
+                {{ 'admin.none' | t }}
+              }
+            </dd>
+          </div>
+          <div class="zt-admin-application-detail__row zt-admin-application-detail__row--block">
+            <dt>{{ 'getQuote.requirements' | t }}</dt>
+            <dd>
+              <div class="zt-admin-application-cover">{{ v.requirements }}</div>
+            </dd>
+          </div>
+        </dl>
+
+        <div class="mb-3">
+          <label class="form-label" for="quote-admin-status">{{ 'admin.colStatus' | t }}</label>
+          <select id="quote-admin-status" class="form-select form-select-sm" [ngModel]="editStatus()" (ngModelChange)="editStatus.set($event)">
+            @for (status of statusOptions; track status) {
+              <option [value]="status">{{ ('getQuote.status.' + status) | t }}</option>
+            }
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="quote-admin-notes">{{ 'admin.quotesNotes' | t }}</label>
+          <textarea
+            id="quote-admin-notes"
+            class="form-control form-control-sm"
+            rows="4"
+            [ngModel]="editNotes()"
+            (ngModelChange)="editNotes.set($event)"
+          ></textarea>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mt-3">
+          <button type="button" class="btn btn-outline-secondary btn-sm" (click)="closeViewModal()">
+            {{ 'admin.cancel' | t }}
+          </button>
+          <button type="button" class="btn btn-primary btn-sm" [disabled]="savingId() === v.id" (click)="saveView()">
+            {{ 'admin.saveUpdate' | t }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+@if (deleteModalOpen()) {
+  <div class="zt-admin-modal-backdrop" aria-hidden="true" (click)="closeDeleteModal()"></div>
+  <div
+    class="zt-admin-modal-wrap zt-admin-modal-wrap--delete"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="admin-quote-delete-modal-title"
+    (click)="$event.target === $event.currentTarget && closeDeleteModal()"
+  >
+    <div class="card shadow-sm border-0 zt-admin-card">
+      <div class="card-body">
+        <h2 id="admin-quote-delete-modal-title" class="h6 mb-2">{{ 'admin.delete' | t }}</h2>
+        @if (deleteErrorKey()) {
+          <p class="text-danger small mb-2" role="alert">{{ deleteErrorKey()! | t }}</p>
+        }
+        <p class="small mb-2">{{ 'admin.deleteConfirmTypeDelete' | t }}</p>
+        <input
+          #deleteConfirmInput
+          class="form-control mb-2"
+          [value]="deleteConfirmText()"
+          (input)="onDeleteConfirmInput($any($event.target).value)"
+          [attr.placeholder]="'admin.deleteConfirmPlaceholder' | t"
+          [attr.aria-label]="'admin.deleteConfirmTypeDelete' | t"
+          autocomplete="off"
+        />
+        <p class="small text-secondary mb-3">{{ 'admin.deleteConfirmNote' | t }}</p>
+        <div class="d-flex gap-2">
+          <button
+            type="button"
+            class="btn btn-danger btn-sm"
+            [disabled]="!canConfirmDelete() || deletingId() !== null"
+            (click)="confirmDelete()"
+          >
+            {{ 'admin.delete' | t }}
+          </button>
+          <button type="button" class="btn btn-outline-secondary btn-sm" [disabled]="deletingId() !== null" (click)="closeDeleteModal()">
+            {{ 'admin.cancel' | t }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

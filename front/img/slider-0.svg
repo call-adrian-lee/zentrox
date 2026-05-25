@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 900" width="1920" height="900" role="img" aria-label="Team collaboration  hero slide">
+  <defs>
+    <linearGradient id="bg0" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f2744"/>
+      <stop offset="45%" stop-color="#1a3d6b"/>
+      <stop offset="100%" stop-color="#2f5591"/>
+    </linearGradient>
+    <radialGradient id="glow0" cx="70%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#5b88c4" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#5b88c4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1920" height="900" fill="url(#bg0)"/>
+  <rect width="1920" height="900" fill="url(#glow0)"/>
+  <g opacity="0.18" stroke="#89acd4" stroke-width="1" fill="none">
+    <path d="M120 720 L420 520 L720 640 L1020 380 L1320 500 L1800 280"/>
+    <circle cx="420" cy="520" r="6" fill="#89acd4"/>
+    <circle cx="1020" cy="380" r="6" fill="#89acd4"/>
+  </g>
+</svg>

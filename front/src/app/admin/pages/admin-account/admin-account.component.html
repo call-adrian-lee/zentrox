@@ -1,0 +1,104 @@
+<section class="zt-admin py-3 px-2 px-md-3">
+  <div class="container-fluid">
+    <div class="zt-admin-pagehead mb-3">
+      <h1 class="h4 mb-1">{{ 'admin.accountTitle' | t }}</h1>
+      <p class="text-secondary small mb-0">{{ 'admin.accountIntro' | t }}</p>
+    </div>
+
+    @if (loading()) {
+      <p class="text-secondary" role="status" aria-live="polite">{{ 'admin.accountLoading' | t }}</p>
+    } @else if (loadError()) {
+      <p class="text-danger" role="alert">{{ 'admin.accountLoadError' | t }}</p>
+      <button type="button" class="btn btn-outline-primary btn-sm" (click)="loadAccount()">
+        {{ 'admin.accountRetry' | t }}
+      </button>
+    } @else {
+      <div class="card border-0 shadow-sm zt-admin-card">
+        <div class="card-body">
+          <dl class="row mb-4">
+            <dt class="col-sm-3 col-md-2 small text-secondary">{{ 'admin.accountCurrentUsername' | t }}</dt>
+            <dd class="col-sm-9 col-md-10 mb-0"><code>{{ currentUsername() }}</code></dd>
+          </dl>
+
+          <form [formGroup]="form" (ngSubmit)="submit()" novalidate [attr.aria-busy]="submitting()">
+            <fieldset [disabled]="submitting()">
+              <legend class="visually-hidden">{{ 'admin.accountTitle' | t }}</legend>
+
+              <div class="mb-3">
+                <label class="form-label" for="acct-current-password">
+                  {{ 'admin.accountCurrentPassword' | t }}
+                  <span class="text-danger" aria-hidden="true">*</span>
+                </label>
+                <input
+                  id="acct-current-password"
+                  type="password"
+                  class="form-control"
+                  formControlName="currentPassword"
+                  autocomplete="current-password"
+                  required
+                  [class.is-invalid]="currentPasswordInvalid()"
+                />
+                @if (currentPasswordInvalid()) {
+                  <div class="invalid-feedback d-block">{{ 'admin.accountCurrentPasswordRequired' | t }}</div>
+                }
+              </div>
+
+              <hr class="my-4" />
+
+              <p class="small text-secondary mb-3">{{ 'admin.accountChangesHint' | t }}</p>
+
+              <div class="mb-3">
+                <label class="form-label" for="acct-new-username">{{ 'admin.accountNewUsername' | t }}</label>
+                <input
+                  id="acct-new-username"
+                  type="text"
+                  class="form-control"
+                  formControlName="newUsername"
+                  autocomplete="username"
+                  spellcheck="false"
+                  autocapitalize="off"
+                />
+                <div class="form-text">{{ 'admin.accountNewUsernameHint' | t }}</div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="acct-new-password">{{ 'admin.accountNewPassword' | t }}</label>
+                <input
+                  id="acct-new-password"
+                  type="password"
+                  class="form-control"
+                  formControlName="newPassword"
+                  autocomplete="new-password"
+                />
+                <div class="form-text">{{ 'admin.accountNewPasswordHint' | t }}</div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="acct-confirm-password">{{ 'admin.accountConfirmPassword' | t }}</label>
+                <input
+                  id="acct-confirm-password"
+                  type="password"
+                  class="form-control"
+                  formControlName="confirmPassword"
+                  autocomplete="new-password"
+                />
+              </div>
+            </fieldset>
+
+            @if (errorKey()) {
+              <p class="text-danger small" role="alert">{{ errorKey()! | t }}</p>
+            }
+
+            <button
+              type="submit"
+              class="btn btn-primary btn-sm zt-admin-primary-cta"
+              [disabled]="submitting() || form.invalid"
+            >
+              {{ submitting() ? ('admin.accountSaving' | t) : ('admin.accountSave' | t) }}
+            </button>
+          </form>
+        </div>
+      </div>
+    }
+  </div>
+</section>

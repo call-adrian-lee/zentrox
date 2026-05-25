@@ -1,4 +1,4 @@
--- Run once (optional): the Node server also creates these tables on startup if missing.
+-- Reference DDL — keep in sync with back/db.js ensureSchema()
 CREATE DATABASE IF NOT EXISTS zentrox CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE zentrox;
 
@@ -32,19 +32,27 @@ CREATE TABLE IF NOT EXISTS job_applications (
   resume_url VARCHAR(1024) NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   KEY idx_job_applications_job_id (job_id),
+  KEY idx_job_applications_created (created_at),
   CONSTRAINT fk_job_applications_job FOREIGN KEY (job_id) REFERENCES jobs (id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS mvp_items (
-  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(128) NOT NULL,
-  focus TEXT NOT NULL,
-  stage VARCHAR(64) NOT NULL DEFAULT 'Prototyping',
-  status ENUM('draft', 'published') NOT NULL DEFAULT 'draft',
-  sort_order INT NOT NULL DEFAULT 0,
+CREATE TABLE IF NOT EXISTS project_inquiries (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  full_name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  company VARCHAR(255) NULL,
+  phone VARCHAR(64) NULL,
+  service_type VARCHAR(64) NOT NULL,
+  requirements TEXT NOT NULL,
+  budget_range VARCHAR(64) NOT NULL,
+  timeline VARCHAR(64) NULL,
+  source VARCHAR(64) NULL,
+  status ENUM('new', 'contacted', 'qualified', 'won', 'lost') NOT NULL DEFAULT 'new',
+  admin_notes TEXT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  KEY idx_mvp_items_status_sort (status, sort_order, created_at)
+  KEY idx_project_inquiries_status (status),
+  KEY idx_project_inquiries_created (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS leadership_members (

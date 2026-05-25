@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" role="img" aria-label="Client portrait placeholder">
+  <defs>
+    <linearGradient id="c1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3f69aa"/>
+      <stop offset="100%" stop-color="#1a3d6b"/>
+    </linearGradient>
+  </defs>
+  <circle cx="80" cy="80" r="78" fill="url(#c1)"/>
+  <circle cx="80" cy="68" r="28" fill="#e9f0fb" opacity="0.92"/>
+  <ellipse cx="80" cy="138" rx="44" ry="36" fill="#e9f0fb" opacity="0.88"/>
+</svg>

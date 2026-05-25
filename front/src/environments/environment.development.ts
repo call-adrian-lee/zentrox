@@ -2,7 +2,7 @@ export const environment = {
   production: false,
   /** Empty: use current origin; dev server proxies `/api` to the Node API (see proxy.conf.json). */
   siteUrl: '' as string,
-  /** Prefix for REST calls, e.g. `/api/jobs`. */
+  /** Prefix for REST calls, e.g. `/api/open-roles`. */
   apiBasePath: '/api',
   /**
    * Omit `apiOrigin` so URLs are same-origin (`/api/...`). `ng serve` proxies `/api` → backend (proxy.conf.json).

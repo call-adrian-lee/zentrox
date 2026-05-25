@@ -1,0 +1,179 @@
+<div
+  id="header"
+  [class.header-scrolled]="!!(nav.headerScrolled() && !isCompactHeaderRoute())"
+  [class.header-compact]="isCompactHeaderRoute()"
+>
+  <div class="container">
+    <div class="header-inner d-flex align-items-center justify-content-between w-100">
+      <div id="logo" class="flex-shrink-0">
+        <a routerLink="/" (click)="nav.closeMobileNav()" [attr.aria-label]="'nav.logoAlt' | t">
+          <svg
+            class="zt-header-logo"
+            xmlns="http://www.w3.org/2000/svg"
+            width="360"
+            height="72"
+            viewBox="0 0 360 72"
+            role="img"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <g class="zt-logo-mark" transform="translate(6 6)">
+              <rect class="zt-logo-mark__badge" x="0" y="0" width="60" height="60" rx="16" />
+              <path class="zt-logo-mark__z" d="M18 18h24l-20 24h20v6H18l20-24H18z" />
+              <g class="zt-logo-mark__dots">
+                <circle cx="44" cy="16" r="2.2" />
+                <circle cx="49" cy="22" r="2.2" />
+                <circle cx="40" cy="24" r="2.2" />
+              </g>
+              <g class="zt-logo-mark__lines">
+                <path d="M44 16 L49 22" />
+                <path d="M40 24 L49 22" />
+              </g>
+            </g>
+            <text x="84" y="46" class="zt-logo-word">Zentrox</text>
+          </svg>
+        </a>
+      </div>
+      @if (!isCompactHeaderRoute()) {
+        <div class="header-toolbar d-flex align-items-center justify-content-end flex-grow-1 min-w-0">
+          <nav id="nav-menu-container" class="d-none d-md-flex align-items-center" [attr.aria-label]="'nav.primaryAria' | t">
+            <ul class="nav-menu">
+              <li [class.menu-active]="isHomeRoute() && nav.activeSection() === homeSection">
+                <a href="/" (click)="nav.scrollToHomeSection($event, homeSection, homeSection)">{{ 'nav.home' | t }}</a>
+              </li>
+              <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'about'">
+                <a href="/" (click)="nav.scrollToHomeSection($event, 'about', 'about')">{{ 'nav.about' | t }}</a>
+              </li>
+              <li [class.menu-active]="isHomeRoute() && nav.activeSection() === leadershipSection">
+                <a href="/" (click)="nav.scrollToHomeSection($event, leadershipSection, leadershipSection)">{{
+                  'nav.leadership' | t
+                }}</a>
+              </li>
+              <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'services'">
+                <a href="/" (click)="nav.scrollToHomeSection($event, 'services', 'services')">{{ 'nav.services' | t }}</a>
+              </li>
+              <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'portfolio'">
+                <a href="/" (click)="nav.scrollToHomeSection($event, 'portfolio', 'portfolio')">{{ 'nav.portfolio' | t }}</a>
+              </li>
+              <li [class.menu-active]="isHomeRoute() && nav.activeSection() === testimonialsSection">
+                <a href="/" (click)="nav.scrollToHomeSection($event, testimonialsSection, testimonialsSection)">{{
+                  'nav.testimonials' | t
+                }}</a>
+              </li>
+              <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'contact'">
+                <a href="/" (click)="nav.scrollToHomeSection($event, 'contact', 'contact')">{{ 'nav.contact' | t }}</a>
+              </li>
+              <li class="zt-nav-flex-spacer" aria-hidden="true"></li>
+              <li
+                class="zt-nav-after-contact"
+                [class.menu-active]="isQuotePageRoute()"
+                [class.zt-cta-nav-item]="isHomeRoute()"
+              >
+                <a
+                  [href]="quotePagePath"
+                  [class.zt-cta-nav-link]="isHomeRoute()"
+                  [attr.aria-label]="'nav.getQuoteAria' | t"
+                  (click)="nav.openSitePageInNewTab($event, quotePagePath)"
+                  >{{ 'nav.getQuote' | t }}</a
+                >
+              </li>
+              <li class="zt-nav-cta-divider" aria-hidden="true"></li>
+              <li
+                [class.menu-active]="isOpenRolesRoute()"
+                [class.zt-cta-nav-item]="isHomeRoute()"
+              >
+                <a
+                  [href]="openRolesPath"
+                  [class.zt-cta-nav-link]="isHomeRoute()"
+                  [attr.aria-label]="'nav.openRolesAria' | t"
+                  (click)="nav.openSitePageInNewTab($event, openRolesPath)"
+                  >{{ 'nav.openRoles' | t }}</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+@if (!isCompactHeaderRoute()) {
+  <button
+    type="button"
+    id="mobile-nav-toggle"
+    class="d-md-none"
+    (click)="nav.toggleMobileNav()"
+    [attr.aria-expanded]="nav.mobileNavOpen()"
+    aria-controls="mobile-nav"
+    [attr.aria-label]="'nav.toggleMenu' | t"
+  >
+    <i
+      class="fa"
+      aria-hidden="true"
+      [class.fa-bars]="!nav.mobileNavOpen()"
+      [class.fa-times]="nav.mobileNavOpen()"
+    ></i>
+  </button>
+
+  <nav
+    id="mobile-nav"
+    [attr.aria-hidden]="!nav.mobileNavOpen()"
+    [attr.inert]="nav.mobileNavOpen() ? null : ''"
+    [attr.aria-label]="'nav.mobileNav' | t"
+  >
+    <ul>
+      <li [class.menu-active]="isHomeRoute() && nav.activeSection() === homeSection">
+        <a href="/" (click)="nav.scrollToHomeSection($event, homeSection, homeSection)">{{ 'nav.home' | t }}</a>
+      </li>
+      <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'about'">
+        <a href="/" (click)="nav.scrollToHomeSection($event, 'about', 'about')">{{ 'nav.about' | t }}</a>
+      </li>
+      <li [class.menu-active]="isHomeRoute() && nav.activeSection() === leadershipSection">
+        <a href="/" (click)="nav.scrollToHomeSection($event, leadershipSection, leadershipSection)">{{
+          'nav.leadership' | t
+        }}</a>
+      </li>
+      <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'services'">
+        <a href="/" (click)="nav.scrollToHomeSection($event, 'services', 'services')">{{ 'nav.services' | t }}</a>
+      </li>
+      <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'portfolio'">
+        <a href="/" (click)="nav.scrollToHomeSection($event, 'portfolio', 'portfolio')">{{ 'nav.portfolio' | t }}</a>
+      </li>
+      <li [class.menu-active]="isHomeRoute() && nav.activeSection() === testimonialsSection">
+        <a href="/" (click)="nav.scrollToHomeSection($event, testimonialsSection, testimonialsSection)">{{
+          'nav.testimonials' | t
+        }}</a>
+      </li>
+      <li [class.menu-active]="isHomeRoute() && nav.activeSection() === 'contact'">
+        <a href="/" (click)="nav.scrollToHomeSection($event, 'contact', 'contact')">{{ 'nav.contact' | t }}</a>
+      </li>
+      <li class="zt-nav-after-contact" [class.menu-active]="isQuotePageRoute()" [class.zt-cta-nav-item]="isHomeRoute()">
+        <a
+          [href]="quotePagePath"
+          [attr.aria-label]="'nav.getQuoteAria' | t"
+          (click)="nav.openSitePageInNewTab($event, quotePagePath)"
+          >{{ 'nav.getQuote' | t }}</a
+        >
+      </li>
+      <li class="zt-nav-cta-divider zt-nav-cta-divider--mobile" aria-hidden="true"></li>
+      <li [class.menu-active]="isOpenRolesRoute()" [class.zt-cta-nav-item]="isHomeRoute()">
+        <a
+          [href]="openRolesPath"
+          [attr.aria-label]="'nav.openRolesAria' | t"
+          (click)="nav.openSitePageInNewTab($event, openRolesPath)"
+          >{{ 'nav.openRoles' | t }}</a
+        >
+      </li>
+    </ul>
+  </nav>
+
+  @if (nav.mobileNavOpen()) {
+    <div
+      id="mobile-body-overly"
+      role="presentation"
+      aria-hidden="true"
+      (click)="nav.closeMobileNav()"
+    ></div>
+  }
+}

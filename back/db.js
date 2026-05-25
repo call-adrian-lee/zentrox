@@ -1,4 +1,5 @@
 const mysql = require('mysql2/promise');
+const logger = require('./lib/logger');
 
 let pool;
 
@@ -11,7 +12,10 @@ function getPool() {
       password: process.env.MYSQL_PASSWORD || '',
       database: process.env.MYSQL_DATABASE || 'zentrox',
       waitForConnections: true,
-      connectionLimit: 10
+      connectionLimit: Number(process.env.MYSQL_POOL_SIZE || 10),
+      queueLimit: 0,
+      enableKeepAlive: true,
+      keepAliveInitialDelay: 0
     });
   }
   return pool;
@@ -66,7 +70,7 @@ async function dropIndexIfExists(connection, table, indexName) {
   try {
     await connection.query(`ALTER TABLE \`${table}\` DROP INDEX \`${indexName}\``);
   } catch (e) {
-    console.warn(`[db] drop index ${indexName} on ${table}:`, e.message);
+    logger.warn(`drop index ${indexName} on ${table}`, e);
   }
 }
 
@@ -82,7 +86,6 @@ async function tableExists(connection, table) {
 async function migrateDropSlugColumns(connection) {
   const specs = [
     { table: 'leadership_members', index: 'uk_leadership_slug' },
-    { table: 'mvp_items', index: 'uk_mvp_items_slug' },
     { table: 'portfolio_tabs', index: 'uk_portfolio_tabs_slug' },
     { table: 'portfolio_items', index: 'uk_portfolio_items_tab_slug' }
   ];
@@ -94,7 +97,7 @@ async function migrateDropSlugColumns(connection) {
     try {
       await connection.query(`ALTER TABLE \`${table}\` DROP COLUMN slug`);
     } catch (e) {
-      console.warn(`[db] drop slug on ${table}:`, e.message);
+      logger.warn(`drop slug on ${table}`, e);
     }
   }
 }
@@ -109,7 +112,7 @@ async function migrateLeadershipMemberColumnComments(connection) {
         MODIFY COLUMN photo_path VARCHAR(512) NULL COMMENT 'Stored token leadership-{id}; app maps to /img/leadership/leadership-{id}.png'
     `);
   } catch (e) {
-    console.warn('[db] leadership_members column comments:', e.message);
+    logger.warn('leadership_members column comments', e);
   }
 }
 
@@ -160,20 +163,8 @@ async function ensureSchema(connection) {
       resume_url VARCHAR(1024) NULL,
       created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       KEY idx_job_applications_job_id (job_id),
+      KEY idx_job_applications_created (created_at),
       CONSTRAINT fk_job_applications_job FOREIGN KEY (job_id) REFERENCES jobs (id) ON DELETE CASCADE
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
-  `);
-  await connection.query(`
-    CREATE TABLE IF NOT EXISTS mvp_items (
-      id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-      name VARCHAR(128) NOT NULL,
-      focus TEXT NOT NULL,
-      stage VARCHAR(64) NOT NULL DEFAULT 'Prototyping',
-      status ENUM('draft', 'published') NOT NULL DEFAULT 'draft',
-      sort_order INT NOT NULL DEFAULT 0,
-      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-      KEY idx_mvp_items_status_sort (status, sort_order, created_at)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
   `);
   await connection.query(`
@@ -208,6 +199,26 @@ async function ensureSchema(connection) {
       created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       KEY idx_portfolio_tabs_status_sort (status, sort_order, id)
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+  `);
+  await connection.query(`
+    CREATE TABLE IF NOT EXISTS project_inquiries (
+      id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+      full_name VARCHAR(255) NOT NULL,
+      email VARCHAR(255) NOT NULL,
+      company VARCHAR(255) NULL,
+      phone VARCHAR(64) NULL,
+      service_type VARCHAR(64) NOT NULL,
+      requirements TEXT NOT NULL,
+      budget_range VARCHAR(64) NOT NULL,
+      timeline VARCHAR(64) NULL,
+      source VARCHAR(64) NULL,
+      status ENUM('new', 'contacted', 'qualified', 'won', 'lost') NOT NULL DEFAULT 'new',
+      admin_notes TEXT NULL,
+      created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+      KEY idx_project_inquiries_status (status),
+      KEY idx_project_inquiries_created (created_at)
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
   `);
   await connection.query(`

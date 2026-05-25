@@ -1,0 +1,39 @@
+<div [id]="sectionId">
+  <div class="container">
+    <div class="section-header">
+      <h2>{{ 'nav.testimonials' | t }}</h2>
+    </div>
+    <ngb-carousel
+      [interval]="6000"
+      [animation]="true"
+      [wrap]="true"
+      [showNavigationArrows]="false"
+      [showNavigationIndicators]="true"
+      class="carousel slide testimonials-carousel"
+    >
+      @for (t of testimonials(); track trackTestimonial($index, t)) {
+        <ng-template ngbSlide>
+          <div class="testimonial-item">
+            <div class="testimonial-img">
+              <img
+                [src]="t.image"
+                [attr.alt]="t.personName + ' — ' + t.title + ', ' + t.company"
+                width="150"
+                height="150"
+                loading="lazy"
+                decoding="async"
+                class="client-img"
+              />
+            </div>
+            <div class="testimonial-content">
+              <h3>{{ t.personName }}</h3>
+              <h4>{{ t.title }}, {{ t.company }}</h4>
+              <p class="testimonial-location">{{ t.location }}</p>
+              <p>{{ t.quote }}</p>
+            </div>
+          </div>
+        </ng-template>
+      }
+    </ngb-carousel>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 /**
  * GitHub Pages (and similar): unknown paths serve 404.html — must be the SPA shell.
- * Copy the built index.html after `ng build` so /mvp loads the app instead of a blank 404.
+ * Copy the built index.html after `ng build` so client routes load the app instead of a blank 404.
  */
 const fs = require('fs');
 const path = require('path');

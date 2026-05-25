@@ -1,0 +1,94 @@
+/**********************************/
+/******** App shell & a11y ********/
+/**********************************/
+
+app-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+app-user-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+app-user-layout main#main-content {
+  display: block;
+  flex: 1 0 auto;
+  min-height: 0;
+}
+
+app-user-layout .page-outlet {
+  display: block;
+  min-height: 0;
+}
+
+/* Skip link: visible on keyboard focus */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  z-index: 10000;
+  padding: 0.75rem 1.25rem;
+  background: var(--brand, #3f69aa);
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 0 0 8px 0;
+  text-decoration: none !important;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+  left: 0;
+  top: 0;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  clip: auto;
+}
+
+/* index.html noscript fallback (no inline styles) */
+.noscript-fallback {
+  max-width: 42rem;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  font-family: system-ui, sans-serif;
+}
+
+/* Shared SVG logo mark (header + admin sidebar) */
+.zt-logo-mark__badge {
+  fill: var(--brand, #3f69aa);
+}
+
+.zt-logo-mark__z,
+.zt-logo-mark__dots {
+  fill: #ffffff;
+}
+
+.zt-logo-mark__dots {
+  opacity: 0.95;
+}
+
+.zt-logo-mark__lines {
+  fill: none;
+  stroke: #ffffff;
+  stroke-width: 1.6;
+  opacity: 0.75;
+  stroke-linecap: round;
+}
+
+#header #logo .zt-logo-word,
+.zt-admin-shell__logo .zt-admin-logo-word {
+  font: 700 34px/1 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.zt-admin-shell__logo .zt-admin-logo-word {
+  fill: #f5f8ff;
+}

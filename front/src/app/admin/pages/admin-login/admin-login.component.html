@@ -1,0 +1,47 @@
+<section class="zt-admin-login py-5">
+  <div class="container zt-admin-login__container">
+    <div class="zt-admin-login__lucky">
+      <span class="zt-admin-login__lucky-icon zt-admin-login__lucky-icon--coin" aria-hidden="true">🪙</span>
+      <div class="zt-admin-login__lucky-copy">
+        <p class="zt-admin-login__lucky-title mb-0">{{ 'admin.loginLuckyDay' | t }}</p>
+        <p class="zt-admin-login__lucky-hint mb-0">{{ 'admin.loginLuckyHint' | t }}</p>
+      </div>
+      <span class="zt-admin-login__lucky-icon zt-admin-login__lucky-icon--pig" aria-hidden="true">🐷</span>
+      <span class="zt-admin-login__lucky-icon zt-admin-login__lucky-icon--clover" aria-hidden="true">🍀</span>
+    </div>
+    <div class="card border-0 shadow-sm zt-admin-login-card">
+      <div class="card-body p-4 zt-form-block">
+        <h1 class="h4 mb-4">{{ 'admin.loginTitle' | t }}</h1>
+        <form [formGroup]="form" novalidate (keydown)="loginFormKeydown($event)">
+          <div class="mb-3">
+            <label class="form-label" for="adm-user">{{ 'admin.loginUsername' | t }}</label>
+            <input
+              id="adm-user"
+              type="text"
+              class="form-control"
+              formControlName="username"
+              autocomplete="username"
+              spellcheck="false"
+            />
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="adm-pass">{{ 'admin.loginPassword' | t }}</label>
+            <input
+              id="adm-pass"
+              type="password"
+              class="form-control"
+              formControlName="password"
+              autocomplete="current-password"
+            />
+          </div>
+          @if (errorKey()) {
+            <p class="text-danger small">{{ errorKey()! | t }}</p>
+          }
+          <button type="button" class="btn btn-primary w-100" [disabled]="submitting()" (click)="submit()">
+            {{ submitting() ? '…' : ('admin.loginSubmit' | t) }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

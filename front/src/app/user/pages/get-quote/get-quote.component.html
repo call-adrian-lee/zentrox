@@ -1,0 +1,236 @@
+<section class="zt-page zt-page--tall zt-page--form py-5" aria-labelledby="get-quote-page-title">
+  <div class="container zt-page__container--760">
+    <header class="mb-4 zt-panel">
+      <h1 id="get-quote-page-title" class="h3 mb-2">{{ 'getQuote.title' | t }}</h1>
+      <p class="text-secondary mb-0">{{ 'getQuote.intro' | t }}</p>
+    </header>
+
+    @if (submitSuccess()) {
+      <div
+        class="alert alert-success alert-dismissible zt-form-notice"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        <strong class="alert-heading d-block mb-1">{{ 'getQuote.thanksTitle' | t }}</strong>
+        {{ 'getQuote.thanksBody' | t }}
+        <button
+          type="button"
+          class="btn-close"
+          (click)="dismissSuccessNotice()"
+          [attr.aria-label]="'getQuote.dismissNotice' | t"
+        ></button>
+      </div>
+    }
+
+    <form
+      class="zt-panel zt-form-block"
+      [formGroup]="form"
+      novalidate
+      [attr.aria-label]="'getQuote.formRegionAria' | t"
+      (keydown)="onFormKeydown($event)"
+    >
+      <p class="zt-get-quote__required-note small text-secondary mb-3">
+        {{ 'getQuote.requiredFieldsNote' | t }}
+      </p>
+
+      <div class="row g-3 mb-0">
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="get-quote-name">
+            {{ 'getQuote.fullName' | t }}
+            <span class="zt-field-required" aria-hidden="true">{{ 'getQuote.requiredMark' | t }}</span>
+            <span class="visually-hidden">{{ 'getQuote.requiredSrOnly' | t }}</span>
+          </label>
+            <input
+              #nameInput
+              id="get-quote-name"
+              class="form-control"
+              type="text"
+              formControlName="fullName"
+              [class.is-invalid]="fieldInvalid('fullName')"
+              autocomplete="name"
+            [attr.aria-required]="true"
+            [attr.aria-invalid]="fieldInvalid('fullName')"
+            [attr.aria-describedby]="fieldInvalid('fullName') ? 'get-quote-name-error' : null"
+          />
+          @if (fieldInvalid('fullName')) {
+            <div id="get-quote-name-error" class="invalid-feedback d-block" role="alert">
+              {{ 'getQuote.required' | t }}
+            </div>
+          }
+        </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="get-quote-email">
+            {{ 'getQuote.email' | t }}
+            <span class="zt-field-required" aria-hidden="true">{{ 'getQuote.requiredMark' | t }}</span>
+            <span class="visually-hidden">{{ 'getQuote.requiredSrOnly' | t }}</span>
+          </label>
+            <input
+              id="get-quote-email"
+              class="form-control"
+              type="email"
+              formControlName="email"
+              [class.is-invalid]="!!emailFieldError()"
+              autocomplete="email"
+            [attr.aria-required]="true"
+            [attr.aria-invalid]="fieldInvalid('email')"
+            [attr.aria-describedby]="fieldInvalid('email') ? 'get-quote-email-error' : null"
+          />
+          @if (emailFieldError() === 'required') {
+            <div id="get-quote-email-error" class="invalid-feedback d-block" role="alert">
+              {{ 'getQuote.required' | t }}
+            </div>
+          }
+          @if (emailFieldError() === 'email') {
+            <div id="get-quote-email-error" class="invalid-feedback d-block" role="alert">
+              {{ 'getQuote.emailInvalid' | t }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="row g-3 mt-0">
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="get-quote-company">
+            {{ 'getQuote.company' | t }}
+            <span class="zt-field-optional">{{ 'getQuote.optionalMark' | t }}</span>
+          </label>
+          <input
+            id="get-quote-company"
+            class="form-control"
+            type="text"
+            formControlName="company"
+            autocomplete="organization"
+            [attr.aria-required]="false"
+          />
+        </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="get-quote-phone">
+            {{ 'getQuote.phone' | t }}
+            <span class="zt-field-optional">{{ 'getQuote.optionalMark' | t }}</span>
+          </label>
+          <input
+            id="get-quote-phone"
+            class="form-control"
+            type="tel"
+            formControlName="phone"
+            autocomplete="tel"
+            [attr.aria-required]="false"
+          />
+        </div>
+      </div>
+
+      <div class="mb-3 mt-3">
+        <label class="form-label" for="get-quote-service">
+          {{ 'getQuote.serviceType' | t }}
+          <span class="zt-field-required" aria-hidden="true">{{ 'getQuote.requiredMark' | t }}</span>
+          <span class="visually-hidden">{{ 'getQuote.requiredSrOnly' | t }}</span>
+        </label>
+          <select
+            id="get-quote-service"
+            class="form-select"
+            formControlName="serviceType"
+            [class.is-invalid]="fieldInvalid('serviceType')"
+          [attr.aria-required]="true"
+          [attr.aria-invalid]="fieldInvalid('serviceType')"
+          [attr.aria-describedby]="fieldInvalid('serviceType') ? 'get-quote-service-error' : null"
+        >
+          <option value="">{{ 'getQuote.selectService' | t }}</option>
+          @for (option of serviceOptions; track option) {
+            <option [value]="option">{{ ('getQuote.service.' + option) | t }}</option>
+          }
+        </select>
+        @if (fieldInvalid('serviceType')) {
+          <div id="get-quote-service-error" class="invalid-feedback d-block" role="alert">
+            {{ 'getQuote.required' | t }}
+          </div>
+        }
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="get-quote-requirements">
+          {{ 'getQuote.requirements' | t }}
+          <span class="zt-field-required" aria-hidden="true">{{ 'getQuote.requiredMark' | t }}</span>
+          <span class="visually-hidden">{{ 'getQuote.requiredSrOnly' | t }}</span>
+        </label>
+          <textarea
+            id="get-quote-requirements"
+            class="form-control"
+            rows="6"
+            formControlName="requirements"
+            [class.is-invalid]="fieldInvalid('requirements')"
+          [attr.placeholder]="'getQuote.requirementsHint' | t"
+          [attr.aria-required]="true"
+          [attr.aria-invalid]="fieldInvalid('requirements')"
+          [attr.aria-describedby]="fieldInvalid('requirements') ? 'get-quote-requirements-error' : null"
+        ></textarea>
+        @if (fieldInvalid('requirements')) {
+          <div id="get-quote-requirements-error" class="invalid-feedback d-block" role="alert">
+            {{ 'getQuote.required' | t }}
+          </div>
+        }
+      </div>
+
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="get-quote-budget">
+            {{ 'getQuote.budgetRange' | t }}
+            <span class="zt-field-required" aria-hidden="true">{{ 'getQuote.requiredMark' | t }}</span>
+            <span class="visually-hidden">{{ 'getQuote.requiredSrOnly' | t }}</span>
+          </label>
+            <select
+              id="get-quote-budget"
+              class="form-select"
+              formControlName="budgetRange"
+              [class.is-invalid]="fieldInvalid('budgetRange')"
+            [attr.aria-required]="true"
+            [attr.aria-invalid]="fieldInvalid('budgetRange')"
+            [attr.aria-describedby]="fieldInvalid('budgetRange') ? 'get-quote-budget-error' : null"
+          >
+            <option value="">{{ 'getQuote.selectBudget' | t }}</option>
+            @for (option of budgetOptions; track option) {
+              <option [value]="option">{{ ('getQuote.budget.' + option) | t }}</option>
+            }
+          </select>
+          @if (fieldInvalid('budgetRange')) {
+            <div id="get-quote-budget-error" class="invalid-feedback d-block" role="alert">
+              {{ 'getQuote.required' | t }}
+            </div>
+          }
+        </div>
+        <div class="col-12 col-md-6">
+          <label class="form-label" for="get-quote-timeline">
+            {{ 'getQuote.timeline' | t }}
+            <span class="zt-field-optional">{{ 'getQuote.optionalMark' | t }}</span>
+          </label>
+          <select
+            id="get-quote-timeline"
+            class="form-select"
+            formControlName="timeline"
+            [attr.aria-required]="false"
+          >
+            <option value="">{{ 'getQuote.selectTimeline' | t }}</option>
+            @for (option of timelineOptions; track option) {
+              <option [value]="option">{{ ('getQuote.timelineOption.' + option) | t }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="zt-form-block__actions">
+        @if (submitErrorKey()) {
+          <p class="text-danger small mb-2" role="alert">{{ submitErrorKey()! | t }}</p>
+        }
+          <button
+            type="button"
+            class="btn btn-primary zt-touch-btn"
+            [disabled]="submitting()"
+            [attr.aria-busy]="submitting()"
+            (click)="submitQuote()"
+          >
+          {{ submitting() ? ('getQuote.sending' | t) : ('getQuote.submit' | t) }}
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
