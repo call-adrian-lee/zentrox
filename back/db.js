@@ -137,6 +137,24 @@ async function ensureLeadershipMemberColumns(connection) {
   }
 }
 
+async function ensurePortfolioItemCaseStudyColumns(connection) {
+  if (!(await tableExists(connection, 'portfolio_items'))) return;
+  for (let i = 0; i < 5; i += 1) {
+    const [cols] = await connection.query('SHOW COLUMNS FROM portfolio_items');
+    const fields = new Set(cols.map((c) => c.Field));
+    if (fields.has('problem') && fields.has('outcome')) return;
+    if (!fields.has('problem')) {
+      await connection.query(
+        'ALTER TABLE portfolio_items ADD COLUMN problem VARCHAR(512) NULL AFTER subtitle'
+      );
+    } else if (!fields.has('outcome')) {
+      await connection.query(
+        'ALTER TABLE portfolio_items ADD COLUMN outcome VARCHAR(512) NULL AFTER problem'
+      );
+    }
+  }
+}
+
 async function ensureSchema(connection) {
   await ensureAdminUsersTable(connection);
   await connection.query(`
@@ -190,6 +208,7 @@ async function ensureSchema(connection) {
   await migrateDropSlugColumns(connection);
   await ensureLeadershipMemberColumns(connection);
   await migrateLeadershipMemberColumnComments(connection);
+  await ensurePortfolioItemCaseStudyColumns(connection);
   await connection.query(`
     CREATE TABLE IF NOT EXISTS portfolio_tabs (
       id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -227,6 +246,8 @@ async function ensureSchema(connection) {
       tab_id INT UNSIGNED NOT NULL,
       title VARCHAR(255) NOT NULL,
       subtitle VARCHAR(255) NULL,
+      problem VARCHAR(512) NULL,
+      outcome VARCHAR(512) NULL,
       description TEXT NOT NULL,
       image_path VARCHAR(512) NOT NULL,
       link_url VARCHAR(1024) NOT NULL,

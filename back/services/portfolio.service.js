@@ -5,7 +5,7 @@ async function listPublishedPortfolio(pool) {
     `SELECT id, title, sort_order FROM portfolio_tabs WHERE status = 'published' ORDER BY sort_order ASC, id ASC`
   );
   const [items] = await pool.query(
-    `SELECT pi.id, pi.tab_id, pi.title, pi.subtitle, pi.description, pi.image_path, pi.link_url, pi.sort_order
+    `SELECT pi.id, pi.tab_id, pi.title, pi.subtitle, pi.problem, pi.outcome, pi.description, pi.image_path, pi.link_url, pi.sort_order
      FROM portfolio_items pi
      INNER JOIN portfolio_tabs pt ON pt.id = pi.tab_id AND pt.status = 'published'
      WHERE pi.status = 'published'

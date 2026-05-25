@@ -100,6 +100,26 @@
   font-size: 0.875em;
 }
 
+.zt-trust-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.zt-trust-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #2f5591;
+  background: #eef4ff;
+  border: 1px solid #d7e5ff;
+}
+
 /* Rich HTML from CMS / role descriptions (public + admin preview) */
 .zt-prose {
   line-height: 1.6;

@@ -293,6 +293,16 @@
               <input id="pi-sub" class="form-control" formControlName="subtitle" />
             </div>
           </div>
+          <div class="row g-2 mb-2">
+            <div class="col-md-6">
+              <label class="form-label" for="pi-problem">{{ 'admin.fieldProblem' | t }}</label>
+              <input id="pi-problem" class="form-control" formControlName="problem" [attr.placeholder]="'admin.fieldProblemHint' | t" />
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" for="pi-outcome">{{ 'admin.fieldOutcome' | t }}</label>
+              <input id="pi-outcome" class="form-control" formControlName="outcome" [attr.placeholder]="'admin.fieldOutcomeHint' | t" />
+            </div>
+          </div>
           <div class="mb-2">
             <label class="form-label" for="pi-desc">{{ 'admin.fieldDescription' | t }}</label>
             <textarea id="pi-desc" class="form-control" rows="3" formControlName="description"></textarea>

@@ -1,0 +1,16 @@
+<section id="clients" class="client-logos" [attr.aria-label]="'clients.sectionAria' | t">
+  <div class="container">
+    <header class="section-header client-logos__header">
+      <h2>{{ 'clients.title' | t }}</h2>
+      <p>{{ 'clients.intro' | t }}</p>
+    </header>
+    <ul class="client-logos__grid">
+      @for (client of clients(); track client.name) {
+        <li class="client-logos__item">
+          <span class="client-logos__name">{{ client.name }}</span>
+          <span class="client-logos__outcome">{{ client.outcomeKey | t }}</span>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

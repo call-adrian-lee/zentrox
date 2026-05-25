@@ -11,6 +11,8 @@ export interface PortfolioPublicItemRow {
   tab_id: number;
   title: string;
   subtitle: string | null;
+  problem: string | null;
+  outcome: string | null;
   description: string;
   image_path: string;
   link_url: string;
@@ -25,6 +27,8 @@ export interface PortfolioGridItem {
   image: string;
   title: string;
   subtitle?: string;
+  problem?: string;
+  outcome?: string;
   description: string;
   link: string;
 }
@@ -44,6 +48,8 @@ export interface PortfolioItemAdmin {
   tab_title: string;
   title: string;
   subtitle: string | null;
+  problem: string | null;
+  outcome: string | null;
   description: string;
   image_path: string;
   link_url: string;

@@ -11,7 +11,7 @@
       class="carousel slide carousel-fade"
       id="headerCarousel"
     >
-      @for (slide of heroSlides(); track ('route' in slide ? slide.route : slide.fragment); let i = $index) {
+      @for (slide of heroSlides(); track slide.titleKey; let i = $index) {
         <ng-template ngbSlide>
           <div class="carousel-background">
             <img
@@ -33,21 +33,12 @@
                 <h2 class="hero-title">{{ slide.titleKey | t }}</h2>
               }
               <p class="hero-description">{{ slide.textKey | t }}</p>
-              @if ('route' in slide) {
-                <a
-                  [href]="slide.route"
-                  class="btn-get-started"
-                  (click)="nav.openSitePageInNewTab($event, slide.route)"
-                  >{{ slide.ctaKey | t }}</a
-                >
-              } @else {
-                <a
-                  [href]="'#' + slide.fragment"
-                  class="btn-get-started"
-                  (click)="nav.scrollToHomeSection($event, slide.fragment, slide.navKey)"
-                  >{{ slide.ctaKey | t }}</a
-                >
-              }
+              <a
+                [href]="slide.route"
+                class="btn-get-started"
+                (click)="nav.openSitePageInNewTab($event, slide.route)"
+                >{{ slide.ctaKey | t }}</a
+              >
             </div>
           </div>
         </ng-template>

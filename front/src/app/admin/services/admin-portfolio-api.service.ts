@@ -43,6 +43,8 @@ export class AdminPortfolioApiService {
     tabId: number;
     title: string;
     subtitle?: string | null;
+    problem?: string | null;
+    outcome?: string | null;
     description: string;
     linkUrl: string;
     status: PortfolioPublishStatus;
@@ -56,6 +58,8 @@ export class AdminPortfolioApiService {
       tabId: number;
       title: string;
       subtitle: string | null;
+      problem: string | null;
+      outcome: string | null;
       description: string;
       linkUrl: string;
       status: PortfolioPublishStatus;

@@ -74,6 +74,8 @@ export class AdminPortfolioComponent implements OnInit {
     tabId: this.fb.control(0, { validators: [Validators.required, Validators.min(1)] }),
     title: this.fb.control('', { validators: [Validators.required, Validators.maxLength(255)] }),
     subtitle: this.fb.control(''),
+    problem: this.fb.control(''),
+    outcome: this.fb.control(''),
     description: this.fb.control('', { validators: [Validators.required] }),
     linkUrl: this.fb.control('', { validators: [Validators.required, Validators.maxLength(1024)] }),
     status: this.fb.control<PortfolioPublishStatus>('draft', { validators: [Validators.required] })
@@ -253,6 +255,8 @@ export class AdminPortfolioComponent implements OnInit {
       tabId: first.id,
       title: '',
       subtitle: '',
+      problem: '',
+      outcome: '',
       description: '',
       linkUrl: '',
       status: 'draft'
@@ -268,6 +272,8 @@ export class AdminPortfolioComponent implements OnInit {
       tabId: it.tab_id,
       title: it.title,
       subtitle: it.subtitle ?? '',
+      problem: it.problem ?? '',
+      outcome: it.outcome ?? '',
       description: it.description,
       linkUrl: it.link_url,
       status: it.status
@@ -287,6 +293,8 @@ export class AdminPortfolioComponent implements OnInit {
       tabId: 0,
       title: '',
       subtitle: '',
+      problem: '',
+      outcome: '',
       description: '',
       linkUrl: '',
       status: 'draft'
@@ -327,6 +335,8 @@ export class AdminPortfolioComponent implements OnInit {
       tabId: Number(v.tabId),
       title: v.title.trim(),
       subtitle: v.subtitle.trim() || null,
+      problem: v.problem.trim() || null,
+      outcome: v.outcome.trim() || null,
       description: v.description.trim(),
       linkUrl: v.linkUrl.trim(),
       status: v.status

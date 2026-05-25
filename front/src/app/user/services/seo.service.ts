@@ -12,7 +12,7 @@ import type { OpenRole } from '@shared/models/open-roles.models';
 import type { SeoData } from '@shared/models/seo.models';
 
 const SITE = 'Zentrox';
-const DEFAULT_DESCRIPTION = `SaaS and web platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. ${COMPANY_ATTRIBUTION}, Austin, TX.`;
+const DEFAULT_DESCRIPTION = `SaaS and product platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. ${COMPANY_ATTRIBUTION}, Austin, TX.`;
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
@@ -330,8 +330,8 @@ export class SeoService {
           knowsAbout: [
             'SaaS development',
             'Product engineering',
-            'Enterprise web applications',
-            'Web platform development',
+            'Enterprise applications',
+            'Product platform development',
             'API development',
             'Cloud computing',
             'DevOps',

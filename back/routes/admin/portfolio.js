@@ -244,7 +244,7 @@ function createAdminPortfolioRouter({ getPool, authMiddleware }) {
     try {
       const pool = getPool();
       const [rows] = await pool.query(
-        `SELECT pi.id, pi.tab_id, pt.title AS tab_title, pi.title, pi.subtitle, pi.description, pi.image_path, pi.link_url, pi.sort_order, pi.status, pi.created_at, pi.updated_at
+        `SELECT pi.id, pi.tab_id, pt.title AS tab_title, pi.title, pi.subtitle, pi.problem, pi.outcome, pi.description, pi.image_path, pi.link_url, pi.sort_order, pi.status, pi.created_at, pi.updated_at
          FROM portfolio_items pi
          INNER JOIN portfolio_tabs pt ON pt.id = pi.tab_id
          ORDER BY pt.sort_order ASC, pi.sort_order ASC, pi.id ASC`
@@ -315,6 +315,8 @@ function createAdminPortfolioRouter({ getPool, authMiddleware }) {
     const tabId = Number(b.tabId);
     const title = String(b.title || '').trim().slice(0, 255);
     const subtitle = b.subtitle != null ? String(b.subtitle).trim().slice(0, 255) || null : null;
+    const problem = b.problem != null ? String(b.problem).trim().slice(0, 512) || null : null;
+    const outcome = b.outcome != null ? String(b.outcome).trim().slice(0, 512) || null : null;
     const description = String(b.description || '').trim();
     const linkNorm = normalizeRequiredHttpUrl(b.linkUrl);
     const status = b.status === 'published' ? 'published' : 'draft';
@@ -340,9 +342,9 @@ function createAdminPortfolioRouter({ getPool, authMiddleware }) {
       );
       const sortOrder = Number(ordRows[0]?.m ?? -1) + 1;
       const [r] = await pool.query(
-        `INSERT INTO portfolio_items (tab_id, title, subtitle, description, image_path, link_url, sort_order, status)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-        [tabId, title, subtitle, description, '', linkUrl, sortOrder, status]
+        `INSERT INTO portfolio_items (tab_id, title, subtitle, problem, outcome, description, image_path, link_url, sort_order, status)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [tabId, title, subtitle, problem, outcome, description, '', linkUrl, sortOrder, status]
       );
       const staticImagePath = portfolioStaticImagePath(r.insertId);
       await pool.query('UPDATE portfolio_items SET image_path = ? WHERE id = ?', [staticImagePath, r.insertId]);
@@ -364,6 +366,10 @@ function createAdminPortfolioRouter({ getPool, authMiddleware }) {
     const title = b.title != null ? String(b.title).trim().slice(0, 255) : null;
     const subtitle =
       b.subtitle !== undefined ? (b.subtitle == null ? null : String(b.subtitle).trim().slice(0, 255) || null) : undefined;
+    const problem =
+      b.problem !== undefined ? (b.problem == null ? null : String(b.problem).trim().slice(0, 512) || null) : undefined;
+    const outcome =
+      b.outcome !== undefined ? (b.outcome == null ? null : String(b.outcome).trim().slice(0, 512) || null) : undefined;
     const description = b.description != null ? String(b.description).trim() : null;
     const linkUrlRaw = b.linkUrl != null ? String(b.linkUrl).trim() : null;
     const status = b.status != null ? (b.status === 'published' ? 'published' : 'draft') : null;
@@ -432,6 +438,14 @@ function createAdminPortfolioRouter({ getPool, authMiddleware }) {
       if (subtitle !== undefined) {
         fields.push('subtitle = ?');
         vals.push(subtitle);
+      }
+      if (problem !== undefined) {
+        fields.push('problem = ?');
+        vals.push(problem);
+      }
+      if (outcome !== undefined) {
+        fields.push('outcome = ?');
+        vals.push(outcome);
       }
       if (description !== null) {
         fields.push('description = ?');

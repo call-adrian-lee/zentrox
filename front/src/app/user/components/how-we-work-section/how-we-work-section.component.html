@@ -1,0 +1,30 @@
+<section id="how-we-work" class="how-we-work" aria-labelledby="how-we-work-heading">
+  <div class="container">
+    <header class="section-header">
+      <h2 id="how-we-work-heading">{{ 'howWeWork.title' | t }}</h2>
+      <p>{{ 'howWeWork.intro' | t }}</p>
+    </header>
+    <ol class="how-we-work__steps">
+      @for (step of steps; track step.titleKey; let i = $index) {
+        <li class="how-we-work__step">
+          <div class="how-we-work__step-num" aria-hidden="true">{{ i + 1 }}</div>
+          <div class="how-we-work__step-icon" aria-hidden="true">
+            <i class="fa" [class]="step.icon"></i>
+          </div>
+          <h3 class="how-we-work__step-title">{{ step.titleKey | t }}</h3>
+          <p class="how-we-work__step-body">{{ step.bodyKey | t }}</p>
+        </li>
+      }
+    </ol>
+    <div class="how-we-work__cta-wrap text-center">
+      <a
+        class="btn-get-started"
+        [href]="quotePath"
+        [attr.aria-label]="'howWeWork.ctaAria' | t"
+        (click)="nav.openSitePageInNewTab($event, quotePath)"
+      >
+        {{ 'howWeWork.cta' | t }}
+      </a>
+    </div>
+  </div>
+</section>

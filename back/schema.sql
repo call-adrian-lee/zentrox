@@ -89,6 +89,8 @@ CREATE TABLE IF NOT EXISTS portfolio_items (
   tab_id INT UNSIGNED NOT NULL,
   title VARCHAR(255) NOT NULL,
   subtitle VARCHAR(255) NULL,
+  problem VARCHAR(512) NULL,
+  outcome VARCHAR(512) NULL,
   description TEXT NOT NULL,
   image_path VARCHAR(512) NOT NULL,
   link_url VARCHAR(1024) NOT NULL,

@@ -54,8 +54,7 @@ export class HeroCarouselComponent {
         titleKey: 'hero.slide1.title',
         textKey: 'hero.slide1.text',
         ctaKey: 'hero.slide1.cta',
-        fragment: 'services',
-        navKey: 'services'
+        route: ROUTE_GET_QUOTE
       },
       {
         image: SITE_IMAGES.heroSlides[2],
@@ -63,8 +62,7 @@ export class HeroCarouselComponent {
         titleKey: 'hero.slide2.title',
         textKey: 'hero.slide2.text',
         ctaKey: 'hero.slide2.cta',
-        fragment: 'portfolio',
-        navKey: 'portfolio'
+        route: ROUTE_GET_QUOTE
       }
     ];
   });

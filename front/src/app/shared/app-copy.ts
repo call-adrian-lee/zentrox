@@ -37,46 +37,56 @@ export const APP_TEXT = {
     slackAria: 'Slack'
   },
   hero: {
-    carousel: 'Featured services',
+    carousel: 'Hero highlights',
+    ctaPrimary: 'Get a quote',
     slide0: {
       alt: 'Product and engineering team collaborating on software delivery',
       title: 'SaaS & Platforms for Serious U.S. Markets.',
-      text: 'We collaborate with idea owners and aligned investors—honest scopes, senior engineers, and releases you can plan around.',
+      text: 'For founders and product teams who need senior engineers, honest scopes, and steady progress on your roadmap.',
       cta: 'Get a quote'
     },
     slide1: {
       alt: 'Modern glass office towers — enterprise web and digital platforms',
       title: 'Web & Enterprise-Grade Platforms.',
       text: 'Web apps, APIs, and integrations built to stay fast, observable, and maintainable at scale.',
-      cta: 'Explore Services'
+      cta: 'Get a quote'
     },
     slide2: {
       alt: 'Soft abstract gradient — AI, real-time 3D, and immersive products',
       title: 'AI, Unity & AR/VR — Built for Production.',
       text: 'AI, Unity, and AR/VR tuned for real devices, performance, and uptime.',
-      cta: 'Portfolio'
+      cta: 'Get a quote'
     }
+  },
+  trust: {
+    barAria: 'Why clients choose Zentrox',
+    reply: 'Reply within 1 business day',
+    hours: 'U.S. business hours (CT)',
+    scopes: 'Clear scope before we start',
+    senior: 'Senior-led engineering'
   },
   about: {
     title: 'About Zentrox',
+    audience:
+      'Built for founders, product owners, and aligned investors targeting ambitious U.S. markets.',
     lead:
-      'partners with idea owners and aligned investors to ship quality SaaS for ambitious U.S. markets—proven web, API, AI, and Unity engineering, clear scopes, U.S. business hours—and a drive to become one of America’s top SaaS development teams.',
+      ' partners on product engineering with honest scopes, U.S. business hours, and progress your team and investors can rely on.',
     story: {
       title: 'Our Story',
-      body: 'We are product- and engineering-led, building SaaS meant to compete for serious market share—not one-off demos. We collaborate openly with founders who own the vision and investors who demand execution, so milestones map to revenue, retention, and products that can scale.'
+      body: 'We are product- and engineering-led, building software meant to compete for serious market share—not one-off demos. We collaborate openly with founders who own the vision and investors who demand execution, so delivery maps to revenue, retention, and products that can scale.'
     },
     mission: {
       title: 'Our Mission',
-      body: 'We pursue ambitious roadmaps with partners targeting major opportunities: secure, maintainable SaaS on a steady cadence—plans we can stand behind, releases that move business metrics, and revenue from software built to win and retain customers in competitive categories.'
+      body: 'We pursue ambitious roadmaps with partners targeting major opportunities: secure, maintainable products delivered on a steady rhythm—plans we can stand behind, releases that move business metrics, and software built to win and retain customers in competitive categories.'
     },
     vision: {
       title: 'Our Vision',
-      body: 'Be counted among America’s leading SaaS development teams—the partner that founders and investors choose when the market is large, the quality bar is high, and progress must show up in both the product and sustainable revenue.'
+      body: 'Be counted among America’s leading product engineering teams—the partner founders and investors choose when the market is large, the quality bar is high, and progress must show up in both the product and sustainable revenue.'
     }
   },
   leadership: {
     title: 'Leadership',
-    lead: 'Leaders who ship SaaS with discipline—partnering with founders, investors, and delivery teams for the long run.',
+    lead: 'Leaders who ship SaaS, platforms, and interactive products with discipline—partnering with founders, investors, and delivery teams for the long run.',
     loading: 'Loading leadership…',
     loadError: 'Could not load leadership. Please try again later.',
     empty: 'No leadership profiles are published right now.'
@@ -84,10 +94,19 @@ export const APP_TEXT = {
   services: {
     title: 'Services',
     intro:
-      'Engineering for ambitious SaaS and web platforms—cloud & data, AI, 3D/Unity, and DevOps—with clear delivery and handoff.',
-    model1: { title: 'Project delivery', body: 'Fixed scope, milestones, and demos when outcomes are well defined.' },
-    model2: { title: 'Team extension', body: 'Engineers embedded with your team—shared tools and U.S. hours overlap.' },
-    model3: { title: 'Advisory', body: 'Architecture and security-minded reviews before you commit to a build.' },
+      'Outcome-focused engineering for SaaS and product platforms—web, APIs, AI, cloud, and Unity.',
+    model1: {
+      title: 'Project delivery',
+      body: 'Scoped builds with clear deliverables and regular demos when outcomes are well defined.'
+    },
+    model2: {
+      title: 'Team extension',
+      body: 'Senior engineers embedded with your team—shared tools, U.S. hours overlap, and capacity you can scale up or down.'
+    },
+    model3: {
+      title: 'Advisory',
+      body: 'Architecture, security, and roadmap reviews before you commit—or while a build is in flight.'
+    },
     web: {
       title: 'Web Development',
       body: 'Responsive, high-performance websites and web applications built with modern frameworks and best practices for accessibility, SEO, and maintainability.'
@@ -125,6 +144,28 @@ export const APP_TEXT = {
       body: 'Tailored software, enterprise integrations, and modernization work designed around your requirements, timelines, and internal constraints.'
     }
   },
+  howWeWork: {
+    title: 'How we work',
+    intro: 'A straightforward path from first message to engaged delivery—no surprises, no black boxes.',
+    step1: {
+      title: 'Share your project',
+      body: 'Tell us what you are building via Get a quote or Contact. Share your goals, timeline, and whether project delivery, team extension, or advisory fits best.'
+    },
+    step2: {
+      title: 'We review & reply',
+      body: 'We read every request and respond within one business day with clarifying questions or next steps.'
+    },
+    step3: {
+      title: 'Scope, terms & billing',
+      body: 'We align on deliverables, hourly/monthly/yearly billing, and availability before work begins. NDA available on request.'
+    },
+    step4: {
+      title: 'Build & ship',
+      body: 'Senior engineers deliver in steady iterations—maintainable code your team can own long term.'
+    },
+    cta: 'Start a project',
+    ctaAria: 'Get a quote — opens quote request form in a new tab'
+  },
   counters: {
     sectionAria: 'Company highlights',
     years: 'Years of Experience',
@@ -135,7 +176,7 @@ export const APP_TEXT = {
   portfolio: {
     title: 'Portfolio',
     intro:
-      'Representative projects and technology focus areas across Web & Enterprise, AI, Unity, and AR/VR.',
+      'Selected work from our Web & Enterprise and AI, Unity, AR/VR portfolios—each project focused on real outcomes, not demo-ware.',
     loading: 'Loading portfolio…',
     loadError: 'Could not load portfolio. Please try again later.',
     empty: 'No portfolio items are published right now.',
@@ -147,7 +188,17 @@ export const APP_TEXT = {
     openProjectAria: 'Open project in a new tab',
     close: 'Close',
     modalPreviewSubtitle: 'Project preview',
+    modalProblem: 'Challenge',
+    modalOutcome: 'Outcome',
     modalNoLink: 'No external link'
+  },
+  clients: {
+    sectionAria: 'Clients we have partnered with',
+    title: 'Trusted by founders & product teams',
+    intro: 'Leaders from the same clients featured below—founders and product teams we have shipped with on SaaS, marketplaces, and product platforms.',
+    howtube: 'Video platform · launch stability',
+    oohyeah: 'Artist commerce · consumer-grade flows',
+    youtopia: 'Health journey platform · UX & velocity'
   },
   testimonials: {
     title: 'Testimonials',
@@ -225,7 +276,9 @@ export const APP_TEXT = {
   getQuote: {
     title: 'Get a quote',
     intro:
-      'Tell us what you need and your budget range. We review every quote request and reply within one business day.',
+      'Tell us what you need, how you prefer to engage (hourly, monthly, or yearly), and your budget range. We review every request and reply within one business day.',
+    reassurance: 'No spam. No obligation. NDA available on request.',
+    trustAria: 'What to expect',
     requiredFieldsNote: 'Fields marked with * are required. All other fields are optional.',
     formRegionAria: 'Get a quote form',
     submit: 'Submit request',
@@ -236,7 +289,7 @@ export const APP_TEXT = {
     submitUnavailable:
       'Our server is temporarily unavailable. Please try again in a few minutes or email us directly.',
     thanksTitle: 'Quote request received',
-    thanksBody: 'Thank you. We will review your project details and get back to you soon.',
+    thanksBody: 'Thank you. We will review your details and follow up with engagement options and next steps.',
     dismissNotice: 'Dismiss notification',
     fullName: 'Full name',
     email: 'Email',
@@ -244,7 +297,7 @@ export const APP_TEXT = {
     phone: 'Phone',
     serviceType: 'Service',
     requirements: 'Project requirements',
-    requirementsHint: 'Describe goals, features, integrations, and anything else we should know.',
+    requirementsHint: 'Describe goals, features, integrations, and your preferred engagement—hourly, monthly, or yearly.',
     budgetRange: 'Budget range',
     timeline: 'Timeline',
     optionalMark: '(optional)',
@@ -420,6 +473,10 @@ export const APP_TEXT = {
     portfolioImageFileInputLabel: 'Upload or replace cover image',
     fieldTab: 'Tab',
     fieldSubtitle: 'Subtitle',
+    fieldProblem: 'Challenge (optional)',
+    fieldOutcome: 'Outcome (optional)',
+    fieldProblemHint: 'What problem or constraint did the client face?',
+    fieldOutcomeHint: 'What result did the project deliver?',
     portfolioImageSectionLabel: 'Image',
     portfolioCoverImageItemIdLabel: 'Item ID',
     portfolioCoverImageIdPending: 'Save this item once to receive an ID.',
@@ -464,19 +521,19 @@ export const APP_TEXT = {
   seo: {
     homeTitle: 'Zentrox — U.S. SaaS & Product Engineering',
     homeDescription:
-      'SaaS and web platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. Zentrox, Austin, TX. Clear scopes, documentation, and U.S. business hours.',
+      'SaaS and product platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. Zentrox, Austin, TX. Clear scopes, documentation, and U.S. business hours.',
     homeKeywords:
-      'Zentrox, SaaS development USA, US product engineering, Austin software company, enterprise SaaS USA, US technology partner, web platform development United States, API development USA, DevOps USA, AI consulting USA, Unity development USA, U.S. startup engineering partner, custom SaaS development Austin',
+      'Zentrox, SaaS development USA, US product engineering, Austin software company, enterprise SaaS USA, US technology partner, product platform development United States, API development USA, DevOps USA, AI consulting USA, Unity development USA, U.S. startup engineering partner, custom SaaS development Austin',
     openRolesTitle: 'Open roles — Zentrox',
     openRolesDescription:
-      'Open engineering and product delivery roles at Zentrox—SaaS, web platforms, APIs, and AI—with U.S. business-hours overlap. Remote-friendly contract work; apply online in minutes. Austin, TX–based team.',
+      'Open engineering and product delivery roles at Zentrox—SaaS, product platforms, APIs, and AI—with U.S. business-hours overlap. Remote-friendly contract work; apply online in minutes. Austin, TX–based team.',
     openRolesKeywords:
       'Zentrox careers, Zentrox jobs, software engineer jobs Austin, remote SaaS engineer contract, full stack Angular Node jobs, product engineering careers USA, Upwork partnership engineer, API developer remote US, AI engineer contract, Austin Texas software jobs',
     ogImageAlt: 'Zentrox — hero image for SaaS and product engineering',
     jsonLdOrgDescription:
-      'U.S. SaaS and product engineering partner—collaboration with idea owners and investors, enterprise web, APIs, AI, cloud, DevOps, and Unity.',
+      'U.S. SaaS and product engineering partner—collaboration with idea owners and investors; web, APIs, AI, cloud, DevOps, and Unity.',
     jsonLdWebPageDescription:
-      'SaaS and web platform engineering for ambitious U.S. markets — partnerships with founders and investors; web, APIs, AI, cloud, and Unity.',
+      'SaaS and product platform engineering for ambitious U.S. markets — partnerships with founders and investors; web, APIs, AI, cloud, and Unity.',
     jsonLdOpenRolesWebPageDescription:
       'Open roles at Zentrox—browse published engineering and delivery roles, remote contract work with U.S. overlap, and online applications.',
     jsonLdOpenRolesBreadcrumbHome: 'Home',
@@ -490,6 +547,6 @@ export const APP_TEXT = {
     getQuoteDescription:
       'Request a project quote from Zentrox. Share your requirements, service needs, and budget range. We reply within one business day.',
     getQuoteKeywords:
-      'Zentrox project quote, hire software developers, SaaS development quote, web development budget, Austin software agency'
+      'Zentrox project quote, hire software developers, SaaS development quote, product engineering budget, Austin software agency'
   }
 } as const;

@@ -2,7 +2,13 @@
   <div class="container zt-page__container--760">
     <header class="mb-4 zt-panel">
       <h1 id="get-quote-page-title" class="h3 mb-2">{{ 'getQuote.title' | t }}</h1>
-      <p class="text-secondary mb-0">{{ 'getQuote.intro' | t }}</p>
+      <p class="text-secondary mb-2">{{ 'getQuote.intro' | t }}</p>
+      <p class="text-secondary small mb-3">{{ 'getQuote.reassurance' | t }}</p>
+      <div class="zt-trust-chips" role="group" [attr.aria-label]="'getQuote.trustAria' | t">
+        <span class="zt-trust-chip">{{ 'trust.reply' | t }}</span>
+        <span class="zt-trust-chip">{{ 'trust.hours' | t }}</span>
+        <span class="zt-trust-chip">{{ 'trust.scopes' | t }}</span>
+      </div>
     </header>
 
     @if (submitSuccess()) {

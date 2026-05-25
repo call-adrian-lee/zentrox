@@ -19,6 +19,8 @@ export class PortfolioSectionComponent {
   readonly previewSrc = signal('');
   readonly previewTitle = signal('');
   readonly previewSubtitle = signal('');
+  readonly previewProblem = signal('');
+  readonly previewOutcome = signal('');
   readonly previewDescription = signal('');
   readonly previewLink = signal('');
   readonly portfolioTabs = signal<PortfolioPublicTabRow[]>([]);
@@ -72,6 +74,8 @@ export class PortfolioSectionComponent {
       image: i.image_path,
       title: i.title,
       subtitle: i.subtitle ?? undefined,
+      problem: i.problem ?? undefined,
+      outcome: i.outcome ?? undefined,
       description: i.description,
       link: i.link_url
     }));
@@ -93,6 +97,8 @@ export class PortfolioSectionComponent {
     this.previewSrc.set(item.image);
     this.previewTitle.set(item.title);
     this.previewSubtitle.set(item.subtitle ?? '');
+    this.previewProblem.set(item.problem ?? '');
+    this.previewOutcome.set(item.outcome ?? '');
     this.previewDescription.set(item.description);
     this.previewLink.set(item.link);
     this.modal.open(tpl, {

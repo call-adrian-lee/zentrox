@@ -10,6 +10,4 @@ type HeroSlideBase = {
   ctaKey: string;
 };
 
-export type HeroSlide =
-  | (HeroSlideBase & { route: string })
-  | (HeroSlideBase & { fragment: string; navKey: HeroHomeNavKey });
+export type HeroSlide = HeroSlideBase & { route: string };

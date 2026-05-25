@@ -25,6 +25,18 @@
       />
     </div>
     <div class="zt-portfolio-preview__body">
+      @if (previewProblem().trim()) {
+        <div class="zt-portfolio-preview__case-row">
+          <h5 class="zt-portfolio-preview__case-label">{{ 'portfolio.modalProblem' | t }}</h5>
+          <p class="zt-portfolio-preview__case-text">{{ previewProblem() }}</p>
+        </div>
+      }
+      @if (previewOutcome().trim()) {
+        <div class="zt-portfolio-preview__case-row">
+          <h5 class="zt-portfolio-preview__case-label">{{ 'portfolio.modalOutcome' | t }}</h5>
+          <p class="zt-portfolio-preview__case-text">{{ previewOutcome() }}</p>
+        </div>
+      }
       <p class="zt-portfolio-preview__desc">{{ previewDescription() }}</p>
     </div>
     <footer class="zt-portfolio-preview__foot">
