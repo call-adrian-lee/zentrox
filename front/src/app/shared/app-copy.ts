@@ -264,7 +264,6 @@ export const APP_TEXT = {
     resumeUrlInvalid: 'Enter a full URL starting with https:// or http://',
     resumeUrlScheme: 'Résumé link must use http or https.',
     required: 'This field is required.',
-    fullNameMinLength: 'Enter at least 2 characters.',
     emailInvalid: 'Enter a valid email address.',
     submit: 'Submit application',
     sending: 'Sending…',

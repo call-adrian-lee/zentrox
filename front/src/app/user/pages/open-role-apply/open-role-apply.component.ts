@@ -42,7 +42,7 @@ export class OpenRoleApplyComponent implements OnInit {
   readonly submitting = signal(false);
 
   readonly form = this.fb.group({
-    fullName: this.fb.control('', { validators: [Validators.required, Validators.minLength(2), Validators.maxLength(255)] }),
+    fullName: this.fb.control('', { validators: [Validators.required, Validators.maxLength(255)] }),
     email: this.fb.control('', { validators: [Validators.required, Validators.email] }),
     phone: this.fb.control(''),
     coverLetter: this.fb.control(''),

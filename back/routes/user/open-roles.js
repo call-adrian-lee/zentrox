@@ -45,7 +45,7 @@ function createUserOpenRolesRouter({ getPool, applicationRateLimit }) {
     const { fullName, email, phone, coverLetter, resumeUrl } = req.body || {};
     const name = (fullName || '').trim();
     const em = (email || '').trim();
-    if (name.length < 2 || name.length > 255) {
+    if (!name.length || name.length > 255) {
       res.status(400).json({ error: 'Invalid fullName' });
       return;
     }
