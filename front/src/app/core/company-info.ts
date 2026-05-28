@@ -20,7 +20,8 @@ export const COMPANY = {
    * Slack “Copy invite link” URL. If empty, the footer still shows Slack but uses
    * `slackFooterFallbackHref` until you paste your real invite link here.
    */
-  slackJoinUrl: '',
+  slackJoinUrl:
+    'https://join.slack.com/t/zentrox-us/shared_invite/zt-3z4p6ept3-gKlWWPXGVpS8L8ArhngLbw',
   /** Shown in footer when `slackJoinUrl` is empty */
   slackFooterFallbackHref: 'https://slack.com'
 } as const;
