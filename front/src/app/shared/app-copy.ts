@@ -3,6 +3,10 @@
  * Not a multilingual bundle — just structured strings for one locale.
  */
 export const APP_TEXT = {
+  common: {
+    joinSlack: 'Join our Slack',
+    joinSlackAria: 'Join our Slack workspace (opens in a new tab)'
+  },
   skip: { main: 'Skip to main content' },
   layout: {
     mainAriaLabel: 'Main content',

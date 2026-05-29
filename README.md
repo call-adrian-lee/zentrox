@@ -52,7 +52,7 @@ This repo intentionally uses 3 npm trees (no workspaces):
 
 See [`NAMING.md`](NAMING.md) for full-stack naming conventions.
 
-See `front/README.md`, `back/README.md`, and [`deploy/README.md`](deploy/README.md) for app-specific notes.
+See `front/README.md`, `back/README.md`, and [`deploy/README.md`](deploy/README.md) for production VPS deploy (Nginx + systemd + MySQL).
 
 ## Security notes
 

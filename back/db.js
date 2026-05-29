@@ -1,4 +1,5 @@
 const mysql = require('mysql2/promise');
+const { buildMysqlConnectionConfig } = require('./lib/mysql-config');
 const logger = require('./lib/logger');
 
 let pool;
@@ -6,10 +7,7 @@ let pool;
 function getPool() {
   if (!pool) {
     pool = mysql.createPool({
-      host: process.env.MYSQL_HOST || '127.0.0.1',
-      port: Number(process.env.MYSQL_PORT || 3306),
-      user: process.env.MYSQL_USER || 'root',
-      password: process.env.MYSQL_PASSWORD || '',
+      ...buildMysqlConnectionConfig(),
       database: process.env.MYSQL_DATABASE || 'zentrox',
       waitForConnections: true,
       connectionLimit: Number(process.env.MYSQL_POOL_SIZE || 10),

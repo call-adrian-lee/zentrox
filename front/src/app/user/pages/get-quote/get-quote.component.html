@@ -225,8 +225,9 @@
 
       <div class="zt-form-block__actions">
         @if (submitErrorKey()) {
-          <p class="text-danger small mb-2" role="alert">{{ submitErrorKey()! | t }}</p>
+          <p class="text-danger small mb-2 w-100" role="alert">{{ submitErrorKey()! | t }}</p>
         }
+        <div class="zt-form-block__actions-row">
           <button
             type="button"
             class="btn btn-primary zt-touch-btn"
@@ -234,8 +235,19 @@
             [attr.aria-busy]="submitting()"
             (click)="submitQuote()"
           >
-          {{ submitting() ? ('getQuote.sending' | t) : ('getQuote.submit' | t) }}
-        </button>
+            {{ submitting() ? ('getQuote.sending' | t) : ('getQuote.submit' | t) }}
+          </button>
+          <a
+            class="btn btn-outline-secondary zt-touch-btn zt-btn-with-icon"
+            [href]="slackHref"
+            target="_blank"
+            rel="noopener noreferrer"
+            [attr.aria-label]="'common.joinSlackAria' | t"
+          >
+            <app-slack-icon />
+            <span>{{ 'common.joinSlack' | t }}</span>
+          </a>
+        </div>
       </div>
     </form>
   </div>

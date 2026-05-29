@@ -65,8 +65,6 @@ async function syncPortfolioImagePaths(pool) {
 }
 
 module.exports = {
-  LEADERSHIP_PLACEHOLDER,
-  PORTFOLIO_PLACEHOLDER,
   leadershipStaticPhotoPath,
   leadershipExpectedPublicPhotoPath,
   portfolioStaticImagePath,

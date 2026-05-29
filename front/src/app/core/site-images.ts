@@ -2,9 +2,8 @@
 export const SITE_IMAGES = {
   logo: '/img/logo.svg',
   favicon: '/img/favicon.svg',
-  heroSlides: ['/img/slider-0.jpg', '/img/slider-1.jpg', '/img/slider-2.jpg'] as const,
-  testimonialAvatars: ['/img/client-0.jpg', '/img/client-1.jpg', '/img/client-2.jpg'] as const,
-  contactMap: '/img/map.png',
+  heroSlides: ['/img/slider-0.svg', '/img/slider-1.svg', '/img/slider-2.svg'] as const,
+  testimonialAvatars: ['/img/client-0.svg', '/img/client-1.svg', '/img/client-2.svg'] as const,
   leadershipPlaceholder: '/img/leadership/placeholder-avatar.svg',
   portfolioPlaceholder: '/img/portfolio/placeholder.svg'
 } as const;

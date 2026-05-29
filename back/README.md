@@ -58,5 +58,4 @@ For production, always set both environment variables explicitly and rotate regu
 ## Portfolio image handling
 
 - Thumbnails are **`/img/portfolio/portfolio-{itemId}.png`** under **`front/img/portfolio/`** (the API checks the file on disk; the DB value is normalized to `portfolio-{id}` on startup). Legacy flat **`/img/portfolio-{id}.png`** is still accepted if the nested file is missing.
-- Canonical Web/Game items created by seed get **contiguous IDs after a fresh bootstrap only**; on an existing database, run `npm run migrate:portfolio-images --prefix back` once if you still have legacy `front/img/dev-web-*.JPG` / `dev-game-*.JPG` assets to convert. It maps each row **by tab + title**, writes PNGs, and optional flag `--remove-sources` deletes the old JPGs afterward.
-- New clones that already include the generated PNGs under `front/img/portfolio/` do not need the migrate step.
+- Canonical Web/Game items created by seed get **contiguous IDs after a fresh bootstrap only**. Place generated PNGs under `front/img/portfolio/` as `portfolio-{id}.png`.

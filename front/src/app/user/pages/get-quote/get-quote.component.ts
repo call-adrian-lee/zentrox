@@ -12,12 +12,14 @@ import {
   type QuoteServiceType,
   type QuoteTimeline
 } from '@shared/models/quote.models';
+import { COMPANY } from '@core/company-info';
+import { SlackIconComponent } from '@shared/components/slack-icon.component';
 import { TextPipe } from '@shared/pipes/text.pipe';
 
 @Component({
   selector: 'app-get-quote',
   standalone: true,
-  imports: [ReactiveFormsModule, TextPipe],
+  imports: [ReactiveFormsModule, SlackIconComponent, TextPipe],
   templateUrl: './get-quote.component.html',
 })
 export class GetQuoteComponent {
@@ -28,6 +30,7 @@ export class GetQuoteComponent {
   private readonly nameInput = viewChild<ElementRef<HTMLInputElement>>('nameInput');
   private successHideTimer: ReturnType<typeof setTimeout> | null = null;
 
+  readonly slackHref = COMPANY.slackJoinUrl || COMPANY.slackFooterFallbackHref;
   readonly serviceOptions = QUOTE_SERVICE_OPTIONS;
   readonly budgetOptions = QUOTE_BUDGET_OPTIONS;
   readonly timelineOptions = QUOTE_TIMELINE_OPTIONS;

@@ -7,7 +7,9 @@ import { roleDescriptionHtml } from '@shared/html-content';
 import { OpenRolesApiService } from '@user/services/open-roles-api.service';
 import { SeoService } from '@user/services/seo.service';
 import type { OpenRole } from '@shared/models/open-roles.models';
+import { COMPANY } from '@core/company-info';
 import { ROUTE_OPEN_ROLES } from '@core/site-nav';
+import { SlackIconComponent } from '@shared/components/slack-icon.component';
 import { TextPipe } from '@shared/pipes/text.pipe';
 
 function optionalHttpResumeUrl(control: AbstractControl): ValidationErrors | null {
@@ -25,7 +27,7 @@ function optionalHttpResumeUrl(control: AbstractControl): ValidationErrors | nul
 @Component({
   selector: 'app-open-role-apply',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, TextPipe],
+  imports: [ReactiveFormsModule, RouterLink, SlackIconComponent, TextPipe],
   templateUrl: './open-role-apply.component.html',
 })
 export class OpenRoleApplyComponent implements OnInit {
@@ -37,6 +39,7 @@ export class OpenRoleApplyComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
   readonly openRolesPath = ROUTE_OPEN_ROLES;
+  readonly slackHref = COMPANY.slackJoinUrl || COMPANY.slackFooterFallbackHref;
 
   readonly role = signal<OpenRole | null>(null);
   readonly loadError = signal(false);

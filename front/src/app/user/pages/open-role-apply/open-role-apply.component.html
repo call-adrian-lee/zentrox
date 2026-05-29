@@ -81,13 +81,26 @@
           }
         </div>
 
-        @if (submitError()) {
-          <p class="text-danger small" role="alert">{{ submitError()! | t }}</p>
-        }
-
-        <button type="button" class="btn btn-primary zt-touch-btn" [disabled]="submitting()" (click)="submit()">
-          {{ submitting() ? ('openRoleApply.sending' | t) : ('openRoleApply.submit' | t) }}
-        </button>
+        <div class="zt-form-block__actions">
+          @if (submitError()) {
+            <p class="text-danger small mb-2 w-100" role="alert">{{ submitError()! | t }}</p>
+          }
+          <div class="zt-form-block__actions-row">
+            <button type="button" class="btn btn-primary zt-touch-btn" [disabled]="submitting()" (click)="submit()">
+              {{ submitting() ? ('openRoleApply.sending' | t) : ('openRoleApply.submit' | t) }}
+            </button>
+            <a
+              class="btn btn-outline-secondary zt-touch-btn zt-btn-with-icon"
+              [href]="slackHref"
+              target="_blank"
+              rel="noopener noreferrer"
+              [attr.aria-label]="'common.joinSlackAria' | t"
+            >
+              <app-slack-icon />
+              <span>{{ 'common.joinSlack' | t }}</span>
+            </a>
+          </div>
+        </div>
       </form>
     }
   </div>

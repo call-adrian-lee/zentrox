@@ -1,0 +1,18 @@
+[Unit]
+Description=Zentrox API
+After=network.target mysql.service
+Wants=mysql.service
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/zentrox/back
+Environment=NODE_ENV=production
+EnvironmentFile=-/var/www/zentrox/back/.env
+ExecStart=/usr/bin/node index.js
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

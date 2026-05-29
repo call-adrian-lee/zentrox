@@ -1,7 +1,3 @@
-import type { HomeSectionKey } from '@core/site-nav';
-
-export type HeroHomeNavKey = HomeSectionKey;
-
 type HeroSlideBase = {
   image: string;
   altKey: string;

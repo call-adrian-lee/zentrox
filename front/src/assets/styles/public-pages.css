@@ -79,6 +79,24 @@
   padding-top: 0.25rem;
 }
 
+.zt-form-block__actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.zt-btn-with-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.zt-btn-with-icon .zt-slack-icon {
+  flex-shrink: 0;
+}
+
 .zt-form-notice {
   margin-bottom: 1rem;
   border-radius: 0.65rem;

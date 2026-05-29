@@ -54,7 +54,7 @@ const CANONICAL_LEADERSHIP = [
 /**
  * tabSortIndex 0 = first tab (Web), 1 = second tab (Games / AR) — matches default sort_order.
  * image_path on insert is synced on API start (`portfolio-{id}`); thumbnails are served only if the file exists at
- * front/img/portfolio/portfolio-{id}.png (see back/scripts/migrate-portfolio-assets.cjs).
+ * front/img/portfolio/portfolio-{id}.png.
  */
 const CANONICAL_PORTFOLIO_ITEMS = [
   {
@@ -272,6 +272,5 @@ async function seedCanonicalHomepageContent(pool, logPrefix = '[seed]') {
 
 module.exports = {
   seedCanonicalHomepageContent,
-  CANONICAL_LEADERSHIP,
   CANONICAL_PORTFOLIO_ITEMS
 };

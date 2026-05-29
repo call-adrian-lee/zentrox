@@ -8,6 +8,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 const mysql = require('mysql2/promise');
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
+const { buildMysqlConnectionConfig } = require('../lib/mysql-config');
 const { getPool, ensureSchema } = require('../db');
 const { seedCanonicalHomepageContent } = require('../seed-canonical.cjs');
 const { ensureRecruitmentPartnerJob } = require('./seed-recruitment-partner-job.cjs');
@@ -29,12 +30,7 @@ function safeIdent(name) {
 async function main() {
   const dbName = safeIdent(process.env.MYSQL_DATABASE || 'zentrox');
 
-  const root = await mysql.createConnection({
-    host: process.env.MYSQL_HOST || '127.0.0.1',
-    port: Number(process.env.MYSQL_PORT || 3306),
-    user: process.env.MYSQL_USER || 'root',
-    password: process.env.MYSQL_PASSWORD || ''
-  });
+  const root = await mysql.createConnection(buildMysqlConnectionConfig());
   await root.query(
     `CREATE DATABASE IF NOT EXISTS \`${dbName}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`
   );

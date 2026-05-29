@@ -31,20 +31,9 @@ export const ROUTE_GET_QUOTE = '/get-quote';
 export const ROUTE_OPEN_ROLES = '/open-roles';
 export const OPEN_ROLE_APPLY_SEGMENT = 'apply';
 
-/** Anchor attrs for CTAs that open in a new tab (use with `href`, not `routerLink`). */
-export const OPEN_IN_NEW_TAB = {
-  target: '_blank',
-  rel: 'noopener noreferrer'
-} as const;
-
 /** Router link tuple for `/open-roles/:roleId/apply`. */
 export function openRoleApplyLink(roleId: number | string): readonly [string, number | string, string] {
   return [ROUTE_OPEN_ROLES, roleId, OPEN_ROLE_APPLY_SEGMENT] as const;
-}
-
-/** Same destination as `openRoleApplyLink`, for plain `href` links. */
-export function openRoleApplyHref(roleId: number | string): string {
-  return `${ROUTE_OPEN_ROLES}/${roleId}/${OPEN_ROLE_APPLY_SEGMENT}`;
 }
 
 /** Legacy paths → redirect in app.routes.ts */
