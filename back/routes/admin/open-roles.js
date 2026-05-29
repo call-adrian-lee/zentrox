@@ -115,7 +115,11 @@ function createAdminOpenRolesRouter({ getPool, authMiddleware }) {
       return;
     }
     try {
-      await openRolesService.deleteRole(getPool(), id);
+      const affected = await openRolesService.deleteRole(getPool(), id);
+      if (affected === 0) {
+        res.status(404).json({ error: 'Not found' });
+        return;
+      }
       res.json({ ok: true });
     } catch (e) {
       logger.error('DELETE /api/admin/open-roles/:id failed', e);

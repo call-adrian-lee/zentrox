@@ -8,9 +8,9 @@ export interface OpenRole {
   description: string;
   location: string;
   employment_type: string;
-  status: OpenRoleStatus;
-  created_at: string;
-  updated_at: string;
+  status?: OpenRoleStatus;
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface OpenRoleApplicationRow {

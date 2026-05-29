@@ -66,7 +66,8 @@ async function updateMember(pool, id, fields, vals) {
 }
 
 async function deleteMember(pool, id) {
-  await pool.query('DELETE FROM leadership_members WHERE id = ?', [id]);
+  const [result] = await pool.query('DELETE FROM leadership_members WHERE id = ?', [id]);
+  return result.affectedRows;
 }
 
 module.exports = {

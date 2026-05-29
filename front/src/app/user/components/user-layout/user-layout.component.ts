@@ -1,4 +1,4 @@
-import { Component, HostListener, afterNextRender, inject } from '@angular/core';
+import { Component, DestroyRef, HostListener, afterNextRender, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { BackToTopComponent } from '@user/components/back-to-top/back-to-top.component';
 import { FooterSectionComponent } from '@user/components/footer-section/footer-section.component';
@@ -15,9 +15,11 @@ import { TextPipe } from '@shared/pipes/text.pipe';
 })
 export class UserLayoutComponent {
   private readonly navigation = inject(NavigationService);
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor() {
     afterNextRender(() => this.navigation.syncScrollStateAfterRender());
+    this.destroyRef.onDestroy(() => this.navigation.closeMobileNav());
   }
 
   @HostListener('window:scroll')

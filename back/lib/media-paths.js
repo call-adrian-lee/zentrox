@@ -27,35 +27,41 @@ function publicPathToFsPath(publicPath) {
 }
 
 function resolveLeadershipPhotoForResponse(member) {
-  const primary = leadershipExpectedPublicPhotoPath(member.id);
+  const token = String(member.photo_path || '').trim();
+  if (token.startsWith('leadership-')) {
+    return { ...member, photo_path: leadershipExpectedPublicPhotoPath(member.id) };
+  }
   const legacyFlat = `/img/leadership-${member.id}.png`;
-  for (const url of [primary, legacyFlat]) {
-    const fsPath = publicPathToFsPath(url);
-    if (fsPath && fs.existsSync(fsPath)) {
-      return { ...member, photo_path: url };
-    }
+  const legacyPath = publicPathToFsPath(legacyFlat);
+  if (legacyPath && fs.existsSync(legacyPath)) {
+    return { ...member, photo_path: legacyFlat };
   }
   return { ...member, photo_path: LEADERSHIP_PLACEHOLDER };
 }
 
 function resolvePortfolioImageForResponse(item) {
-  const primary = portfolioExpectedPublicImagePath(item.id);
+  const token = String(item.image_path || '').trim();
+  if (token.startsWith('portfolio-')) {
+    return { ...item, image_path: portfolioExpectedPublicImagePath(item.id) };
+  }
   const legacyFlat = `/img/portfolio-${item.id}.png`;
-  for (const url of [primary, legacyFlat]) {
-    const fsPath = publicPathToFsPath(url);
-    if (fsPath && fs.existsSync(fsPath)) {
-      return { ...item, image_path: url };
-    }
+  const legacyPath = publicPathToFsPath(legacyFlat);
+  if (legacyPath && fs.existsSync(legacyPath)) {
+    return { ...item, image_path: legacyFlat };
   }
   return { ...item, image_path: PORTFOLIO_PLACEHOLDER };
 }
 
 async function syncLeadershipPhotoPaths(pool) {
-  await pool.query("UPDATE leadership_members SET photo_path = CONCAT('leadership-', id)");
+  await pool.query(
+    "UPDATE leadership_members SET photo_path = CONCAT('leadership-', id) WHERE photo_path IS NULL OR photo_path = ''"
+  );
 }
 
 async function syncPortfolioImagePaths(pool) {
-  await pool.query("UPDATE portfolio_items SET image_path = CONCAT('portfolio-', id)");
+  await pool.query(
+    "UPDATE portfolio_items SET image_path = CONCAT('portfolio-', id) WHERE image_path IS NULL OR image_path = ''"
+  );
 }
 
 module.exports = {

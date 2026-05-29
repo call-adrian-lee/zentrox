@@ -1,5 +1,6 @@
 import {
   Component,
+  DestroyRef,
   ElementRef,
   HostListener,
   OnInit,
@@ -10,6 +11,7 @@ import {
   signal,
   viewChild
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdminOpenRolesApiService } from '@admin/services/admin-open-roles-api.service';
 import { AdminNotifyService } from '@admin/services/admin-notify.service';
@@ -28,6 +30,7 @@ export class AdminOpenRolesComponent implements OnInit {
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly notify = inject(AdminNotifyService);
   private readonly injector = inject(Injector);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly roles = signal<OpenRole[]>([]);
   readonly loadError = signal(false);
@@ -65,14 +68,17 @@ export class AdminOpenRolesComponent implements OnInit {
 
   @HostListener('document:keydown.escape', ['$event'])
   onDocumentEscape(event: Event): void {
-    if (!this.modalOpen()) return;
+    if (this.deleteModalOpen()) {
+      event.preventDefault();
+      this.closeDeleteModal();
+    } else if (!this.modalOpen()) return;
     event.preventDefault();
     this.closeModal();
   }
 
   reload(): void {
     this.loadError.set(false);
-    this.api.listOpenRoles().subscribe({
+    this.api.listOpenRoles().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (r) => this.roles.set(r.roles || []),
       error: () => this.loadError.set(true)
     });
@@ -173,7 +179,7 @@ export class AdminOpenRolesComponent implements OnInit {
       status: v.status
     };
     if (id == null) {
-      this.api.createOpenRole(body).subscribe({
+      this.api.createOpenRole(body).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
         next: () => {
           this.closeModal();
           this.reload();
@@ -187,7 +193,7 @@ export class AdminOpenRolesComponent implements OnInit {
         }
       });
     } else {
-      this.api.updateOpenRole(id, body).subscribe({
+      this.api.updateOpenRole(id, body).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
         next: () => {
           this.closeModal();
           this.reload();
@@ -205,7 +211,7 @@ export class AdminOpenRolesComponent implements OnInit {
 
   quickSetStatus(role: OpenRole, status: OpenRoleStatus): void {
     if (role.status === status) return;
-    this.api.updateOpenRole(role.id, { status }).subscribe({
+    this.api.updateOpenRole(role.id, { status }).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: () => {
         this.reload();
         this.notify.success('admin.noticeStatusUpdated');
@@ -221,7 +227,7 @@ export class AdminOpenRolesComponent implements OnInit {
   confirmDelete(): void {
     const role = this.deleteTarget();
     if (!role || !this.canConfirmDelete()) return;
-    this.api.deleteOpenRole(role.id).subscribe({
+    this.api.deleteOpenRole(role.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: () => {
         this.closeDeleteModal();
         this.reload();
@@ -253,6 +259,12 @@ export class AdminOpenRolesComponent implements OnInit {
     if (!raw) return;
     const href = raw.trim();
     if (!href) return;
+    try {
+      const u = new URL(href);
+      if (u.protocol !== 'http:' && u.protocol !== 'https:') return;
+    } catch {
+      return;
+    }
     document.execCommand('createLink', false, href);
     this.syncDescriptionFromEditor(true);
   }

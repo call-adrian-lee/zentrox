@@ -110,6 +110,25 @@ export class SeoService {
     this.setJsonLd(this.openRolesListingSchema(base, pageUrl, documentTitle, roles));
   }
 
+  /** Per-role apply page: title, canonical, and JobPosting JSON-LD. */
+  applyRolePage(role: OpenRole): void {
+    const base = this.baseUrl();
+    const path = `${ROUTE_OPEN_ROLES}/${role.id}/apply`;
+    const canonical = `${base}${path}`;
+    const rawTitle = `${role.title} — Apply`;
+    const documentTitle = `${rawTitle} | ${SITE}`;
+    const description = this.truncateForJsonLd(
+      role.description || `${role.title} at ${COMPANY.name}`,
+      160
+    );
+
+    this.title.setTitle(documentTitle);
+    this.meta.updateTag({ name: 'description', content: description });
+    this.setCanonical(canonical);
+    this.setOgTwitter({ title: documentTitle, description, url: canonical });
+    this.setJsonLd(this.jobPostingJsonLd(base, role));
+  }
+
   private baseUrl(): string {
     const configured = environment.siteUrl?.replace(/\/$/, '').trim();
     if (configured) {

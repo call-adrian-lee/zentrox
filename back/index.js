@@ -22,12 +22,21 @@ async function start() {
   } finally {
     conn.release();
   }
-  await syncLeadershipPhotoPaths(pool);
   await seedCanonicalHomepageContent(pool, '[zentrox-api]');
+  await syncLeadershipPhotoPaths(pool);
   await syncPortfolioImagePaths(pool);
-  app.listen(PORT, '0.0.0.0', () => {
+  const server = app.listen(PORT, '0.0.0.0', () => {
     logger.info(`[zentrox-api] Listening on http://127.0.0.1:${PORT}`);
   });
+
+  const shutdown = async (signal) => {
+    logger.info(`[zentrox-api] ${signal} received, shutting down`);
+    server.close(() => {
+      pool.end().finally(() => process.exit(0));
+    });
+  };
+  process.on('SIGTERM', () => void shutdown('SIGTERM'));
+  process.on('SIGINT', () => void shutdown('SIGINT'));
 }
 
 start().catch((err) => {

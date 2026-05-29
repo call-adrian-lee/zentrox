@@ -245,7 +245,11 @@ function createAdminLeadershipRouter({ getPool, authMiddleware }) {
       return;
     }
     try {
-      await leadershipService.deleteMember(getPool(), id);
+      const affected = await leadershipService.deleteMember(getPool(), id);
+      if (affected === 0) {
+        res.status(404).json({ error: 'Not found' });
+        return;
+      }
       res.json({ ok: true });
     } catch (e) {
       logger.error('DELETE /api/admin/leadership/:id failed', e);

@@ -2,8 +2,10 @@ import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AbstractControl, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { EMPTY, switchMap } from 'rxjs';
 import { roleDescriptionHtml } from '@shared/html-content';
 import { OpenRolesApiService } from '@user/services/open-roles-api.service';
+import { SeoService } from '@user/services/seo.service';
 import type { OpenRole } from '@shared/models/open-roles.models';
 import { ROUTE_OPEN_ROLES } from '@core/site-nav';
 import { TextPipe } from '@shared/pipes/text.pipe';
@@ -30,6 +32,7 @@ export class OpenRoleApplyComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly openRolesApi = inject(OpenRolesApiService);
+  private readonly seo = inject(SeoService);
   private readonly fb = inject(NonNullableFormBuilder);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -54,19 +57,30 @@ export class OpenRoleApplyComponent implements OnInit {
   private roleId = 0;
 
   ngOnInit(): void {
-    const raw = this.route.snapshot.paramMap.get('roleId');
-    const id = Number(raw);
-    if (!Number.isInteger(id) || id < 1) {
-      void this.router.navigateByUrl(ROUTE_OPEN_ROLES);
-      return;
-    }
-    this.roleId = id;
-    this.openRolesApi
-      .getPublished(id)
-      .pipe(takeUntilDestroyed(this.destroyRef))
+    this.route.paramMap
+      .pipe(
+        switchMap((params) => {
+          const raw = params.get('roleId');
+          const id = Number(raw);
+          if (!Number.isInteger(id) || id < 1) {
+            void this.router.navigateByUrl(ROUTE_OPEN_ROLES);
+            return EMPTY;
+          }
+          this.roleId = id;
+          this.role.set(null);
+          this.loadError.set(false);
+          this.submitted.set(false);
+          this.submitError.set(null);
+          this.form.reset();
+          return this.openRolesApi.getPublished(id);
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe({
         next: (r) => {
+          if (!r?.role) return;
           this.role.set(r.role);
+          this.seo.applyRolePage(r.role);
         },
         error: () => {
           this.loadError.set(true);

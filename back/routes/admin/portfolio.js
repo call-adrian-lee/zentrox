@@ -232,7 +232,11 @@ function createAdminPortfolioRouter({ getPool, authMiddleware }) {
     }
     try {
       const pool = getPool();
-      await pool.query('DELETE FROM portfolio_tabs WHERE id = ?', [id]);
+      const [result] = await pool.query('DELETE FROM portfolio_tabs WHERE id = ?', [id]);
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: 'Not found' });
+        return;
+      }
       res.json({ ok: true });
     } catch (e) {
       logger.error('DELETE /api/admin/portfolio/tabs/:id failed', e);
@@ -537,7 +541,11 @@ function createAdminPortfolioRouter({ getPool, authMiddleware }) {
     }
     try {
       const pool = getPool();
-      await pool.query('DELETE FROM portfolio_items WHERE id = ?', [id]);
+      const [result] = await pool.query('DELETE FROM portfolio_items WHERE id = ?', [id]);
+      if (result.affectedRows === 0) {
+        res.status(404).json({ error: 'Not found' });
+        return;
+      }
       res.json({ ok: true });
     } catch (e) {
       logger.error('DELETE /api/admin/portfolio/items/:id failed', e);

@@ -2,7 +2,7 @@
 
 async function listPublishedRoles(pool) {
   const [rows] = await pool.query(
-    `SELECT id, title, description, location, employment_type, status, created_at, updated_at
+    `SELECT id, title, description, location, employment_type
      FROM jobs WHERE status = 'published' ORDER BY created_at DESC`
   );
   return rows;
@@ -10,7 +10,7 @@ async function listPublishedRoles(pool) {
 
 async function getPublishedRoleById(pool, id) {
   const [rows] = await pool.query(
-    `SELECT id, title, description, location, employment_type, status, created_at, updated_at
+    `SELECT id, title, description, location, employment_type
      FROM jobs WHERE id = ? AND status = 'published' LIMIT 1`,
     [id]
   );
@@ -61,7 +61,8 @@ async function updateRole(pool, id, fields, vals) {
 }
 
 async function deleteRole(pool, id) {
-  await pool.query('DELETE FROM jobs WHERE id = ?', [id]);
+  const [result] = await pool.query('DELETE FROM jobs WHERE id = ?', [id]);
+  return result.affectedRows;
 }
 
 async function listApplications(pool, roleId) {

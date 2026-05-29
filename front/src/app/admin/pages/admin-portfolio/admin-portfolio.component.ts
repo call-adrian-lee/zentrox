@@ -87,7 +87,10 @@ export class AdminPortfolioComponent implements OnInit {
 
   @HostListener('document:keydown.escape', ['$event'])
   onDocumentEscape(event: Event): void {
-    if (this.tabModalOpen()) {
+    if (this.deleteModalOpen()) {
+      event.preventDefault();
+      this.closeDeleteModal();
+    } else if (this.tabModalOpen()) {
       event.preventDefault();
       this.closeTabModal();
     } else if (this.itemModalOpen()) {

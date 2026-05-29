@@ -50,11 +50,20 @@ async function main() {
 
   const admin = resolveBootstrapAdmin();
   const adminHash = await bcrypt.hash(admin.password, 12);
-  await pool.query(
-    `INSERT INTO admin_users (username, password_hash) VALUES (?, ?)
-     ON DUPLICATE KEY UPDATE password_hash = VALUES(password_hash)`,
-    [admin.username, adminHash]
-  );
+  const forceAdminPassword =
+    process.env.ADMIN_BOOTSTRAP_FORCE === '1' || process.env.ADMIN_BOOTSTRAP_FORCE === 'true';
+  if (forceAdminPassword) {
+    await pool.query(
+      `INSERT INTO admin_users (username, password_hash) VALUES (?, ?)
+       ON DUPLICATE KEY UPDATE password_hash = VALUES(password_hash)`,
+      [admin.username, adminHash]
+    );
+  } else {
+    await pool.query(`INSERT IGNORE INTO admin_users (username, password_hash) VALUES (?, ?)`, [
+      admin.username,
+      adminHash
+    ]);
+  }
 
   const seedJobs = [
     [

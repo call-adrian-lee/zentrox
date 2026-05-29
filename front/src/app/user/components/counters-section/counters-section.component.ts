@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { TextPipe } from '@shared/pipes/text.pipe';
-import { AfterViewInit, Component, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, signal } from '@angular/core';
 
 @Component({
   selector: 'app-counters-section',
@@ -10,6 +10,7 @@ import { AfterViewInit, Component, inject, signal } from '@angular/core';
 })
 export class CountersSectionComponent implements AfterViewInit {
   private readonly doc = inject(DOCUMENT);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly countYears = signal(0);
   readonly countProjects = signal(0);
@@ -17,6 +18,17 @@ export class CountersSectionComponent implements AfterViewInit {
   readonly countMilestones = signal(0);
 
   private countersDone = false;
+  private io: IntersectionObserver | null = null;
+  private rafId = 0;
+
+  constructor() {
+    this.destroyRef.onDestroy(() => {
+      this.io?.disconnect();
+      if (this.rafId) {
+        cancelAnimationFrame(this.rafId);
+      }
+    });
+  }
 
   ngAfterViewInit(): void {
     const host = this.doc.getElementById('counters');
@@ -34,16 +46,17 @@ export class CountersSectionComponent implements AfterViewInit {
       start();
       return;
     }
-    const io = new IntersectionObserver(
+    this.io = new IntersectionObserver(
       (entries) => {
         if (entries[0]?.isIntersecting) {
           start();
-          io.disconnect();
+          this.io?.disconnect();
+          this.io = null;
         }
       },
       { threshold: 0.2 }
     );
-    io.observe(host);
+    this.io.observe(host);
   }
 
   private animateCounters(): void {
@@ -58,9 +71,11 @@ export class CountersSectionComponent implements AfterViewInit {
       this.countClients.set(Math.round(targets.c * ease));
       this.countMilestones.set(Math.round(targets.m * ease));
       if (p < 1) {
-        requestAnimationFrame(step);
+        this.rafId = requestAnimationFrame(step);
+      } else {
+        this.rafId = 0;
       }
     };
-    requestAnimationFrame(step);
+    this.rafId = requestAnimationFrame(step);
   }
 }

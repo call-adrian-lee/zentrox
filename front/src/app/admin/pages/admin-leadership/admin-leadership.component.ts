@@ -46,7 +46,10 @@ export class AdminLeadershipComponent implements OnInit {
 
   @HostListener('document:keydown.escape', ['$event'])
   onDocumentEscape(event: Event): void {
-    if (!this.modalOpen()) return;
+    if (this.deleteModalOpen()) {
+      event.preventDefault();
+      this.closeDeleteModal();
+    } else if (!this.modalOpen()) return;
     event.preventDefault();
     this.closeModal();
   }

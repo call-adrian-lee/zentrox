@@ -80,15 +80,15 @@
               autocomplete="email"
             [attr.aria-required]="true"
             [attr.aria-invalid]="fieldInvalid('email')"
-            [attr.aria-describedby]="fieldInvalid('email') ? 'get-quote-email-error' : null"
+            [attr.aria-describedby]="emailFieldError() === 'required' ? 'get-quote-email-required' : emailFieldError() === 'email' ? 'get-quote-email-format' : null"
           />
           @if (emailFieldError() === 'required') {
-            <div id="get-quote-email-error" class="invalid-feedback d-block" role="alert">
+            <div id="get-quote-email-required" class="invalid-feedback d-block" role="alert">
               {{ 'getQuote.required' | t }}
             </div>
           }
           @if (emailFieldError() === 'email') {
-            <div id="get-quote-email-error" class="invalid-feedback d-block" role="alert">
+            <div id="get-quote-email-format" class="invalid-feedback d-block" role="alert">
               {{ 'getQuote.emailInvalid' | t }}
             </div>
           }

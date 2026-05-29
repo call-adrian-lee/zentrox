@@ -1,6 +1,7 @@
 /**
  * Idempotent homepage defaults: original leadership + portfolio (two tabs + items).
  * Used by `scripts/bootstrap-db.cjs` and by the API on startup so `/api/leadership` and `/api/portfolio` are populated.
+ * Inserts missing rows only — existing admin edits are not overwritten on restart.
  *
  * Leadership rows use DB column `name` (display name). `photo_path` is not seeded from files:
  * after upsert, `photo_path` is set to `leadership-{id}` for every row (see end of `ensureCanonicalLeadership`).
@@ -185,21 +186,6 @@ async function ensureCanonicalLeadership(pool, logPrefix = '[seed]') {
       [m.name, m.roleTitle]
     );
     if (ex.length) {
-      await pool.query(
-        `UPDATE leadership_members SET blurb = ?, badge_label = ?, card_aria = ?, cta_label = ?, cta_aria = ?, cta_path = ?, open_seat = ?, sort_order = ?
-         WHERE id = ?`,
-        [
-          m.blurb,
-          m.badgeLabel,
-          m.cardAria,
-          m.ctaLabel ?? null,
-          m.ctaAria ?? null,
-          m.ctaPath ?? null,
-          m.openSeat,
-          m.sortOrder,
-          ex[0].id
-        ]
-      );
       continue;
     }
     await pool.query(
@@ -223,26 +209,6 @@ async function ensureCanonicalLeadership(pool, logPrefix = '[seed]') {
   if (inserted) {
     console.log(`${logPrefix} Inserted ${inserted} missing canonical leadership row(s).`);
   }
-  await pool.query(
-    `UPDATE leadership_members SET status = 'published'
-     WHERE (name, role_title) IN (
-       ('Founder / CEO', 'CEO · U.S. citizen'),
-       ('Adrian Lee', 'CTO'),
-       ('Jason Lim', 'Tech Lead')
-     )`
-  );
-  await pool.query(
-    `UPDATE leadership_members SET cta_label = NULL, cta_aria = NULL, cta_path = NULL
-     WHERE name = 'Founder / CEO' AND role_title = 'CEO · U.S. citizen'`
-  );
-  await pool.query(
-    `UPDATE leadership_members SET cta_label = NULL, cta_aria = NULL, cta_path = NULL WHERE cta_label = 'View role details'`
-  );
-  await pool.query(
-    `UPDATE leadership_members SET badge_label = NULL, open_seat = 0
-     WHERE name = 'Founder / CEO' AND role_title = 'CEO · U.S. citizen'`
-  );
-  await pool.query("UPDATE leadership_members SET photo_path = CONCAT('leadership-', id)");
 }
 
 /** Ensure default portfolio tabs exist; returns [firstTabId, secondTabId] by sort_order. */
@@ -254,11 +220,7 @@ async function ensureDefaultPortfolioTabs(pool) {
   for (const [title, sortOrder] of specs) {
     const [ex] = await pool.query('SELECT id FROM portfolio_tabs WHERE title = ? LIMIT 1', [title]);
     if (ex.length) {
-      await pool.query('UPDATE portfolio_tabs SET sort_order = ?, status = ? WHERE id = ?', [
-        sortOrder,
-        'published',
-        ex[0].id
-      ]);
+      continue;
     } else {
       await pool.query(`INSERT INTO portfolio_tabs (title, sort_order, status) VALUES (?, ?, 'published')`, [
         title,
@@ -297,15 +259,6 @@ async function ensureCanonicalPortfolio(pool, logPrefix = '[seed]') {
   if (inserted) {
     console.log(`${logPrefix} Inserted ${inserted} missing canonical portfolio item(s).`);
   }
-  const canonicalTitles = [...new Set(CANONICAL_PORTFOLIO_ITEMS.map((x) => x.title))];
-  const ph = canonicalTitles.map(() => '?').join(',');
-  await pool.query(
-    `UPDATE portfolio_items pi
-     INNER JOIN portfolio_tabs pt ON pt.id = pi.tab_id
-     SET pi.status = 'published'
-     WHERE pt.id IN (?, ?) AND pi.title IN (${ph})`,
-    [w, g, ...canonicalTitles]
-  );
 }
 
 /**

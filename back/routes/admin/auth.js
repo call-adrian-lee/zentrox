@@ -4,6 +4,9 @@ const logger = require('../../lib/logger');
 const { normalizeAdminUsername } = require('../../lib/validation');
 const { signAdminToken } = require('../../auth');
 
+/** Fixed hash so missing usernames still run bcrypt.compare (timing-safe login). */
+const DUMMY_PASSWORD_HASH = bcrypt.hashSync('__zentrox_login_dummy__', 12);
+
 function createAdminAuthRouter({ getPool, authRateLimit }) {
   const router = express.Router();
 
@@ -20,12 +23,9 @@ function createAdminAuthRouter({ getPool, authRateLimit }) {
         'SELECT username, password_hash FROM admin_users WHERE username = ? LIMIT 1',
         [username]
       );
-      if (!rows.length) {
-        res.status(401).json({ error: 'Invalid credentials' });
-        return;
-      }
       const u = rows[0];
-      const ok = await bcrypt.compare(password, u.password_hash);
+      const hash = u?.password_hash || DUMMY_PASSWORD_HASH;
+      const ok = u && (await bcrypt.compare(password, hash));
       if (!ok) {
         res.status(401).json({ error: 'Invalid credentials' });
         return;
