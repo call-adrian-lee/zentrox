@@ -85,12 +85,9 @@
           <p class="text-danger small" role="alert">{{ submitError()! | t }}</p>
         }
 
-        <div class="d-flex flex-wrap align-items-center gap-2">
-          <button type="button" class="btn btn-primary zt-touch-btn" [disabled]="submitting()" (click)="submit()">
-            {{ submitting() ? ('openRoleApply.sending' | t) : ('openRoleApply.submit' | t) }}
-          </button>
-          <a [routerLink]="openRolesPath" class="btn btn-link zt-touch-btn">{{ 'openRoleApply.cancel' | t }}</a>
-        </div>
+        <button type="button" class="btn btn-primary zt-touch-btn" [disabled]="submitting()" (click)="submit()">
+          {{ submitting() ? ('openRoleApply.sending' | t) : ('openRoleApply.submit' | t) }}
+        </button>
       </form>
     }
   </div>

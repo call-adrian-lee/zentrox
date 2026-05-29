@@ -268,7 +268,6 @@ export const APP_TEXT = {
     submit: 'Submit application',
     sending: 'Sending…',
     submitError: 'Something went wrong. Please try again or email us directly.',
-    cancel: 'Cancel',
     thanksTitle: 'Application received',
     thanksBody: 'Thank you. We will review your application and reply if there is a fit.'
   },
