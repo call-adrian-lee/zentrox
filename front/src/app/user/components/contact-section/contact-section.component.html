@@ -12,8 +12,8 @@
       </div>
     </header>
 
-    <div class="row g-4 g-xl-5 contact-layout">
-      <div class="col-lg-7">
+    <div class="row g-4 g-xl-5 contact-layout justify-content-center">
+      <div class="col-lg-8">
         <div class="contact-panel contact-panel--form">
           <div class="contact-panel__head">
             <h3 class="contact-panel__title">{{ 'contact.formTitle' | t }}</h3>
@@ -93,47 +93,6 @@
             </div>
           </form>
         </div>
-      </div>
-      <div class="col-lg-5">
-        <aside class="contact-aside" [attr.aria-label]="'contact.asideAria' | t">
-          <div class="contact-aside__map">
-            <img
-              [src]="contactMapPath"
-              [attr.alt]="'contact.mapAlt' | t"
-              width="520"
-              height="320"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
-          <div class="contact-vcard">
-            <div class="contact-vcard__heading">
-              <h3 class="contact-vcard__title">{{ c.name }}</h3>
-            </div>
-            <ul class="contact-vcard__list">
-              <li class="contact-vcard__item">
-                <span class="contact-vcard__icon" aria-hidden="true">
-                  <i class="fa fa-map-marker"></i>
-                </span>
-                <span class="contact-vcard__text">
-                  {{ c.addressLine1 }}, {{ c.cityStateZip }}, {{ c.country }}
-                </span>
-              </li>
-              <li class="contact-vcard__item">
-                <span class="contact-vcard__icon" aria-hidden="true">
-                  <i class="fa fa-phone"></i>
-                </span>
-                <a class="contact-vcard__link" [href]="'tel:' + c.phoneTel">{{ c.phoneDisplay }}</a>
-              </li>
-              <li class="contact-vcard__item">
-                <span class="contact-vcard__icon" aria-hidden="true">
-                  <i class="fa fa-envelope"></i>
-                </span>
-                <a class="contact-vcard__link" [href]="'mailto:' + c.email">{{ c.email }}</a>
-              </li>
-            </ul>
-          </div>
-        </aside>
       </div>
     </div>
   </div>

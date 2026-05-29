@@ -1,6 +1,4 @@
 import { Component, inject, signal } from '@angular/core';
-import { COMPANY } from '@core/company-info';
-import { SITE_IMAGES } from '@core/site-images';
 import { TextService } from '@shared/services/text.service';
 import { TextPipe } from '@shared/pipes/text.pipe';
 
@@ -11,8 +9,6 @@ import { TextPipe } from '@shared/pipes/text.pipe';
   templateUrl: './contact-section.component.html',
 })
 export class ContactSectionComponent {
-  readonly c = COMPANY;
-  readonly contactMapPath = SITE_IMAGES.contactMap;
   readonly text = inject(TextService);
   readonly formStatus = signal('');
   readonly formStatusClass = signal('');

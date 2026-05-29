@@ -15,7 +15,6 @@ import { NavigationService } from '@user/services/navigation.service';
 export class FooterSectionComponent {
   readonly nav = inject(NavigationService);
   readonly companyName = COMPANY.name;
-  readonly linkedInHref = COMPANY.linkedinUrl;
   readonly slackHref = COMPANY.slackJoinUrl || COMPANY.slackFooterFallbackHref;
   readonly getQuotePath = ROUTE_GET_QUOTE;
   readonly openRolesPath = ROUTE_OPEN_ROLES;

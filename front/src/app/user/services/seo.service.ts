@@ -12,7 +12,7 @@ import type { OpenRole } from '@shared/models/open-roles.models';
 import type { SeoData } from '@shared/models/seo.models';
 
 const SITE = 'Zentrox';
-const DEFAULT_DESCRIPTION = `SaaS and product platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. ${COMPANY_ATTRIBUTION}, Austin, TX.`;
+const DEFAULT_DESCRIPTION = `SaaS and product platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. ${COMPANY_ATTRIBUTION}, remote-first across the United States.`;
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
@@ -242,10 +242,6 @@ export class SeoService {
         '@type': 'Place',
         address: {
           '@type': 'PostalAddress',
-          streetAddress: COMPANY.addressLine1,
-          addressLocality: COMPANY.addressLocality,
-          addressRegion: COMPANY.addressRegion,
-          postalCode: COMPANY.postalCode,
           addressCountry: 'US'
         }
       };
@@ -316,16 +312,6 @@ export class SeoService {
           description: orgDesc,
           url: base,
           ...(sameAs.length ? { sameAs } : {}),
-          email: COMPANY.email,
-          telephone: COMPANY.phoneTel,
-          address: {
-            '@type': 'PostalAddress',
-            streetAddress: COMPANY.addressLine1,
-            addressLocality: COMPANY.addressLocality,
-            addressRegion: COMPANY.addressRegion,
-            postalCode: COMPANY.postalCode,
-            addressCountry: 'US'
-          },
           areaServed: { '@type': 'Country', name: 'United States' },
           knowsAbout: [
             'SaaS development',

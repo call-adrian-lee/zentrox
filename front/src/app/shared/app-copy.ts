@@ -223,8 +223,8 @@ export const APP_TEXT = {
   },
   contact: {
     title: 'Contact',
-    lead1: 'Reach Zentrox by email or phone.',
-    lead2: 'We read every request and respond during Central Time business hours.',
+    lead1: 'Send us a message — we read every request.',
+    lead2: 'We respond during Central Time business hours.',
     chipsAria: 'Response and hours',
     formTitle: 'Send a message',
     name: 'Name',
@@ -233,11 +233,9 @@ export const APP_TEXT = {
     message: 'Message',
     submit: 'Send message',
     sending: 'Sending…',
-    asideAria: 'Office location and contact details',
-    mapAlt: 'Map of Austin, Texas and surrounding area',
     formSubject: 'New website message (Zentrox)',
     success: 'Thanks — your message was sent.',
-    error: 'Sorry — something went wrong. Please email us directly.',
+    error: 'Sorry — something went wrong. Please try again in a few minutes.',
     hours: 'Mon–Fri · 9:00 a.m. – 6:00 p.m. CT',
     sla: 'We reply within one business day.'
   },
@@ -267,7 +265,7 @@ export const APP_TEXT = {
     emailInvalid: 'Enter a valid email address.',
     submit: 'Submit application',
     sending: 'Sending…',
-    submitError: 'Something went wrong. Please try again or email us directly.',
+    submitError: 'Something went wrong. Please try again in a few minutes.',
     thanksTitle: 'Application received',
     thanksBody: 'Thank you. We will review your application and reply if there is a fit.'
   },
@@ -281,11 +279,11 @@ export const APP_TEXT = {
     formRegionAria: 'Get a quote form',
     submit: 'Submit request',
     sending: 'Sending…',
-    submitError: 'Something went wrong. Please try again or email us directly.',
+    submitError: 'Something went wrong. Please try again in a few minutes.',
     submitValidationError: 'Please check the highlighted fields and try again.',
     submitRateLimit: 'Too many submissions. Please wait a few minutes and try again.',
     submitUnavailable:
-      'Our server is temporarily unavailable. Please try again in a few minutes or email us directly.',
+      'Our server is temporarily unavailable. Please try again in a few minutes.',
     thanksTitle: 'Quote request received',
     thanksBody: 'Thank you. We will review your details and follow up with engagement options and next steps.',
     dismissNotice: 'Dismiss notification',
@@ -519,12 +517,12 @@ export const APP_TEXT = {
   seo: {
     homeTitle: 'Zentrox — U.S. SaaS & Product Engineering',
     homeDescription:
-      'SaaS and product platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. Zentrox, Austin, TX. Clear scopes, documentation, and U.S. business hours.',
+      'SaaS and product platform engineering for ambitious U.S. markets—partnerships with idea owners and investors. Web, APIs, AI, cloud, and Unity. Zentrox, remote-first across the United States. Clear scopes, documentation, and U.S. business hours.',
     homeKeywords:
       'Zentrox, SaaS development USA, US product engineering, Austin software company, enterprise SaaS USA, US technology partner, product platform development United States, API development USA, DevOps USA, AI consulting USA, Unity development USA, U.S. startup engineering partner, custom SaaS development Austin',
     openRolesTitle: 'Open roles — Zentrox',
     openRolesDescription:
-      'Open engineering and product delivery roles at Zentrox—SaaS, product platforms, APIs, and AI—with U.S. business-hours overlap. Remote-friendly contract work; apply online in minutes. Austin, TX–based team.',
+      'Open engineering and product delivery roles at Zentrox—SaaS, product platforms, APIs, and AI—with U.S. business-hours overlap. Remote-friendly contract work; apply online in minutes.',
     openRolesKeywords:
       'Zentrox careers, Zentrox jobs, software engineer jobs Austin, remote SaaS engineer contract, full stack Angular Node jobs, product engineering careers USA, Upwork partnership engineer, API developer remote US, AI engineer contract, Austin Texas software jobs',
     ogImageAlt: 'Zentrox — hero image for SaaS and product engineering',
