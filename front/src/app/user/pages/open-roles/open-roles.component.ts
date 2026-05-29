@@ -1,16 +1,17 @@
 import { Component, DestroyRef, OnInit, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 import { plainTextPreview } from '@shared/html-content';
 import { OpenRolesApiService } from '@user/services/open-roles-api.service';
 import type { OpenRole } from '@shared/models/open-roles.models';
 import { SeoService } from '@user/services/seo.service';
 import { TextPipe } from '@shared/pipes/text.pipe';
-import { openRoleApplyHref, ROUTE_OPEN_ROLES } from '@core/site-nav';
+import { openRoleApplyLink } from '@core/site-nav';
 
 @Component({
   selector: 'app-open-roles',
   standalone: true,
-  imports: [TextPipe],
+  imports: [RouterLink, TextPipe],
   templateUrl: './open-roles.component.html',
 })
 export class OpenRolesComponent implements OnInit {
@@ -24,8 +25,7 @@ export class OpenRolesComponent implements OnInit {
   readonly loadError = signal(false);
   readonly loading = signal(true);
 
-  readonly openRolesPath = ROUTE_OPEN_ROLES;
-  readonly openRoleApplyHref = openRoleApplyHref;
+  readonly openRoleApplyLink = openRoleApplyLink;
 
   ngOnInit(): void {
     this.openRolesApi

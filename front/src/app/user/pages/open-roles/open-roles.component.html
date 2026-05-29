@@ -24,10 +24,8 @@
             </div>
             <a
               class="btn btn-primary btn-sm zt-open-roles-item__apply zt-touch-btn"
-              [href]="openRoleApplyHref(role.id)"
-              target="_blank"
-              rel="noopener noreferrer"
-              [attr.aria-label]="('openRoles.applyCta' | t) + ' — ' + role.title + '. Opens in a new tab.'"
+              [routerLink]="openRoleApplyLink(role.id)"
+              [attr.aria-label]="('openRoles.applyCta' | t) + ' — ' + role.title"
               >{{ 'openRoles.applyCta' | t }}</a
             >
           </article>

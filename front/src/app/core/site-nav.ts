@@ -42,7 +42,7 @@ export function openRoleApplyLink(roleId: number | string): readonly [string, nu
   return [ROUTE_OPEN_ROLES, roleId, OPEN_ROLE_APPLY_SEGMENT] as const;
 }
 
-/** Same destination as `openRoleApplyLink`, for `href` + new-tab links. */
+/** Same destination as `openRoleApplyLink`, for plain `href` links. */
 export function openRoleApplyHref(roleId: number | string): string {
   return `${ROUTE_OPEN_ROLES}/${roleId}/${OPEN_ROLE_APPLY_SEGMENT}`;
 }
