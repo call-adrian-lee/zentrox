@@ -114,7 +114,8 @@ h6 {
     cursor: pointer;
 }
 
-.back-to-top i {
+.back-to-top app-fa-icon,
+.back-to-top .zt-fa-icon {
     padding-top: 0;
     color: #ffffff;
 }
@@ -224,10 +225,6 @@ h6 {
 
 #header .header-toolbar {
     gap: 10px;
-}
-
-#header .header-lang {
-    margin-left: 4px;
 }
 
 #nav-menu-container {
@@ -458,7 +455,8 @@ h6 {
     color: var(--brand);
 }
 
-#header.header-scrolled #mobile-nav-toggle i {
+#header.header-scrolled #mobile-nav-toggle app-fa-icon,
+#header.header-scrolled #mobile-nav-toggle .zt-fa-icon {
     color: var(--text);
 }
 
@@ -492,7 +490,8 @@ h6 {
     border-radius: 8px;
 }
 
-#mobile-nav-toggle i {
+#mobile-nav-toggle app-fa-icon,
+#mobile-nav-toggle .zt-fa-icon {
     color: #fff;
 }
 
@@ -824,7 +823,8 @@ body.mobile-nav-active #mobile-nav-toggle {
     white-space: nowrap;
 }
 
-.trust-bar__item i {
+.trust-bar__item app-fa-icon,
+.trust-bar__item .zt-fa-icon {
     color: rgba(255, 255, 255, 0.78);
     font-size: 0.95rem;
 }
@@ -1016,48 +1016,6 @@ body.mobile-nav-active #mobile-nav-toggle {
     margin-bottom: 30px;
 }
 
-#about .welcome {
-    max-width: 900px;
-    text-align: center;
-}
-
-#about .welcome h2 {
-    color: var(--brand);
-    font-size: 35px;
-    font-weight: 700;
-    padding-bottom: 15px;
-}
-
-#about .welcome h2:after {
-    position: absolute;
-    content: "";
-    width: 50px;
-    height: 3px;
-    top: 50px;
-    left: calc(50% - 25px);
-    background: var(--brand);
-}
-
-#about .welcome p {
-    font-size: 18px;
-    font-weight: 400;
-    color: var(--muted);
-}
-
-#about .welcome a {
-    padding: 6px 25px;
-    color: var(--brand);
-    letter-spacing: 1px;
-    background: #ffffff;
-    border: 2px solid var(--brand);
-    border-radius: 50px;
-}
-
-#about .welcome a:hover {
-    color: #ffffff;
-    background: var(--brand);
-}
-
 #about .about-col {
     height: inherit;
     background: transparent;
@@ -1079,7 +1037,8 @@ body.mobile-nav-active #mobile-nav-toggle {
     background: #222222;
 }
 
-#about .about-content i {
+#about .about-content app-fa-icon,
+#about .about-content .zt-fa-icon {
     color: #ffffff;
     font-size: 60px;
     margin-bottom: 20px;
@@ -1196,7 +1155,8 @@ body.mobile-nav-active #mobile-nav-toggle {
     flex: 0 0 80px;
 }
 
-#services .service-icon i {
+#services .service-icon app-fa-icon,
+#services .service-icon .zt-fa-icon {
     font-size: 40px;
     color: var(--brand);
 }
@@ -1281,7 +1241,8 @@ body.mobile-nav-active #mobile-nav-toggle {
     background: linear-gradient(135deg, #3f69aa, #2f5591);
 }
 
-.how-we-work__step-icon i {
+.how-we-work__step-icon app-fa-icon,
+.how-we-work__step-icon .zt-fa-icon {
     font-size: 1.05rem;
 }
 
@@ -1557,8 +1518,10 @@ body.mobile-nav-active #mobile-nav-toggle {
     -webkit-appearance: none;
 }
 
-#portfolio .portfolio-item figure .link-preview i,
-#portfolio .portfolio-item figure .link-details i {
+#portfolio .portfolio-item figure .link-preview app-fa-icon,
+#portfolio .portfolio-item figure .link-preview .zt-fa-icon,
+#portfolio .portfolio-item figure .link-details app-fa-icon,
+#portfolio .portfolio-item figure .link-details .zt-fa-icon {
     padding: 12px 0;
     font-size: 24px;
 }
@@ -1568,8 +1531,10 @@ body.mobile-nav-active #mobile-nav-toggle {
     background: var(--brand);
 }
 
-#portfolio .portfolio-item figure .link-preview:hover i,
-#portfolio .portfolio-item figure .link-details:hover i {
+#portfolio .portfolio-item figure .link-preview:hover app-fa-icon,
+#portfolio .portfolio-item figure .link-preview:hover .zt-fa-icon,
+#portfolio .portfolio-item figure .link-details:hover app-fa-icon,
+#portfolio .portfolio-item figure .link-details:hover .zt-fa-icon {
     color: #ffffff;
 }
 
@@ -1777,25 +1742,6 @@ body.mobile-nav-active #mobile-nav-toggle {
     font-size: 16px;
     font-weight: 300;
     margin: 0;
-}
-
-#testimonials .owl-nav,
-#testimonials .owl-dots {
-    margin-top: 15px;
-    text-align: center;
-}
-
-#testimonials .owl-dot {
-    display: inline-block;
-    margin: 0 5px;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-}
-
-#testimonials .owl-dot.active {
-    background: #ffffff;
 }
 
 @media (max-width: 767.98px) {

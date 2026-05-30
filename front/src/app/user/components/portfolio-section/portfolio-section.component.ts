@@ -1,6 +1,7 @@
 import { Component, DestroyRef, TemplateRef, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FaIconComponent } from '@shared/components/fa-icon.component';
 import { TextPipe } from '@shared/pipes/text.pipe';
 import { PortfolioApiService } from '@user/services/portfolio-api.service';
 import type { PortfolioGridItem, PortfolioPublicItemRow, PortfolioPublicTabRow } from '@shared/models/portfolio.models';
@@ -8,7 +9,7 @@ import type { PortfolioGridItem, PortfolioPublicItemRow, PortfolioPublicTabRow }
 @Component({
   selector: 'app-portfolio-section',
   standalone: true,
-  imports: [TextPipe],
+  imports: [TextPipe, FaIconComponent],
   templateUrl: './portfolio-section.component.html'
 })
 export class PortfolioSectionComponent {

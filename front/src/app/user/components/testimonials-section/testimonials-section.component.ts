@@ -4,6 +4,7 @@ import { TextService } from '@shared/services/text.service';
 import { TextPipe } from '@shared/pipes/text.pipe';
 import { HOME_SECTION_TESTIMONIALS } from '@core/site-nav';
 import { SITE_IMAGES } from '@core/site-images';
+import { FEATURED_CLIENT_NAMES } from '@shared/constants/featured-clients';
 
 @Component({
   selector: 'app-testimonials-section',
@@ -26,7 +27,7 @@ export class TestimonialsSectionComponent {
         image: SITE_IMAGES.testimonialAvatars[0],
         personName: 'Alex Taylor',
         title: this.text.t('testimonials.t0.role'),
-        company: 'HowTube',
+        company: FEATURED_CLIENT_NAMES[0],
         location: this.text.t('testimonials.t0.location'),
         quote: this.text.t('testimonials.t0.quote')
       },
@@ -34,7 +35,7 @@ export class TestimonialsSectionComponent {
         image: SITE_IMAGES.testimonialAvatars[1],
         personName: 'Travis Allen',
         title: this.text.t('testimonials.t1.role'),
-        company: 'OohYeah',
+        company: FEATURED_CLIENT_NAMES[1],
         location: this.text.t('testimonials.t1.location'),
         quote: this.text.t('testimonials.t1.quote')
       },
@@ -42,7 +43,7 @@ export class TestimonialsSectionComponent {
         image: SITE_IMAGES.testimonialAvatars[2],
         personName: 'Simeon Schnapper',
         title: this.text.t('testimonials.t2.role'),
-        company: 'Youtopia',
+        company: FEATURED_CLIENT_NAMES[2],
         location: this.text.t('testimonials.t2.location'),
         quote: this.text.t('testimonials.t2.quote')
       }

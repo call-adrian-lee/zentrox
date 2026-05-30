@@ -1,11 +1,12 @@
 import { DOCUMENT } from '@angular/common';
 import { TextPipe } from '@shared/pipes/text.pipe';
+import { FaIconComponent } from '@shared/components/fa-icon.component';
 import { AfterViewInit, Component, DestroyRef, inject, signal } from '@angular/core';
 
 @Component({
   selector: 'app-counters-section',
   standalone: true,
-  imports: [TextPipe],
+  imports: [TextPipe, FaIconComponent],
   templateUrl: './counters-section.component.html'
 })
 export class CountersSectionComponent implements AfterViewInit {

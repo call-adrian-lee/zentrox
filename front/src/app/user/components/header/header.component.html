@@ -108,12 +108,7 @@
     aria-controls="mobile-nav"
     [attr.aria-label]="'nav.toggleMenu' | t"
   >
-    <i
-      class="fa"
-      aria-hidden="true"
-      [class.fa-bars]="!nav.mobileNavOpen()"
-      [class.fa-times]="nav.mobileNavOpen()"
-    ></i>
+    <app-fa-icon [name]="nav.mobileNavOpen() ? 'times' : 'bars'" />
   </button>
 
   <nav

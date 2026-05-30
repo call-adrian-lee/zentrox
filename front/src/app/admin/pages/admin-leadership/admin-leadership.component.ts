@@ -5,12 +5,13 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { AdminLeadershipApiService } from '@admin/services/admin-leadership-api.service';
 import { AdminNotifyService } from '@admin/services/admin-notify.service';
 import type { LeadershipMember, PublishStatus } from '@shared/models/leadership.models';
+import { FaIconComponent } from '@shared/components/fa-icon.component';
 import { TextPipe } from '@shared/pipes/text.pipe';
 import { SITE_IMAGES, leadershipPhotoPath } from '@core/site-images';
 @Component({
   selector: 'app-admin-leadership',
   standalone: true,
-  imports: [ReactiveFormsModule, TextPipe, DragDropModule, CdkScrollable],
+  imports: [ReactiveFormsModule, TextPipe, DragDropModule, CdkScrollable, FaIconComponent],
   templateUrl: './admin-leadership.component.html',
 })
 export class AdminLeadershipComponent implements OnInit {

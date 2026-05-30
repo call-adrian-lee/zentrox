@@ -6,7 +6,15 @@ import { TextPipe } from '@shared/pipes/text.pipe';
 import { ROUTE_GET_QUOTE } from '@core/site-nav';
 import { SITE_IMAGES } from '@core/site-images';
 import { NavigationService } from '@user/services/navigation.service';
-import type { HeroSlide } from './hero-carousel.types';
+
+type HeroSlide = {
+  image: string;
+  altKey: string;
+  titleKey: string;
+  textKey: string;
+  ctaKey: string;
+  route: string;
+};
 
 @Component({
   selector: 'app-hero-carousel',

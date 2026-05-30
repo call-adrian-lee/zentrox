@@ -4,6 +4,7 @@
  */
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 const mysql = require('mysql2/promise');
+const { buildMysqlConnectionConfig } = require('../lib/mysql-config');
 
 const TITLE = 'Recruitment Partner (High Commission)';
 
@@ -63,10 +64,7 @@ async function ensureRecruitmentPartnerJob(pool) {
 
 async function main() {
   const pool = mysql.createPool({
-    host: process.env.MYSQL_HOST || '127.0.0.1',
-    port: Number(process.env.MYSQL_PORT || 3306),
-    user: process.env.MYSQL_USER || 'root',
-    password: process.env.MYSQL_PASSWORD || '',
+    ...buildMysqlConnectionConfig(),
     database: process.env.MYSQL_DATABASE || 'zentrox',
     waitForConnections: true,
     connectionLimit: 5

@@ -6,6 +6,7 @@ import { forkJoin } from 'rxjs';
 import { AdminPortfolioApiService } from '@admin/services/admin-portfolio-api.service';
 import { AdminNotifyService } from '@admin/services/admin-notify.service';
 import type { PortfolioItemAdmin, PortfolioPublishStatus, PortfolioTabAdmin } from '@shared/models/portfolio.models';
+import { FaIconComponent } from '@shared/components/fa-icon.component';
 import { TextPipe } from '@shared/pipes/text.pipe';
 import { SITE_IMAGES, portfolioImagePath } from '@core/site-images';
 /** Stable reference for tabs with no items — avoids breaking CDK with a fresh `[]` each CD cycle. */
@@ -14,7 +15,7 @@ const EMPTY_PORTFOLIO_TAB_ITEMS: PortfolioItemAdmin[] = [];
 @Component({
   selector: 'app-admin-portfolio',
   standalone: true,
-  imports: [ReactiveFormsModule, TextPipe, DragDropModule, CdkScrollable],
+  imports: [ReactiveFormsModule, TextPipe, DragDropModule, CdkScrollable, FaIconComponent],
   templateUrl: './admin-portfolio.component.html'
 })
 export class AdminPortfolioComponent implements OnInit {

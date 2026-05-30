@@ -38,11 +38,13 @@
                 <div class="zt-admin-dnd__cell zt-admin-dnd__cell--handle">
                   <span
                     cdkDragHandle
-                    class="zt-admin-drag-handle fa fa-ellipsis-v"
+                    class="zt-admin-drag-handle"
                     role="button"
                     tabindex="0"
                     [attr.aria-label]="'admin.dragReorder' | t"
-                  ></span>
+                  >
+                    <app-fa-icon name="ellipsis-v" />
+                  </span>
                 </div>
                 <div class="zt-admin-dnd__cell zt-admin-photo-cell">
                   <img

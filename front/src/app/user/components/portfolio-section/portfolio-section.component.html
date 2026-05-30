@@ -49,7 +49,7 @@
           [attr.aria-label]="'portfolio.openProjectAria' | t"
         >
           {{ 'portfolio.openProject' | t }}
-          <i class="fa fa-external-link ms-2" aria-hidden="true"></i>
+          <app-fa-icon name="external-link" [hostClass]="'ms-2'" />
         </a>
       } @else {
         <span class="zt-portfolio-preview__nolink">{{ 'portfolio.modalNoLink' | t }}</span>
@@ -126,7 +126,7 @@
                   [attr.aria-label]="('portfolio.preview' | t) + ': ' + item.title"
                   (click)="openPreview(imagePreview, item, $event)"
                 >
-                  <i class="fa fa-eye" aria-hidden="true"></i>
+                  <app-fa-icon name="eye" />
                 </button>
                 <a
                   [href]="item.link"
@@ -136,7 +136,7 @@
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <i aria-hidden="true" class="fa fa-link"></i>
+                  <app-fa-icon name="link" />
                 </a>
                 <h3 class="portfolio-title">
                   {{ item.title }}

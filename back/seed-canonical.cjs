@@ -271,6 +271,5 @@ async function seedCanonicalHomepageContent(pool, logPrefix = '[seed]') {
 }
 
 module.exports = {
-  seedCanonicalHomepageContent,
-  CANONICAL_PORTFOLIO_ITEMS
+  seedCanonicalHomepageContent
 };

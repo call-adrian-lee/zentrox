@@ -15,7 +15,7 @@
     "db:bootstrap": "npm run db:bootstrap --prefix back",
     "test": "npm run test --prefix front",
     "verify:api": "npm run verify:api --prefix back",
-    "dev": "concurrently -k -n web,api -c cyan,magenta \"npm run start --prefix front\" \"npm run start --prefix back\""
+    "dev": "concurrently -k -n web,api -c cyan,magenta \"npm run start --prefix front\" \"npm run api:watch\""
   },
   "devDependencies": {
     "concurrently": "^9.2.1"

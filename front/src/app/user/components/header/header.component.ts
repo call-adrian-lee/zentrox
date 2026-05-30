@@ -11,12 +11,13 @@ import {
   ROUTE_OPEN_ROLES
 } from '@core/site-nav';
 import { NavigationService } from '@user/services/navigation.service';
+import { FaIconComponent } from '@shared/components/fa-icon.component';
 import { TextPipe } from '@shared/pipes/text.pipe';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, TextPipe],
+  imports: [RouterLink, TextPipe, FaIconComponent],
   templateUrl: './header.component.html'
 })
 export class HeaderComponent {

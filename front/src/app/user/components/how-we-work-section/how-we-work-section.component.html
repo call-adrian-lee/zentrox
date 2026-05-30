@@ -9,7 +9,7 @@
         <li class="how-we-work__step">
           <div class="how-we-work__step-num" aria-hidden="true">{{ i + 1 }}</div>
           <div class="how-we-work__step-icon" aria-hidden="true">
-            <i class="fa" [class]="step.icon"></i>
+            <app-fa-icon [name]="step.icon" />
           </div>
           <h3 class="how-we-work__step-title">{{ step.titleKey | t }}</h3>
           <p class="how-we-work__step-body">{{ step.bodyKey | t }}</p>

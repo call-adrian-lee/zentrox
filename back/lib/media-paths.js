@@ -68,7 +68,6 @@ async function syncPortfolioImagePaths(pool) {
 
 module.exports = {
   leadershipStaticPhotoPath,
-  leadershipExpectedPublicPhotoPath,
   portfolioStaticImagePath,
   portfolioExpectedPublicImagePath,
   resolveLeadershipPhotoForResponse,

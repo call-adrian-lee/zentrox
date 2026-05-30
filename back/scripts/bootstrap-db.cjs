@@ -12,6 +12,7 @@ const { buildMysqlConnectionConfig } = require('../lib/mysql-config');
 const { getPool, ensureSchema } = require('../db');
 const { seedCanonicalHomepageContent } = require('../seed-canonical.cjs');
 const { ensureRecruitmentPartnerJob } = require('./seed-recruitment-partner-job.cjs');
+const { seedPartnershipJobsIfEmpty } = require('./seed-partnership-jobs.cjs');
 
 function resolveBootstrapAdmin() {
   const username = String(process.env.ADMIN_BOOTSTRAP_USERNAME || 'admin').trim().toLowerCase();
@@ -61,34 +62,7 @@ async function main() {
     ]);
   }
 
-  const seedJobs = [
-    [
-      'Upwork Partnership: Senior Full-Stack Engineer (Angular + Node)',
-      'Partner with Zentrox and U.S. founders to ship production SaaS on Upwork engagements. Own Angular frontend, Node APIs, and delivery quality from scope to launch.',
-      'Remote (U.S. overlap)',
-      'Contract'
-    ],
-    [
-      'Upwork Partnership: AI/Automation Engineer (APIs + Workflows)',
-      'Build practical AI features and business automations for startup teams. Integrate LLM providers, external APIs, and operational workflows with strong reliability and documentation.',
-      'Remote (U.S. overlap)',
-      'Contract'
-    ],
-    [
-      'Upwork Partnership: Product Delivery Engineer (MVP to Scale)',
-      'Help idea owners and investors turn validated concepts into scalable products. Lead implementation across web architecture, integrations, and release readiness.',
-      'Remote (U.S. overlap)',
-      'Contract'
-    ]
-  ];
-
-  const [jobs] = await pool.query('SELECT id FROM jobs LIMIT 1');
-  if (!jobs.length) {
-    await pool.query(
-      `INSERT INTO jobs (title, description, location, employment_type, status)
-       VALUES ?`,
-      [seedJobs.map((j) => [j[0], j[1], j[2], j[3], 'published'])]
-    );
+  if (await seedPartnershipJobsIfEmpty(pool)) {
     console.log('[bootstrap] Seeded 3 published partnership jobs for /open-roles.');
   }
 

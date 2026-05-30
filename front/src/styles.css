@@ -1,10 +1,8 @@
 /* Fonts loaded from index.html (preconnect + stylesheet) for faster first paint */
-@import 'font-awesome/css/font-awesome.min.css';
 @import './assets/styles/zentrox-theme.css';
 @import './assets/styles/layout.css';
 @import './assets/styles/public-pages.css';
 @import './assets/styles/home-sections.css';
-@import './assets/styles/admin-components.css';
 
 /* Mobile: avoid accidental horizontal page scroll from overflowing sections */
 html {
@@ -30,7 +28,7 @@ html {
   height: 100vh;
 }
 
-/* Owl put dots under slides; ngb-carousel renders indicators first in DOM — reorder visually */
+/* ngb-carousel renders indicators first in DOM — reorder visually */
 #testimonials ngb-carousel.carousel {
   display: flex !important;
   flex-direction: column;
@@ -71,7 +69,7 @@ html {
   min-width: 0;
 }
 
-/* Client dots: match static HTML Owl Carousel (.owl-dots / .owl-dot), not Bootstrap pill indicators */
+/* Client dots: circular indicators (not Bootstrap pill defaults) */
 #testimonials ngb-carousel.carousel .carousel-indicators {
   position: static;
   right: auto;
