@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const { getPool, ensureSchema } = require('./db');
-const { seedCanonicalHomepageContent } = require('./seed-canonical.cjs');
+const { seedCanonicalHomepageContentIfEmpty } = require('./seed-canonical.cjs');
 const { syncLeadershipPhotoPaths, syncPortfolioImagePaths } = require('./lib/media-paths');
 const { createApp } = require('./app');
 const logger = require('./lib/logger');
@@ -22,7 +22,7 @@ async function start() {
   } finally {
     conn.release();
   }
-  await seedCanonicalHomepageContent(pool, '[zentrox-api]');
+  await seedCanonicalHomepageContentIfEmpty(pool, '[zentrox-api]');
   await syncLeadershipPhotoPaths(pool);
   await syncPortfolioImagePaths(pool);
   const server = app.listen(PORT, '0.0.0.0', () => {

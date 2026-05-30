@@ -1,7 +1,8 @@
 /**
  * Idempotent homepage defaults: original leadership + portfolio (two tabs + items).
- * Used by `scripts/bootstrap-db.cjs` and by the API on startup so `/api/leadership` and `/api/portfolio` are populated.
- * Inserts missing rows only — existing admin edits are not overwritten on restart.
+ * Used by `scripts/bootstrap-db.cjs` (merge missing canonical rows) and by the API on startup
+ * only when leadership/portfolio tables are still empty (first run without bootstrap).
+ * Admin renames/deletes are not undone on API restart.
  *
  * Leadership rows use DB column `name` (display name). `photo_path` is not seeded from files:
  * after upsert, `photo_path` is set to `leadership-{id}` for every row (see end of `ensureCanonicalLeadership`).
@@ -270,6 +271,22 @@ async function seedCanonicalHomepageContent(pool, logPrefix = '[seed]') {
   await ensureCanonicalPortfolio(pool, logPrefix);
 }
 
+/**
+ * API startup: seed defaults only when a table has no rows yet.
+ * Avoids re-inserting canonical CEO/leadership after admin edits on every restart.
+ */
+async function seedCanonicalHomepageContentIfEmpty(pool, logPrefix = '[seed]') {
+  const [[{ lc }]] = await pool.query('SELECT COUNT(*) AS lc FROM leadership_members');
+  const [[{ tc }]] = await pool.query('SELECT COUNT(*) AS tc FROM portfolio_tabs');
+  if (Number(lc) === 0) {
+    await ensureCanonicalLeadership(pool, logPrefix);
+  }
+  if (Number(tc) === 0) {
+    await ensureCanonicalPortfolio(pool, logPrefix);
+  }
+}
+
 module.exports = {
-  seedCanonicalHomepageContent
+  seedCanonicalHomepageContent,
+  seedCanonicalHomepageContentIfEmpty
 };

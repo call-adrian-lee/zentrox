@@ -12,6 +12,8 @@ npm run api
 
 `db:bootstrap` is safe to re-run: it merges any **missing** default leadership rows and portfolio `web` / `game` items (same copy as the original static homepage) without deleting rows you added in admin.
 
+API restarts do **not** re-insert renamed or deleted leadership rows. Run `db:bootstrap` manually if you intentionally want missing canonical rows merged back in.
+
 ## Run only backend
 
 ```bash
