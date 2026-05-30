@@ -99,6 +99,38 @@ sudo apt install -y nginx mysql-server nodejs npm certbot python3-certbot-nginx
 node -v   # must be >= 20
 ```
 
+## Routine updates (after code changes)
+
+From your **local machine**: commit and push to the remote your VPS tracks.
+
+On the **VPS** (one command):
+
+```bash
+sudo bash /var/www/zentrox/deploy/update.sh
+```
+
+This script pulls latest code, runs `npm ci` + `npm run build` in `front/`, refreshes `back/` dependencies, verifies hero/testimonial JPGs exist, and restarts `zentrox-api`. It never overwrites `back/.env`.
+
+Useful flags:
+
+```bash
+# Skip git pull (already pulled manually)
+sudo bash deploy/update.sh --skip-pull
+
+# Also refresh nginx or systemd templates from deploy/
+sudo bash deploy/update.sh --sync-nginx
+sudo bash deploy/update.sh --sync-systemd
+
+# Rebuild frontend only, leave API running
+sudo bash deploy/update.sh --no-restart-api
+```
+
+Override paths if needed:
+
+```bash
+sudo APP_ROOT=/var/www/zentrox SITE_URL=https://zentrox.us bash deploy/update.sh
+```
+
 ## Notes
 
 - Admin UI: `/admin-0911` (blocked in `robots.txt`; not a security boundary).
