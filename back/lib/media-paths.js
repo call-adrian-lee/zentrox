@@ -27,9 +27,10 @@ function publicPathToFsPath(publicPath) {
 }
 
 function resolveLeadershipPhotoForResponse(member) {
-  const token = String(member.photo_path || '').trim();
-  if (token.startsWith('leadership-')) {
-    return { ...member, photo_path: leadershipExpectedPublicPhotoPath(member.id) };
+  const nestedPath = leadershipExpectedPublicPhotoPath(member.id);
+  const nestedFs = publicPathToFsPath(nestedPath);
+  if (nestedFs && fs.existsSync(nestedFs)) {
+    return { ...member, photo_path: nestedPath };
   }
   const legacyFlat = `/img/leadership-${member.id}.png`;
   const legacyPath = publicPathToFsPath(legacyFlat);
@@ -40,9 +41,10 @@ function resolveLeadershipPhotoForResponse(member) {
 }
 
 function resolvePortfolioImageForResponse(item) {
-  const token = String(item.image_path || '').trim();
-  if (token.startsWith('portfolio-')) {
-    return { ...item, image_path: portfolioExpectedPublicImagePath(item.id) };
+  const nestedPath = portfolioExpectedPublicImagePath(item.id);
+  const nestedFs = publicPathToFsPath(nestedPath);
+  if (nestedFs && fs.existsSync(nestedFs)) {
+    return { ...item, image_path: nestedPath };
   }
   const legacyFlat = `/img/portfolio-${item.id}.png`;
   const legacyPath = publicPathToFsPath(legacyFlat);
