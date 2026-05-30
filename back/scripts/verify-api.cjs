@@ -50,9 +50,28 @@ function assert(name, ok, detail) {
   return true;
 }
 
+async function waitForReady(maxMs = 60_000) {
+  const deadline = Date.now() + maxMs;
+  while (Date.now() < deadline) {
+    try {
+      const ready = await request('GET', '/api/ready');
+      if (ready.status === 200 && ready.body?.ready === true) return;
+    } catch {
+      /* server may still be binding */
+    }
+    await new Promise((r) => setTimeout(r, 500));
+  }
+  throw new Error('API not ready — timed out waiting for GET /api/ready');
+}
+
 async function main() {
+  await waitForReady();
+
   const health = await request('GET', '/api/health');
   assert('GET /api/health', health.status === 200 && health.body?.db === true, health);
+
+  const ready = await request('GET', '/api/ready');
+  assert('GET /api/ready', ready.status === 200 && ready.body?.ready === true, ready);
 
   const leadership = await request('GET', '/api/leadership');
   assert('GET /api/leadership', leadership.status === 200 && Array.isArray(leadership.body?.members), leadership);

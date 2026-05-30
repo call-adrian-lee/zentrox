@@ -5,7 +5,8 @@
 export const APP_TEXT = {
   common: {
     joinSlack: 'Join our Slack',
-    joinSlackAria: 'Join our Slack workspace (opens in a new tab)'
+    joinSlackAria: 'Join our Slack workspace (opens in a new tab)',
+    retry: 'Try again'
   },
   skip: { main: 'Skip to main content' },
   layout: {

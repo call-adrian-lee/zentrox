@@ -23,6 +23,7 @@
               [attr.fetchpriority]="i === 0 ? 'high' : null"
               [attr.loading]="i === 0 ? 'eager' : 'lazy'"
               decoding="async"
+              (error)="onHeroImageError($event, i)"
             />
           </div>
           <div class="carousel-container">

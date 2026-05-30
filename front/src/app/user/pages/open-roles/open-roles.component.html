@@ -1,16 +1,16 @@
 <section class="zt-page py-5" aria-labelledby="open-roles-page-heading">
   <div class="container">
-    <header class="mb-4 zt-panel">
+    <header class="mb-4 zt-panel zt-panel--header">
       <h1 id="open-roles-page-heading" class="h2 mb-2">{{ 'openRoles.title' | t }}</h1>
-      <p class="text-secondary mb-0">{{ 'openRoles.intro' | t }}</p>
+      <p class="zt-page-lead">{{ 'openRoles.intro' | t }}</p>
     </header>
 
     @if (loading()) {
-      <p class="text-secondary" role="status" aria-live="polite">{{ 'openRoles.loading' | t }}</p>
+      <p class="zt-page-status" role="status" aria-live="polite">{{ 'openRoles.loading' | t }}</p>
     } @else if (loadError()) {
       <p class="text-danger" role="alert">{{ 'openRoles.loadError' | t }}</p>
     } @else if (!roles().length) {
-      <p class="text-secondary">{{ 'openRoles.empty' | t }}</p>
+      <p class="zt-page-status">{{ 'openRoles.empty' | t }}</p>
     } @else {
       <div class="zt-open-roles-stack">
         @for (role of roles(); track role.id) {
@@ -18,9 +18,9 @@
             <div class="zt-open-roles-item__content">
               <h2 class="h5 mb-1">{{ role.title }}</h2>
               @if (roleMeta(role)) {
-                <p class="small text-secondary mb-2">{{ roleMeta(role) }}</p>
+                <p class="zt-page-meta mb-2">{{ roleMeta(role) }}</p>
               }
-              <p class="zt-open-roles-desc small text-body-secondary">{{ descriptionPreview(role.description) }}</p>
+              <p class="zt-open-roles-desc">{{ descriptionPreview(role.description) }}</p>
             </div>
             <a
               class="btn btn-primary btn-sm zt-open-roles-item__apply zt-touch-btn"

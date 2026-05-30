@@ -6,7 +6,12 @@
     </header>
 
     @if (loadError()) {
-      <p class="leadership__status" role="alert">{{ 'leadership.loadError' | t }}</p>
+      <p class="leadership__status" role="alert">
+        {{ 'leadership.loadError' | t }}
+        <button type="button" class="btn btn-link btn-sm p-0 ms-2" (click)="retryLoad()">
+          {{ 'common.retry' | t }}
+        </button>
+      </p>
     } @else if (loading()) {
       <p class="leadership__status leadership__status--loading" role="status" aria-live="polite">
         {{ 'leadership.loading' | t }}

@@ -23,6 +23,7 @@
                 loading="lazy"
                 decoding="async"
                 class="client-img"
+                (error)="onClientImageError($event, $index)"
               />
             </div>
             <div class="testimonial-content">

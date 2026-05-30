@@ -1,7 +1,7 @@
 [Unit]
 Description=Zentrox API
-After=network.target mysql.service
-Wants=mysql.service
+After=network.target mysql.service mariadb.service
+Wants=mysql.service mariadb.service
 
 [Service]
 Type=simple
@@ -10,9 +10,11 @@ Group=www-data
 WorkingDirectory=/var/www/zentrox/back
 Environment=NODE_ENV=production
 EnvironmentFile=-/var/www/zentrox/back/.env
+ExecStartPre=/usr/bin/bash -c 'until mysqladmin ping -h127.0.0.1 --silent 2>/dev/null; do sleep 1; done'
 ExecStart=/usr/bin/node index.js
-Restart=on-failure
-RestartSec=5
+Restart=always
+RestartSec=3
+TimeoutStopSec=15
 
 [Install]
 WantedBy=multi-user.target

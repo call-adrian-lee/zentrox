@@ -4,7 +4,7 @@ import { NgbCarousel, NgbSlide } from '@ng-bootstrap/ng-bootstrap';
 import { TextService } from '@shared/services/text.service';
 import { TextPipe } from '@shared/pipes/text.pipe';
 import { ROUTE_GET_QUOTE } from '@core/site-nav';
-import { SITE_IMAGES } from '@core/site-images';
+import { heroSlideFallbackUrl, SITE_IMAGES } from '@core/site-images';
 import { NavigationService } from '@user/services/navigation.service';
 
 type HeroSlide = {
@@ -74,4 +74,12 @@ export class HeroCarouselComponent {
       }
     ];
   });
+
+  onHeroImageError(ev: Event, index: number): void {
+    const img = ev.target as HTMLImageElement | null;
+    if (!img || index < 0 || index > 2) return;
+    const fallback = heroSlideFallbackUrl(index as 0 | 1 | 2);
+    if (img.src.includes(fallback)) return;
+    img.src = fallback;
+  }
 }

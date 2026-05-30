@@ -4,29 +4,29 @@
       <p class="text-danger" role="alert">{{ 'openRoleApply.loadError' | t }}</p>
       <a [routerLink]="openRolesPath" class="btn btn-outline-primary btn-sm zt-touch-btn">{{ 'openRoleApply.backOpenRoles' | t }}</a>
     } @else if (!role()) {
-      <p class="text-secondary" role="status" aria-live="polite">{{ 'openRoleApply.loading' | t }}</p>
+      <p class="zt-page-status" role="status" aria-live="polite">{{ 'openRoleApply.loading' | t }}</p>
     } @else if (submitted()) {
       <h1 id="open-role-apply-page-heading" class="h4 mb-3">{{ 'openRoleApply.thanksTitle' | t }}</h1>
-      <p class="text-secondary">{{ 'openRoleApply.thanksBody' | t }}</p>
+      <p class="zt-page-copy">{{ 'openRoleApply.thanksBody' | t }}</p>
       <a [routerLink]="openRolesPath" class="btn btn-primary btn-sm mt-2 zt-touch-btn">{{ 'openRoleApply.backOpenRoles' | t }}</a>
     } @else {
-      <header class="mb-4 zt-panel" aria-labelledby="open-role-apply-heading">
-        <p class="small text-secondary mb-1">
+      <header class="mb-4 zt-panel zt-panel--header" aria-labelledby="open-role-apply-heading">
+        <p class="zt-page-breadcrumb mb-1">
           <a [routerLink]="openRolesPath">{{ 'openRoles.title' | t }}</a>
         </p>
         <h1 id="open-role-apply-heading" class="h3 mb-2">{{ role()!.title }}</h1>
-        <p class="small text-secondary mb-2">{{ 'openRoleApply.subtitle' | t }}</p>
-        <p class="small text-secondary mb-0">{{ role()!.location }} · {{ role()!.employment_type }}</p>
+        <p class="zt-page-copy mb-2">{{ 'openRoleApply.subtitle' | t }}</p>
+        <p class="zt-page-meta mb-0">{{ role()!.location }} · {{ role()!.employment_type }}</p>
       </header>
 
       <div
         id="open-role-apply-description"
-        class="zt-prose mb-3 small text-body-secondary"
+        class="zt-prose zt-panel zt-prose-panel mb-4"
         [innerHTML]="roleDescriptionHtml(role()!.description)"
       ></div>
 
       <form
-        class="zt-panel zt-form-block"
+        class="zt-panel zt-panel--form zt-form-block"
         [formGroup]="form"
         novalidate
         [attr.aria-label]="'openRoleApply.formRegionAria' | t"

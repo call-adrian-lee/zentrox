@@ -11,7 +11,8 @@ function getPool() {
       database: process.env.MYSQL_DATABASE || 'zentrox',
       waitForConnections: true,
       connectionLimit: Number(process.env.MYSQL_POOL_SIZE || 10),
-      queueLimit: 0,
+      queueLimit: 50,
+      connectTimeout: Number(process.env.MYSQL_CONNECT_TIMEOUT || 10_000),
       enableKeepAlive: true,
       keepAliveInitialDelay: 0
     });
@@ -97,20 +98,6 @@ async function migrateDropSlugColumns(connection) {
     } catch (e) {
       logger.warn(`drop slug on ${table}`, e);
     }
-  }
-}
-
-async function migrateLeadershipMemberColumnComments(connection) {
-  if (!(await tableExists(connection, 'leadership_members'))) return;
-  try {
-    await connection.query(`
-      ALTER TABLE leadership_members
-        MODIFY COLUMN name VARCHAR(128) NOT NULL COMMENT 'Display name (person or open-seat label)',
-        MODIFY COLUMN role_title VARCHAR(255) NOT NULL COMMENT 'Role line under the name',
-        MODIFY COLUMN photo_path VARCHAR(512) NULL COMMENT 'Stored token leadership-{id}; app maps to /img/leadership/leadership-{id}.png'
-    `);
-  } catch (e) {
-    logger.warn('leadership_members column comments', e);
   }
 }
 
@@ -205,7 +192,6 @@ async function ensureSchema(connection) {
   `);
   await migrateDropSlugColumns(connection);
   await ensureLeadershipMemberColumns(connection);
-  await migrateLeadershipMemberColumnComments(connection);
   await ensurePortfolioItemCaseStudyColumns(connection);
   await connection.query(`
     CREATE TABLE IF NOT EXISTS portfolio_tabs (

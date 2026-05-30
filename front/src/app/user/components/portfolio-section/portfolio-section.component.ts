@@ -1,8 +1,11 @@
 import { Component, DestroyRef, TemplateRef, computed, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { merge, of, Subject, switchMap, tap } from 'rxjs';
+import { retryTransientApi } from '@core/api-retry';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FaIconComponent } from '@shared/components/fa-icon.component';
 import { TextPipe } from '@shared/pipes/text.pipe';
+import { portfolioImageUrl, SITE_IMAGES } from '@core/site-images';
 import { PortfolioApiService } from '@user/services/portfolio-api.service';
 import type { PortfolioGridItem, PortfolioPublicItemRow, PortfolioPublicTabRow } from '@shared/models/portfolio.models';
 
@@ -16,6 +19,10 @@ export class PortfolioSectionComponent {
   private readonly modal = inject(NgbModal);
   private readonly portfolioApi = inject(PortfolioApiService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly loadTrigger$ = new Subject<void>();
+
+  readonly portfolioImageUrl = portfolioImageUrl;
+  readonly portfolioPlaceholder = SITE_IMAGES.portfolioPlaceholder;
 
   readonly previewSrc = signal('');
   readonly previewTitle = signal('');
@@ -31,9 +38,15 @@ export class PortfolioSectionComponent {
   readonly loading = signal(true);
 
   constructor() {
-    this.portfolioApi
-      .listPublished()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+    merge(of(undefined), this.loadTrigger$)
+      .pipe(
+        tap(() => {
+          this.loading.set(true);
+          this.loadError.set(false);
+        }),
+        switchMap(() => this.portfolioApi.listPublished().pipe(retryTransientApi())),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe({
         next: (r) => {
           const tabs = r.tabs || [];
@@ -54,6 +67,10 @@ export class PortfolioSectionComponent {
       });
   }
 
+  retryLoad(): void {
+    this.loadTrigger$.next();
+  }
+
   /** Published tab ids in display order → first tab uses `web` theme, second `game`. */
   readonly tabKindById = computed(() => {
     const tabs = [...this.portfolioTabs()].sort(
@@ -72,7 +89,7 @@ export class PortfolioSectionComponent {
       id: i.id,
       tabId: i.tab_id,
       portfolioKind: kinds.get(i.tab_id) ?? '',
-      image: i.image_path,
+      image: portfolioImageUrl(i),
       title: i.title,
       subtitle: i.subtitle ?? undefined,
       problem: i.problem ?? undefined,
@@ -91,6 +108,13 @@ export class PortfolioSectionComponent {
 
   setPortfolioFilter(f: 'all' | number): void {
     this.portfolioFilter.set(f);
+  }
+
+  onPortfolioImageError(ev: Event): void {
+    const img = ev.target as HTMLImageElement | null;
+    if (!img) return;
+    if (img.src.includes(this.portfolioPlaceholder)) return;
+    img.src = this.portfolioPlaceholder;
   }
 
   openPreview(tpl: TemplateRef<unknown>, item: PortfolioGridItem, event: Event): void {

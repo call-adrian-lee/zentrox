@@ -1,5 +1,7 @@
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { merge, of, Subject, switchMap, tap } from 'rxjs';
+import { retryTransientApi } from '@core/api-retry';
 import { TextPipe } from '@shared/pipes/text.pipe';
 import { LeadershipApiService } from '@user/services/leadership-api.service';
 import { leadershipPhotoUrl, type LeadershipMemberPublic } from '@shared/models/leadership.models';
@@ -14,6 +16,7 @@ import { SITE_IMAGES } from '@core/site-images';
 export class LeadershipSectionComponent {
   private readonly api = inject(LeadershipApiService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly loadTrigger$ = new Subject<void>();
   readonly placeholderAvatarPath = SITE_IMAGES.leadershipPlaceholder;
   readonly leaderPhotoUrl = leadershipPhotoUrl;
 
@@ -22,9 +25,15 @@ export class LeadershipSectionComponent {
   readonly loading = signal(true);
 
   constructor() {
-    this.api
-      .listPublished()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+    merge(of(undefined), this.loadTrigger$)
+      .pipe(
+        tap(() => {
+          this.loading.set(true);
+          this.loadError.set(false);
+        }),
+        switchMap(() => this.api.listPublished().pipe(retryTransientApi())),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe({
         next: (r) => {
           this.members.set(r.members || []);
@@ -36,6 +45,10 @@ export class LeadershipSectionComponent {
           this.loading.set(false);
         }
       });
+  }
+
+  retryLoad(): void {
+    this.loadTrigger$.next();
   }
 
   onLeaderImageError(ev: Event): void {

@@ -22,6 +22,7 @@
         [attr.alt]="previewTitle() + ' — ' + ('portfolio.preview' | t)"
         loading="lazy"
         decoding="async"
+        (error)="onPortfolioImageError($event)"
       />
     </div>
     <div class="zt-portfolio-preview__body">
@@ -65,7 +66,12 @@
       <p>{{ 'portfolio.intro' | t }}</p>
     </header>
     @if (loadError()) {
-      <p class="text-center text-secondary">{{ 'portfolio.loadError' | t }}</p>
+      <p class="text-center text-secondary" role="alert">
+        {{ 'portfolio.loadError' | t }}
+        <button type="button" class="btn btn-link btn-sm p-0 ms-2" (click)="retryLoad()">
+          {{ 'common.retry' | t }}
+        </button>
+      </p>
     } @else if (loading()) {
       <p class="text-center text-secondary">{{ 'portfolio.loading' | t }}</p>
     } @else if (!gridItems().length) {
@@ -118,6 +124,9 @@
                   [src]="item.image"
                   class="img-fluid"
                   [attr.alt]="item.title + ' — ' + ('portfolio.preview' | t)"
+                  loading="lazy"
+                  decoding="async"
+                  (error)="onPortfolioImageError($event)"
                 />
                 <button
                   type="button"
@@ -128,16 +137,18 @@
                 >
                   <app-fa-icon name="eye" />
                 </button>
-                <a
-                  [href]="item.link"
-                  class="link-details"
-                  [attr.title]="'portfolio.details' | t"
-                  [attr.aria-label]="('portfolio.openProject' | t) + ': ' + item.title + ' (opens in new tab)'"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <app-fa-icon name="link" />
-                </a>
+                @if (item.link?.trim()) {
+                  <a
+                    [href]="item.link"
+                    class="link-details"
+                    [attr.title]="'portfolio.details' | t"
+                    [attr.aria-label]="('portfolio.openProject' | t) + ': ' + item.title + ' (opens in new tab)'"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <app-fa-icon name="link" />
+                  </a>
+                }
                 <h3 class="portfolio-title">
                   {{ item.title }}
                   @if (item.subtitle) {

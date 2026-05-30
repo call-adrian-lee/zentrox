@@ -7,7 +7,7 @@ import { TextService } from '@shared/services/text.service';
 import { ADMIN_BASE_URL } from '@admin/core/admin-paths';
 import { COMPANY, COMPANY_ATTRIBUTION } from '@core/company-info';
 import { isOpenRolesListingPath, ROUTE_GET_QUOTE, ROUTE_OPEN_ROLES } from '@core/site-nav';
-import { SITE_IMAGES } from '@core/site-images';
+import { SITE_IMAGES, publicImageMimeType } from '@core/site-images';
 import type { OpenRole } from '@shared/models/open-roles.models';
 import type { SeoData } from '@shared/models/seo.models';
 
@@ -166,7 +166,7 @@ export class SeoService {
     this.meta.updateTag({ property: 'og:image:alt', content: imageAlt });
     this.meta.updateTag({ property: 'og:image:width', content: '1900' });
     this.meta.updateTag({ property: 'og:image:height', content: '1200' });
-    this.meta.updateTag({ property: 'og:image:type', content: 'image/jpeg' });
+    this.meta.updateTag({ property: 'og:image:type', content: publicImageMimeType(SITE_IMAGES.heroSlides[0]) });
     this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     this.meta.updateTag({ name: 'twitter:title', content: opts.title });
     this.meta.updateTag({ name: 'twitter:description', content: opts.description });

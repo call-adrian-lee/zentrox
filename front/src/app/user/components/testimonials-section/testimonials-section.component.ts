@@ -3,7 +3,7 @@ import { NgbCarousel, NgbSlide } from '@ng-bootstrap/ng-bootstrap';
 import { TextService } from '@shared/services/text.service';
 import { TextPipe } from '@shared/pipes/text.pipe';
 import { HOME_SECTION_TESTIMONIALS } from '@core/site-nav';
-import { SITE_IMAGES } from '@core/site-images';
+import { SITE_IMAGES, testimonialAvatarFallbackUrl } from '@core/site-images';
 import { FEATURED_CLIENT_NAMES } from '@shared/constants/featured-clients';
 
 @Component({
@@ -18,6 +18,14 @@ export class TestimonialsSectionComponent {
 
   trackTestimonial(_index: number, t: { personName: string }): string {
     return `${t.personName}-${this.text.lang()}`;
+  }
+
+  onClientImageError(ev: Event, index: number): void {
+    const img = ev.target as HTMLImageElement | null;
+    if (!img) return;
+    const fallback = testimonialAvatarFallbackUrl(index as 0 | 1 | 2);
+    if (img.src.includes(fallback)) return;
+    img.src = fallback;
   }
 
   readonly testimonials = computed(() => {
