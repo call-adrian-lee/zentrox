@@ -255,3 +255,11 @@
   outline: 3px solid #0a58ca;
   outline-offset: 3px;
 }
+
+/* Public forms: minimum tap height for primary actions */
+.zt-touch-btn {
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

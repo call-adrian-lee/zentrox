@@ -1,6 +1,6 @@
 /**
  * Idempotent: inserts the Recruitment Partner job if missing (matched by exact title).
- * Run: node scripts/seed-recruitment-partner-job.cjs  (from back/)
+ * Used by bootstrap-db.cjs; run standalone: node scripts/seed-recruitment-partner-job.cjs (from back/)
  */
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 const mysql = require('mysql2/promise');

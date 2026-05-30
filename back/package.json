@@ -8,8 +8,7 @@
     "dev": "node --watch index.js",
     "db:bootstrap": "node scripts/bootstrap-db.cjs",
     "db:reset-admin-password": "node scripts/reset-admin-password.cjs",
-    "verify:api": "node scripts/verify-api.cjs",
-    "db:seed-recruitment-partner": "node scripts/seed-recruitment-partner-job.cjs"
+    "verify:api": "node scripts/verify-api.cjs"
   },
   "engines": {
     "node": ">=20"
